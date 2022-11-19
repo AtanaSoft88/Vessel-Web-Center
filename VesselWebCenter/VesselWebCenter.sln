@@ -9,11 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VesselWebCenter.Data", "Ves
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VesselWebCenter.Services", "VesselWebCenter.Services\VesselWebCenter.Services.csproj", "{7B9198CB-DBDE-46F0-890C-B41FC9414C64}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{09FBA1DF-85CD-4F7A-BC9B-3AD82A6FC567}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
