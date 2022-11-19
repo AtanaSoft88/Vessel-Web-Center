@@ -1,0 +1,25 @@
+﻿.title-Beautify {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 700px;
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+    border-radius: 50%;
+    left: 480px;
+    position: absolute;
+    filter: drop-shadow(8px 8px 10px green);
+    filter: sepia(70% position: center);
+    border-block-style: double
+}
+
+.lower-title-Beautify {        
+    padding: 2px;
+    width: 400px;
+    /*box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);    */
+    backdrop-filter:blur(2px);
+    left: 640px;
+    position: absolute;
+    top:750px;
+    filter: drop-shadow(7px 15px 8px green);
+    filter: sepia(100% position: center);    
+}

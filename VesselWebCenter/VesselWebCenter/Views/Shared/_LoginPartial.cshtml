@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using VesselWebCenter.Data
+@using VesselWebCenter.Data.Models.Accounts
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+
+<ul class="navbar-nav">
+	@if (SignInManager.IsSignedIn(User))
+	{
+		<li class="nav-item m-1">
+			<a style="-webkit-text-fill-color:gold" class="nav-link text-success" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @ViewBag.UserFirstName !</a>
+		</li>
+		<li class="nav-item m-1">
+			<form  asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+				<button type="submit" class="btn-outline-warning nav-link text-dark btn-outline-primary rounded-pill">🔓Logout</button>
+
+			</form>
+		</li>
+		
+	}
+	else
+	{
+		<li class="nav-item m-1">
+			<a class="btn-outline-warning nav-link text-dark btn-outline-primary rounded-pill" asp-controller="Account" asp-action="Register">🔒Register</a>
+		</li>
+		<li class="nav-item m-1">
+			<a class="btn-outline-warning nav-link text-dark btn-outline-primary rounded-pill" asp-controller="Account" asp-action="Login">🔑Login</a>
+		</li>
+	}
+</ul>

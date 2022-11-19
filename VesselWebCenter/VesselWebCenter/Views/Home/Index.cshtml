@@ -1,0 +1,74 @@
+﻿@model List<VesselsHomeViewModel>
+@{
+	ViewData["Title"] = "Home Page";
+	var show = true;
+}
+
+<link rel="stylesheet" href="~/css/site.css">
+<link rel="stylesheet" href="~/css/myIndex.css">
+<link rel="stylesheet" href="~/css/title-Beautify.css">
+<link rel="stylesheet" href="~/css/Img-Backgrnd.css">
+
+<div class="text-center">
+	<h1 class="title-Beautify">Welc☸me to vessel web center</h1>
+	<br />
+</div>
+@*НАПРАВИ ГО ДА ПРЕМЕСТВА КАРТИНКИ-----------------------------------------------------------------------------------------*@
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+	<div class="carousel-indicators">
+		@for (int i = 0; i < Model.Count(); i++)
+		{
+			if (i == 0)
+			{
+				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="@i" class="active" aria-current="true" aria-label="Slide @i"></button>
+			}
+			else
+			{
+				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="@i" aria-current="true" aria-label="Slide @i"></button>
+			}
+		}
+
+	</div>
+	<div class="carousel-inner image-home">	
+		@foreach (var vessel in Model)
+		{
+			<div class="carousel-item @(show ? "active" : string.Empty)">
+
+				<img class="d-block w-100" style="height:610px"
+				 src="@vessel.ImageUrl" alt="@vessel.Name">
+				<div class="carousel-caption d-none d-md-block">
+					
+					@if (User?.Identity?.IsAuthenticated ?? false)
+					{						
+						<h5>
+							<a class="btn btn-outline-info opacity-75 btn-dark rounded-pill alert" asp-controller="Vessel" asp-action="ChooseAVessel"
+					         asp-route-id="@vessel.IdVessel"> @vessel.Name</a>
+						</h5>
+					}
+				</div>
+			</div>
+			show = false;
+		}
+	</div>
+	<br /> 
+	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	</button>
+	<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Next</span>
+	</button>
+</div>
+<hr />
+<h4 class="lower-title-Beautify">Where the Dreams may come true...</h4>
+@*----------------------*@
+
+<partial name="_sidebar" />
+
+
+
+
+
+
+

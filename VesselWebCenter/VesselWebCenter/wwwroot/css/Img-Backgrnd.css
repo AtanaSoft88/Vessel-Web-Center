@@ -1,0 +1,33 @@
+﻿.Image-Beautify {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 210px;
+    height: 200px;
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+    border-radius: 50%;
+    left:950px;
+    top: 235px;
+    position: absolute;
+    filter: drop-shadow(8px 8px 10px green);
+    filter: sepia(70% position: center);
+    border-block-style: double;
+    opacity: 85%;    
+}
+
+.image-home {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position:relative;
+    top:40px;
+    padding: 1px;
+    width: auto;
+    height: auto;
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);        
+    filter: drop-shadow(8px 8px 10px green);
+    filter: sepia(50% position: center);
+    border-block-style: double;
+    opacity: 90%;
+   
+}
+

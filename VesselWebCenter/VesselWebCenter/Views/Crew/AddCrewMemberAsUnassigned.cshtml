@@ -1,0 +1,47 @@
+﻿@model CrewMemberViewModel
+@{
+    ViewData["Title"] = "Register a Crew Member";
+}
+<link rel="stylesheet" href="~/css/Img-Backgrnd.css">
+<h1>@ViewData["Title"]</h1>
+
+<h4>Please enter crew member details</h4>
+<hr />
+<form method="post">
+    <div class="card-body w-75 alert-primary rounded-pill align-content-md-center">
+        
+    
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <label asp-for="FirstName"></label>
+    <div class="form-control-sm">
+        <input asp-for="FirstName" type="text" class="form-control-sm w-25" autocomplete="on" />
+        
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <label asp-for="LastName"></label>
+    <div class="form-control-sm">
+        <input asp-for="LastName" type="text" class="form-control-sm w-25" autocomplete="on" />
+        
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <label asp-for="Nationality"></label>
+    <div class="form-control-sm">
+        
+        <input asp-for="Nationality" type="text" class="form-control-sm w-25" autocomplete="off" aria-required="true" />        
+        <span asp-validation-for="Nationality" class="text-danger"></span>
+    </div>
+    <label asp-for="Age"></label>
+    <div class="form-control-sm">
+        <input asp-for="Age" type="number" value="" min="18" max="80" class="form-control-sm w-25" />
+        
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+    </div>
+
+    <button type="submit" class="rounded-pill w-auto btn-outline-dark btn btn-lg btn-success">Add</button>
+
+</form>
+<img class="figure-caption Image-Beautify" src="~/Img/1080p-Wallpapers-Full-HD-Download.jpg" />
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

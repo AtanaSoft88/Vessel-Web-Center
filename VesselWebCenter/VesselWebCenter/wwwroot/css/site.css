@@ -1,0 +1,81 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/*add by me - by adding to any div,footer,body,h1 tags -> id="footer"  ( you can access css styling)*/
+#footer {
+    position: absolute;
+    width: 100%;
+    height: 20%;
+    bottom: 0; /* set footer at bottom */
+    left: 0; /* set footer at left */
+    background: red;
+}
+
+.usr-Count {
+    position: relative;
+    left: 200px;
+    top: 580px;
+    background-color: greenyellow;
+    color: #00539f;
+    text-shadow: 1px 0px 1px black;
+    float: right;
+    text-align: right;
+}
+
+.bgrnd {
+   /* width: 10%;
+    height: 10px;*/ /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat:no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    padding-left: 10px;
+    width:auto;
+    height:auto;
+    background-image: url(../Img/1080p-Wallpapers-Full-HD-Download.jpg)
+}
+
+.clrB {
+    background:lightskyblue
+        paleturquoise
+        rosybrown;
+     
+}
+
+/*form sidebar*/
+
+#wrapper #sidebar-wrapper {
+    width: 50px;
+}
+
+#wrapper .sidebar-nav {
+    display: none;
+}
+
+#wrapper.toggled .sidebar-nav {
+    display: block;
+}
+
+a#menu-toggle {
+    display: inline-block;
+    width: 100%;
+    line-height: 100%;
+    padding: 0;
+    margin: 0;
+    color: dodgerblue;
+}

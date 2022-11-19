@@ -1,0 +1,30 @@
+﻿@{
+	if (TempData["already_in_role"] != null)
+	{
+		<script>
+			alert('@TempData["already_in_role"]');
+		</script>
+	}
+	if (TempData["select_from_menu"] != null)
+	{
+		<script>
+			alert('@TempData["select_from_menu"]');
+		</script>
+	}
+	if (TempData["role_add_successfully"] != null)
+	{
+		<script>
+			alert('@TempData["role_add_successfully"]');
+		</script>
+	}
+	if (TempData["roles_reset"] != null)
+	{
+		<script>
+			alert('@TempData["roles_reset"]');
+		</script>
+	}
+	TempData["roles_reset"] = null;
+	TempData["role_add_successfully"] = null;
+	TempData["select_from_menu"] = null;
+	TempData["already_in_role"] = null;
+}

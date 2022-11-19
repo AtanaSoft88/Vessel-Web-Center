@@ -1,0 +1,7 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using VesselWebCenter.Data.Models.Accounts
+@inject UserManager<AppUser> userManager
+
+<p class="text-md-start border-4">Total registered Users: @userManager.Users.Count(x=>x.IsDeleted==false) </p>
+
+

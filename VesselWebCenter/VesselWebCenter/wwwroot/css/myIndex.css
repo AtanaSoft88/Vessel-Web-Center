@@ -1,0 +1,17 @@
+﻿.usr-Count {
+    position: relative;
+    left: 15px;
+    top: 20px;
+    background-color: lightgreen;    
+    color: blueviolet;    
+    float: right;
+    text-align: right;
+    opacity: 80%;
+}
+.my-reflection {
+    -webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4));
+}
+/*------------*/
+
+
+

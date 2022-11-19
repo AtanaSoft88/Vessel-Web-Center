@@ -1,0 +1,96 @@
+﻿@model IEnumerable<MostVisitedPortsViewModel>
+@{
+	ViewData["Title"] = "Most Visited Ports";
+	var count = 1;		
+}
+<link rel="stylesheet" href="~/css/Img-Backgrnd.css">
+<link rel="stylesheet" href="~/css/MostVisitedPorts_HC.css">
+
+<h3>@ViewData["Title"]</h3>
+<hr />
+<button name="n" class="btn btn-outline-warning btn-success rounded-pill" id="showCharts">Show Graphic</button>
+@*--= HighCharts =--*@
+<figure class="highcharts-figure ">
+	<div id="container"></div>
+	<p class="highcharts-description">
+		Feel free to adjust all visual effects for better view.
+	</p>
+	<div id="sliders">
+		<table>
+			<tr>
+				<td><label for="alpha">Alpha Angle</label></td>
+				<td><input id="alpha" type="range" min="0" max="45" value="15" /> <span id="alpha-value" class="value"></span></td>
+			</tr>
+			<tr>
+				<td><label for="beta">Beta Angle</label></td>
+				<td><input id="beta" type="range" min="-45" max="45" value="15" /> <span id="beta-value" class="value"></span></td>
+			</tr>
+			<tr>
+				<td><label for="depth">Depth</label></td>
+				<td><input id="depth" type="range" min="20" max="100" value="50" /> <span id="depth-value" class="value"></span></td>
+			</tr>
+		</table>
+	</div>
+</figure>
+
+@*Table*@
+
+<p>	
+	<button class="btn btn-outline-warning btn-success rounded-pill" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+		Show/Hide Table
+	</button>
+</p>
+
+<div class="navbar-collapse" id="collapseExample">
+	<div class="card card-body">
+
+		<form method="post">
+			<label>Number of Top Visited ports ✎</label>
+			<input class="form-control-sm" name="n" type="number" />
+			<button asp-action="MostVisitedPorts" asp-controller="Port" class="btn-dark rounded-pill"> ⁌••Show••⁍</button>
+		</form>
+		<hr />
+		@*---*@
+		<table class="table table-success table-striped table-hover table-bordered border-secondary">
+			<thead class="form-select-sm">
+				<tr class="table-dark bg-light bg-opacity-75">
+					<td>No</td>
+					<td>Port Name</td>
+					<td>Country Name</td>
+					<td>Vessel Visited Count</td>
+				</tr>
+			</thead>
+			<tbody class="w-25">
+				@foreach (var port in Model)
+				{
+					<tr>
+						<td>
+							@(count++)
+						</td>
+						<td>
+							@port.PortName
+						</td>
+						<td>
+							@port.CountryName
+						</td>
+						<td>
+							@port.TotalVesselsVisited
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		@*---*@
+	</div>
+</div>
+
+@section Scripts{
+	@*HighCharts*@
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+	@*Import Js below*@
+	<script src="~/js/HighChartsDiagrams/MostVisitedPorts_HC.js"></script>	
+}

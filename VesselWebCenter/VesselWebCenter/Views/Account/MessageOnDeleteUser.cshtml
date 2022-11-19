@@ -1,0 +1,19 @@
+﻿<div>
+	
+	@if (TempData["delEmail"]?.ToString() == "unavailable")
+	{
+		<h5 class="alert alert-danger w-75 text-lg-center">No such Email address available!</h5>
+		<a class="alert-success w-25 form-control btn-success text-lg-center" asp-controller="Home" asp-action="Index">Home</a>
+	}
+	else if (TempData.ContainsKey("delUser") && TempData.ContainsKey("delEmail"))
+	{
+		<h5 class="alert alert-success w-75 text-lg-center">You have just successfully deleted User: @TempData["delUser"].ToString(), owner of Email: @TempData["delEmail"].ToString()</h5>
+		
+	}
+	else
+	{
+		<h5 class="alert alert-danger w-50 text-lg-center">No permission to delete such user rank</h5>
+		<a class="alert-success w-25 form-control btn-success text-lg-center" asp-controller="Home" asp-action="Index">Home</a>
+	}
+	
+</div>

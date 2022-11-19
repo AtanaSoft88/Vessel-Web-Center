@@ -1,0 +1,76 @@
+﻿@using VesselWebCenter.Data.Models
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model IEnumerable<VesselsViewModel>
+
+@{
+	ViewData["Title"] = "Vessels currently registered";
+}
+<h1 class="rounded-pill  shadow fst-italic" style="-webkit-text-fill-color:lightseagreen">@ViewData["Title"]</h1>
+
+<table class="table table-striped table-hover table-bordered border-success">
+	<thead>
+		@* thead => The main row containing description of each column*@
+		<tr class="bg-success shadow-lg text-warning">
+			@* tr => One row in table*@
+
+			@* td => One cell of our row in table*@
+			@*<td class="bg-body" align="center">No:</td>*@
+			<td class="bg-body" align="center">Vessel Name</td>
+			<td class="bg-body" align="center">Vessel Type</td>
+			<td class="bg-body" align="center">CallSign</td>
+			<td class="bg-body" align="center">Length Overall</td>
+			<td class="bg-body" align="center">Breadth</td>
+			<td class="bg-body" align="center">Visited Ports Number</td>
+			<td class="bg-body" align="center">Last Port Of Call</td>
+			<td class="bg-body" align="center">Details for:</td>
+		</tr>
+	</thead>
+	<tbody class="table-hover link-success">
+
+		@foreach (var vsl in Model)
+		{
+			<tr>				
+				<td>@vsl.Name</td>
+				<td>@vsl.VesselType</td>
+				<td>@vsl.CallSign</td>
+				<td>@vsl.LOA m</td>
+				<td>@vsl.Breadth m</td>
+				@if (User?.Identity?.IsAuthenticated ?? false)
+				{
+					<td>
+						@vsl.PortsOfCall?.Count()					
+                  
+					</td>
+					<td><p>@vsl?.PortsOfCall?.LastOrDefault()?.PortName</p></td>                                 
+				}
+				else
+				{
+					<td style="-webkit-text-fill-color:darkred">Unavailable info</td>
+					<td style="-webkit-text-fill-color:darkred">Unavailable info</td>
+				}
+				<td>
+					<form method="get">
+						
+						@if (User?.Identity?.IsAuthenticated?? false)
+						{
+							<label style="font-style:oblique;-moz-animation-fill-mode:forwards" asp-for="@vsl.Id">Vessel Details:</label>
+							<input type="submit" class="btn-success btn-lg btn-success shadow shadow-lg" title="@vsl.Name" name="vesselId" value="@vsl.Id" asp-controller="Vessel" asp-action="ChooseAVessel" />
+						}
+						else
+						{
+							<label style="font-style:oblique;-moz-animation-fill-mode:forwards" asp-for="@vsl.Id"> <a class="btn-outline-warning btn-success badge badge"
+								asp-route-returnUrl="/Vessel/GetAllVessels" asp-controller="Account" asp-action="Login">Login for more Info</a> 
+								</label>
+							<input type="submit" disabled="disabled" class="btn-success btn-lg btn" title="@vsl.Name" name="vesselId" value="@vsl.Id" asp-controller="Vessel" asp-action="ChooseAVessel" />
+						}					
+						
+				    </form>
+				</td>				
+			</tr>
+		}
+	</tbody>
+</table>
+
+
+

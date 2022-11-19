@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" /> @*my css*@
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+</head>
+<body>
+	<div id="mySidenav" class="sidenav">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">⌫</a>
+		<a asp-controller="Port" asp-action="MostVisitedPorts" class="btn-outline-dark">⚝Most Visited Ports</a>
+		<a class="btn-outline-dark" href="#">⚝Services</a>
+		<a class="btn-outline-dark" href="#">⚝Clients</a>
+		<a class="btn-outline-dark" href="#">⚝Contact</a>		
+
+	</div>
+	
+	<p class="txtSidebar">➲ Navigational Side menu ⤵⤵⤵</p>
+	@*<span class="sidebarPsn-Btn button" onclick="openNav()">⚝pen side menu⫸⫸⫸</span>*@
+	<button class="button sidebarPsn-Btn btn-outline-light badge" onclick="openNav()" style="vertical-align:middle"><span>⚝pen side menu⫸ </span></button>
+	
+	<script src="~/js/sidebar.js"></script>
+</body>
+</html> 
