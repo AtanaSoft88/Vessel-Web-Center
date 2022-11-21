@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using VesselWebCenter.Data.Constants;
 using VesselWebCenter.Data.Models.Accounts;
@@ -10,6 +9,9 @@ using VesselWebCenter.Services.ViewModels;
 
 namespace VesselWebCenter.Controllers
 {
+    /// <summary>
+    /// Controller responsible for Account management
+    /// </summary>
     public class AccountController : BaseController
     {
         private readonly UserManager<AppUser> userManager;
@@ -17,26 +19,44 @@ namespace VesselWebCenter.Controllers
         private readonly RoleManager<IdentityRole<Guid>> roleManager;
         private readonly IAccountSupportService accountSupportService;
 
+        /// <summary>
+        /// Configuring UserManager,SignInManager and RoleManager for each specific User.
+        /// </summary>
+        /// <param name="_userManager"></param>
+        /// <param name="_signInManager"></param>
+        /// <param name="_roleManager"></param>
+        /// <param name="_accountSupportService"></param>
         public AccountController(
-            UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager,
+            UserManager<AppUser> _userManager,
+            SignInManager<AppUser> _signInManager,
             RoleManager<IdentityRole<Guid>> _roleManager,
-            IAccountSupportService accountSupportService)
+            IAccountSupportService _accountSupportService)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
+            this.userManager = _userManager;
+            this.signInManager = _signInManager;
             this.roleManager = _roleManager;
-            this.accountSupportService = accountSupportService;
+            this.accountSupportService = _accountSupportService;
         }
 
+        /// <summary>
+        /// Registers Users
+        /// </summary>
+        /// <returns>Registeration form</returns>
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Register()
-        {
+        {            
             var model = new RegisterViewModel();
             return View(model);
         }
 
+        /// <summary>
+        /// Registers Users,Initializes all available Roles, 
+        /// Gives First User specific roles such as:ADMINISTRATOR,USER-OWNER,MANAGER
+        /// Adds Claims to each registered user.
+        /// </summary>
+        /// <param name="registerModel"></param>
+        /// <returns>Registration form</returns>
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerModel)
@@ -53,17 +73,14 @@ namespace VesselWebCenter.Controllers
                 FirstName = registerModel.FirstName,
                 LastName = registerModel.LastName,
                 UserName = registerModel.Email,
-                // to be deleted in a real project , no password in db allowed! Only hashed passwords.
-                //PasswordPreserved = registerModel.Password,
             };
             var result = await userManager.CreateAsync(user, registerModel.Password);
 
             if (result.Succeeded)
-            {
-                //Add claim , use the First name if it is null - get the email
+            {                
                 await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("first_name", user.FirstName ?? user.Email));
-                //-------------------------------------------------------------------------------------------------------------------
-                if (!roleManager.Roles.Any())
+                
+                if (!await roleManager.Roles.AnyAsync())
                 {
                     await roleManager.CreateAsync(new IdentityRole<Guid>(RoleConstants.ADMINISTRATOR));
                     await roleManager.CreateAsync(new IdentityRole<Guid>(RoleConstants.MANAGER));
@@ -73,12 +90,12 @@ namespace VesselWebCenter.Controllers
                 await signInManager.SignInAsync(user, isPersistent: false);
                 if (userManager.Users.Count() == 1)
                 {
-                    await userManager.AddToRolesAsync(user, new string[] 
+                    await userManager.AddToRolesAsync(user, new string[]
                     {   RoleConstants.ADMINISTRATOR,
                         RoleConstants.MANAGER,
-                        RoleConstants.USER_OWNER 
+                        RoleConstants.USER_OWNER
                     });
-                }                             
+                }
                 return RedirectToAction("Index", "Home");
             }
 
@@ -90,6 +107,11 @@ namespace VesselWebCenter.Controllers
 
         }
 
+        /// <summary>
+        /// Login all registered and authenticated users
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns>Login form to be filled up</returns>
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Login(string? returnUrl = null)
@@ -101,9 +123,14 @@ namespace VesselWebCenter.Controllers
             return View(loginModel);
         }
 
+        /// <summary>
+        /// Login all registered and authenticated users
+        /// </summary>
+        /// <param name="loginModel"></param>
+        /// <returns>Signing in a User</returns>
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginModel) //djx7000@abv.bg - User Nakata / Nasko8807@
+        public async Task<IActionResult> Login(LoginViewModel loginModel)
         {
             if (!this.ModelState.IsValid)
             {
@@ -111,9 +138,8 @@ namespace VesselWebCenter.Controllers
             }
             var user = await userManager.FindByEmailAsync(loginModel.Email);
 
-            if (user != null && user.IsDeleted == false) // && user.IsDeleted == false
+            if (user != null && user.IsDeleted == false)
             {
-                // "isPersistent:false" - here we need this true if we already implemented "Remmember me" on login
                 var result = await signInManager.PasswordSignInAsync(user, loginModel.Password, isPersistent: true, lockoutOnFailure: false);
 
                 if (result.Succeeded)
@@ -130,22 +156,38 @@ namespace VesselWebCenter.Controllers
             return View(loginModel);
         }
 
+        /// <summary>
+        /// Logging out a User
+        /// </summary>
+        /// <returns>User Signed out</returns>
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
-        }        
+        }
+
+        /// <summary>
+        /// Configure message upon implementing logic for user deletion
+        /// </summary>
+        /// <returns>msg</returns>
         public IActionResult MessageOnDeleteUser()
         {
             return this.View();
         }
 
-        //[AllowAnonymous]
+        /// <summary>
+        /// Configure message on not persmission granted
+        /// </summary>
+        /// <returns>msg</returns>
         public IActionResult AccessDenied()
         {
             return View();
-        }      
+        }
 
+        /// <summary>
+        /// Deletion of an User Account
+        /// </summary>
+        /// <returns>All User Accounts which can be deleted</returns>
         [HttpGet]
         [Authorize(Policy = "myFullPermissionPolicy")]
         public async Task<IActionResult> DeleteUserAccount()
@@ -155,8 +197,13 @@ namespace VesselWebCenter.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Actual deletion of an User Account - marked as Deleted ( not phisically deleted )
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns>All available User's Accounts(Those not marked as Deleted)</returns>
         [HttpPost]
-        [Authorize(Policy = "myFullPermissionPolicy")]        
+        [Authorize(Policy = "myFullPermissionPolicy")]
         public async Task<IActionResult> DeleteUserAccount(AccountDeleteViewModel account)
         {
             if (!this.ModelState.IsValid)
@@ -164,7 +211,8 @@ namespace VesselWebCenter.Controllers
                 return this.View(account);
             }
 
-            if (User.IsInRole(RoleConstants.ADMINISTRATOR) && User.IsInRole(RoleConstants.MANAGER) && User?.Identity?.Name == account.EmailAddress)
+            if (User.IsInRole(RoleConstants.ADMINISTRATOR) && User.IsInRole(RoleConstants.MANAGER)
+                                                           && User?.Identity?.Name == account.EmailAddress)
             {
                 return RedirectToAction("MessageOnDeleteUser", "Account");
             }
@@ -181,6 +229,10 @@ namespace VesselWebCenter.Controllers
             return RedirectToAction("MessageOnDeleteUser", "Account");
         }
 
+        /// <summary>
+        /// Configuring User Roles or Resetting existing ones
+        /// </summary>
+        /// <returns>List of Users and their Roles</returns>
         [HttpGet]
         [Authorize(Policy = "myFullPermissionPolicy")]
         public async Task<IActionResult> ManageUserRoles()
@@ -190,18 +242,25 @@ namespace VesselWebCenter.Controllers
             {
                 model.RolesAvailable = await roleManager.Roles.Select(x => x.Name).ToListAsync();
                 model.RolesAvailable.Add("Reset Account Roles");
-            }  
-           
+            }
+
             model.UserIds = await accountSupportService.GetAllUsersId();
             return View(model);
         }
 
+        /// <summary>
+        /// Actual role assigned to chosen User Accounts.Configuring User Roles or Resetting existing ones.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="userId"></param>
+        /// <param name="roleName"></param>
+        /// <returns>Obtaining roles for given Users</returns>
         [HttpPost]
-        [Authorize(Policy = "myFullPermissionPolicy")]        
+        [Authorize(Policy = "myFullPermissionPolicy")]
         public async Task<IActionResult> ManageUserRoles(AccountAddRolesViewModel model, string userId, string roleName)
         {
-            if (model.UserId == Guid.Empty || userId.Contains("Select") || roleName.Contains("Select")) 
-            {                
+            if (model.UserId == Guid.Empty || userId.Contains("Select") || roleName.Contains("Select"))
+            {
                 TempData["select_from_menu"] = RoleConstants.SELECT_RELEVANT_ROLE_AND_ACCOUNT;
                 return this.RedirectToAction(nameof(ManageUserRoles));
 
