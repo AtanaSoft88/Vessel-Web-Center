@@ -170,7 +170,7 @@ namespace VesselWebCenter.Controllers
         /// Configure message upon implementing logic for user deletion
         /// </summary>
         /// <returns>msg</returns>
-        public IActionResult MessageOnDeleteUser()
+        public IActionResult UserMessages()
         {
             return this.View();
         }
@@ -213,27 +213,51 @@ namespace VesselWebCenter.Controllers
 
             if (User.IsInRole(RoleConstants.ADMINISTRATOR) && User.IsInRole(RoleConstants.MANAGER)
                                                            && User?.Identity?.Name == account.EmailAddress)
-            {
-                return RedirectToAction("MessageOnDeleteUser", "Account");
+            {                
+                return RedirectToAction("UserMessages", "Account");
             }
             var currentUserToDelete = userManager.Users.FirstOrDefault(x => x.Email == account.EmailAddress);
             if ((!userManager.Users.Any(x => x.Email == account.EmailAddress)) || currentUserToDelete.IsDeleted == true)
             {
                 ModelState.AddModelError("", "There is no such email address available!");
                 TempData["delEmail"] = "unavailable";
-                return RedirectToAction("MessageOnDeleteUser", "Account");
+                return RedirectToAction("UserMessages", "Account");
             }
             await accountSupportService.DeleteUserAccount(account);
             TempData["delUser"] = userManager.Users.Where(x => x.Email == account.EmailAddress).FirstOrDefault()?.FirstName;
             TempData["delEmail"] = userManager.Users.Where(x => x.Email == account.EmailAddress).FirstOrDefault()?.Email;
-            return RedirectToAction("MessageOnDeleteUser", "Account");
+            return RedirectToAction("UserMessages", "Account");
+        }
+        //------------------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Recovering of an User Account
+        /// </summary>
+        /// <returns>All User Accounts which can be Recovered</returns>
+        [HttpGet]
+        [Authorize(Policy = "myFullPermissionPolicy")]
+        public async Task<IActionResult> RecoverUserAccount()
+        {
+            var model = new AccountRecoverViewModel();
+            model.Users = await accountSupportService.GetAllDeletedUsers();
+            return View(model);
         }
 
-        /// <summary>
-        /// Configuring User Roles or Resetting existing ones
-        /// </summary>
-        /// <returns>List of Users and their Roles</returns>
-        [HttpGet]
+        public async Task<IActionResult> RecoverUserAccount(AccountRecoverViewModel account)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(account);
+            }
+            await accountSupportService.GetUserAccountRecovered(account);
+            TempData["recoverMsg"] = "recover";
+            return RedirectToAction("UserMessages", "Account");            
+        }   
+
+            /// <summary>
+            /// Configuring User Roles or Resetting existing ones
+            /// </summary>
+            /// <returns>List of Users and their Roles</returns>
+            [HttpGet]
         [Authorize(Policy = "myFullPermissionPolicy")]
         public async Task<IActionResult> ManageUserRoles()
         {

@@ -5,10 +5,16 @@
 		<h5 class="alert alert-danger w-75 text-lg-center">No such Email address available!</h5>
 		<a class="alert-success w-25 form-control btn-success text-lg-center" asp-controller="Home" asp-action="Index">Home</a>
 	}
+	else if (TempData["recoverMsg"]?.ToString() == "recover")
+	{
+		<h5 class="alert alert-success w-50 text-lg-center">User Account has been successfully recovered!</h5>
+		<a class="alert-success w-25 form-control btn-success text-lg-center" asp-controller="Account" asp-action="RecoverUserAccount">Recover more accounts</a>
+	}
 	else if (TempData.ContainsKey("delUser") && TempData.ContainsKey("delEmail"))
 	{
 		<h5 class="alert alert-success w-75 text-lg-center">
-			You have just successfully deleted User: @TempData["delUser"].ToString(), owner of Email: @TempData["delEmail"].ToString()</h5>		
+			You have just successfully deleted User: @TempData["delUser"].ToString(), owner of Email: @TempData["delEmail"].ToString()</h5>
+		<a class="alert-success w-25 form-control btn-success text-lg-center" asp-controller="Account" asp-action="DeleteUserAccount">Delete more accounts</a>
 	}
 	else
 	{

@@ -87,5 +87,29 @@ namespace VesselWebCenter.Services
                 return;
             }
         }
+
+        public async Task<IEnumerable<SelectListItem>> GetAllDeletedUsers()
+        {
+            var users = await repo.All<AppUser>().Where(u => u.IsDeleted == true).Select(x => new SelectListItem
+            {
+                Text = $"💇‍♂️‍[{x.FirstName} {x.LastName}] | ✉:{x.Email}",
+                Value = x.Email,
+            }).ToListAsync();
+            return users;
+        }
+
+        public async Task GetUserAccountRecovered(AccountRecoverViewModel account)
+        {
+            var userToRecover = await repo.All<AppUser>(x => x.Email == account.EmailAddress).FirstOrDefaultAsync();
+
+            if (userToRecover != null)
+            {
+                userToRecover.IsDeleted = false;
+                userToRecover.DeletedOn = null;
+                repo.Update(userToRecover);
+                await repo.SaveChangesAsync();
+
+            }
+        }
     }
 }

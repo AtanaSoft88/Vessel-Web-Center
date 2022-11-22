@@ -6,6 +6,7 @@
         public const string PASSWORD_REQUIREMENTS = "Password must be between 6 and 24 characters long. It must contain at least one digit, upper-case letter, lower-case letter and one special character!";
 
         public const string CHOOSE_ACCOUNT_TO_DELETE = "Please, choose one of the listed accounts which are to be deleted";
+        public const string CHOOSE_ACCOUNT_TO_RECOVER = "Please, choose a valid account you want to recover";
         public const string NAME_FIELD_REQUIREMENTS = "This field requires Upper-case starting character, followed by not more than 20 Lower-case characters only";
         public const string FIRST_NAME_REQUIREMENTS = "This field requires Upper-case starting character, followed by not more than 20 Lower-case characters only";
 

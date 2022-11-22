@@ -5,7 +5,7 @@ $(document).ready(() => {
         $.ajax({
             url: "/Port/TopTenVisitedPortsHighCharts",
             type: "GET",
-            success: function (data) {            
+            success: function (data) {          
                             
                 
                 for (var i = 0; i < data.length; i++) {
