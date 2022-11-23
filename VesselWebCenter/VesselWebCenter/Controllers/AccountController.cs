@@ -228,7 +228,7 @@ namespace VesselWebCenter.Controllers
             TempData["delEmail"] = userManager.Users.Where(x => x.Email == account.EmailAddress).FirstOrDefault()?.Email;
             return RedirectToAction("UserMessages", "Account");
         }
-        //------------------------------------------------------------------------------------------------------------------------------
+        
         /// <summary>
         /// Recovering of an User Account
         /// </summary>
@@ -242,6 +242,12 @@ namespace VesselWebCenter.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Recovering of an User Account
+        /// </summary>
+        /// <returns>Message describing the operation result</returns>
+        [HttpPost]
+        [Authorize(Policy = "myFullPermissionPolicy")]
         public async Task<IActionResult> RecoverUserAccount(AccountRecoverViewModel account)
         {
             if (!this.ModelState.IsValid)
