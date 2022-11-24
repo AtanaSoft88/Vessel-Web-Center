@@ -36,18 +36,19 @@
 @*Table*@
 
 <p>	
-	<button class="btn btn-outline-warning btn-success rounded-pill" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="position:absolute;left:1220px; top:150px">
+	<button class="btn btn-outline-warning btn-success rounded-pill" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+	 aria-controls="collapseExample" style="position:absolute;left:920px; top:155px">	
 		Show/Hide Table
 	</button>
 </p>
 
-<div class="navbar-collapse navbar-nav-scroll" id="collapseExample" style="position:inherit;left:1220px; top:510px">
+<div class="navbar-collapse navbar-nav-scroll" id="collapseExample" style="position:absolute;left:920px; top:210px;max-height:65%">
 	<div class="card card-body w-75">
 
 		<form method="post">
 			<label>Number of Top Visited ports ✎</label>
 			<input class="form-control-sm" name="n" type="number" />
-			<button asp-action="MostVisitedPorts" asp-controller="Port" class="btn-dark rounded-pill"> ⁌••Show••⁍</button>
+			<button asp-action="MostVisitedPorts" asp-controller="Port" class="btn-info rounded-pill btn-outline-dark"> ⁌••Show••⁍</button>
 		</form>
 		<hr />
 		
