@@ -10,7 +10,7 @@
 <hr />
 <button name="n" class="btn btn-outline-warning btn-success rounded-pill" id="showCharts">Show Graphic</button>
 @*--= HighCharts =--*@
-<figure class="highcharts-figure ">
+<figure class="highcharts-figure" style="position:relative; left:-390px">
 	<div id="container"></div>
 	<p class="highcharts-description">
 		Feel free to adjust all visual effects for better view.
@@ -36,13 +36,13 @@
 @*Table*@
 
 <p>	
-	<button class="btn btn-outline-warning btn-success rounded-pill" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+	<button class="btn btn-outline-warning btn-success rounded-pill" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="position:absolute;left:1220px; top:150px">
 		Show/Hide Table
 	</button>
 </p>
 
-<div class="navbar-collapse" id="collapseExample">
-	<div class="card card-body">
+<div class="navbar-collapse navbar-nav-scroll" id="collapseExample" style="position:inherit;left:1220px; top:510px">
+	<div class="card card-body w-75">
 
 		<form method="post">
 			<label>Number of Top Visited ports ✎</label>
@@ -51,7 +51,7 @@
 		</form>
 		<hr />
 		
-		<table class="table table-success table-striped table-hover table-bordered border-secondary">
+		<table class="table table-success table-striped table-hover table-bordered border-secondary w-100">
 			<thead class="form-select-sm">
 				<tr class="table-dark bg-light bg-opacity-75">
 					<td>No</td>
