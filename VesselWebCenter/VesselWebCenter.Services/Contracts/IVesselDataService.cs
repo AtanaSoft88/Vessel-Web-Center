@@ -6,7 +6,7 @@ namespace VesselWebCenter.Services.Contracts
 {
     public interface IVesselDataService
     {
-        Task<IEnumerable<VesselsViewModel>> GetAll();        
+        Task<IQueryable<VesselsViewModel>> GetAll();        
         Task<SingleVesselViewModel> GetChoosenVessel(int id);
         Task<IEnumerable<VesselsHomeViewModel>> AllAsHomePage();
 

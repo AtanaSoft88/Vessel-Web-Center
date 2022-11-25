@@ -17,16 +17,17 @@ namespace VesselWebCenter.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetAllVessels()
+        public async Task<IActionResult> GetAllVessels(int pageNumber = 1)
         {
-            IEnumerable<VesselsViewModel> vessels = await service.GetAll();
-            if (vessels.Count()>0)
+            IQueryable<VesselsViewModel>? vessels = await service.GetAll();
+            if (vessels.Count() > 0 && vessels != null)
             {
-                return View(vessels);
+                var model = await PagingList<VesselsViewModel>.CreatePagesAsync(vessels, pageNumber, 7);
+                return View(model);
             }
             return RedirectToAction("Index", "Home");
         }
-        
+
         [AllowAnonymous]        
         public async Task<IActionResult> ChooseAVessel(int id, int vesselId)
         {

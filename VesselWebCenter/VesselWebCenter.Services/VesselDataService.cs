@@ -39,13 +39,13 @@ namespace VesselWebCenter.Services
                 ManningCompanyName = x.ManningCompany.Name,
                 PortsOfCall = x.PortsOfCall.ToList(),
                 
-            }).FirstOrDefaultAsync(x=>x.Id==idVessel);       
+            }).FirstAsync(x=>x.Id==idVessel);       
                         
         }
 
-        public async Task<IEnumerable<VesselsViewModel>> GetAll()
+        public async Task<IQueryable<VesselsViewModel>> GetAll()
         {
-            return await repo.AllReadonly<Vessel>().Select(x => new VesselsViewModel
+            return repo.AllReadonly<Vessel>().Select(x => new VesselsViewModel
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -54,7 +54,7 @@ namespace VesselWebCenter.Services
                 LOA = x.LengthOverall,
                 VesselType = x.VesselType,
                 PortsOfCall = x.PortsOfCall.ToList(),
-            }).ToListAsync();
+            });
              
         }
 
