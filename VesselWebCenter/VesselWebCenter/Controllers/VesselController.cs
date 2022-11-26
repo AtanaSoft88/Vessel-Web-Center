@@ -5,16 +5,28 @@ using VesselWebCenter.Services.Contracts;
 using VesselWebCenter.Services.ViewModels;
 
 namespace VesselWebCenter.Controllers
-{    
+{
+    /// <summary>
+    /// Vessel Controller responsible for Vessels arrangement
+    /// </summary>
     public class VesselController : BaseController
     {
         private readonly IVesselDataService service;
-        
+
+        /// <summary>
+        /// Controller's constructor with DI needed services
+        /// </summary>
+        /// <param name="service"></param>
         public VesselController(IVesselDataService service)
         {
             this.service = service;
         }
-                
+
+        /// <summary>
+        /// Getting all Vessels and paginated with possible movement to Next and Previous pages
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <returns>All Vessels Paginated</returns>
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllVessels(int pageNumber = 1)
@@ -28,6 +40,12 @@ namespace VesselWebCenter.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// Get chosen Vessel by Id for further manipulation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="vesselId"></param>
+        /// <returns>Vessel chosen by User</returns>
         [AllowAnonymous]        
         public async Task<IActionResult> ChooseAVessel(int id, int vesselId)
         {
