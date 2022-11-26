@@ -11,7 +11,14 @@
         public const string FIRST_NAME_REQUIREMENTS = "This field requires Upper-case starting character, followed by not more than 20 Lower-case characters only";
 
         public const string TEXT_FIELD_REQUIREMENTS = "Field must be a text";
-        
+
+        public const string COMPANIES_SEEDING = "bin\\Debug\\net6.0\\DataSeeder\\DataImportSets\\companyNoId.json";
+        public const string VESSELS_SEEDING = "bin\\Debug\\net6.0\\DataSeeder\\DataImportSets\\vesselsNoId.json";
+        public const string PORTS_OF_CALL_SEEDING = "bin\\Debug\\net6.0\\DataSeeder\\DataImportSets\\PortsOfCall.json";
+        public const string CREW_MEMBERS_SEEDING = "bin\\Debug\\net6.0\\DataSeeder\\DataImportSets\\CrewMembers.json";
+        public const string DESTINATION_PORTS_SEEDING = "bin\\Debug\\net6.0\\DataSeeder\\DataImportSets\\DestinationPorts.json";
+
+
     }    
     public static class RoleConstants 
     {

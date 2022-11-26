@@ -1,120 +1,94 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using VesselWebCenter.Data.Constants;
+using VesselWebCenter.Data.DataSeeder.Contracts;
 using VesselWebCenter.Data.Models;
+using VesselWebCenter.Data.Repositories;
 
 namespace VesselWebCenter.Data.DataSeeder
 {
     public class DbApplicationSeeder
     {
-        public async Task SeedDataBaseAsync(VesselAppDbContext context)
+        public async Task SeedDataBaseAsync(IRepository repository, ISeederService seederService)
         {
-            if (context.ManningCompanies.Count() == 0)
+            if (await repository.AllReadonly<ManningCompany>().CountAsync() == 0)
             {
-                string jsonString = File.ReadAllText("bin\\Debug\\net6.0\\DataSeeder\\DataImportSets\\companyNoId.json");
+                string jsonString = File.ReadAllText(GlobalConstants.COMPANIES_SEEDING);
                 var companiesJsonInput = JsonConvert.DeserializeObject<ManningCompany[]>(jsonString);
-                foreach (var compJson in companiesJsonInput)
+                try
                 {
-                    var company = new ManningCompany()
-                    {
-                        Name = compJson.Name,
-                        Country = compJson.Country,
-                    };
-                    context.ManningCompanies.Add(company);
+                    await seederService.SeedManningCompanies(companiesJsonInput);
                 }
-                await context.SaveChangesAsync();
+                catch (Exception ex)
+                {
+
+                    throw new ApplicationException("ManningCompanies could not be saved properly into Data Base", ex);
+                }
             }
-            if (context.Vessels.Count() == 0)
+            if (await repository.AllReadonly<Vessel>().CountAsync() == 0)
             {
-                string jsonString = File.ReadAllText("bin\\Debug\\net6.0\\DataSeeder\\DataImportSets\\vesselsNoId.json");
+                string jsonString = File.ReadAllText(GlobalConstants.VESSELS_SEEDING);
                 var vesselsJsonInput = JsonConvert.DeserializeObject<Vessel[]>(jsonString);
-                foreach (var vsl in vesselsJsonInput)
+                try
                 {
-                    //Two ways to relate and find appropriate vessel for a specific company
-                    var companyId1 = await context.ManningCompanies.FindAsync(vsl.ManningCompanyId);
-                    //var companyId2 = await context.ManningCompanies.FirstOrDefaultAsync(x => x.Id == vsl.ManningCompanyId);
-                    if (companyId1 != null)
-                    {
-                        var vessel = new Vessel()
-                        {
-                            Name = vsl.Name,
-                            CallSign = vsl.CallSign,
-                            BreadthMax = vsl.BreadthMax,
-                            IsLaden = vsl.IsLaden,
-                            LengthOverall = vsl.LengthOverall,
-                            VesselType = vsl.VesselType,
-                            CargoTypeOnBoard = vsl.CargoTypeOnBoard,
-                            VesselImageUrl = vsl.VesselImageUrl,
-                            ManningCompanyId = companyId1.Id,
-                        };
-                        context.Vessels.Add(vessel);
-                    }
+                    await seederService.SeedVessels(vesselsJsonInput);
                 }
-                await context.SaveChangesAsync();
+                catch (Exception ex)
+                {
+
+                    throw new ApplicationException("Vessels could not be saved properly into Data Base", ex);
+                }
+
             }
-            if (context.PortsOfCall.Count() == 0)
+            if (await repository.AllReadonly<PortOfCall>().CountAsync() == 0)
             {
-                string jsonString = File.ReadAllText("bin\\Debug\\net6.0\\DataSeeder\\DataImportSets\\PortsOfCall.json");
+                string jsonString = File.ReadAllText(GlobalConstants.PORTS_OF_CALL_SEEDING);
                 var portsJsonInput = JsonConvert.DeserializeObject<PortOfCall[]>(jsonString);
-                foreach (var port in portsJsonInput)
+
+                try
                 {
-                    var portOfCall = new PortOfCall()
-                    {
-                        Latitude = port.Latitude,
-                        Longitude = port.Longitude,
-                        Country = port.Country,
-                        PortName = port.PortName,
-                        UNLocode = port.UNLocode,
-                    };
-                    var randomNumberVessels = new Random().Next(1, 14);
-
-                    var vesselMinId = 1;
-                    var vesselMaxId = context.Vessels.Count() + 1;
-
-                    for (int i = 0; i < randomNumberVessels; i++)
-                    {
-                        var vesselRandomId = new Random().Next(vesselMinId, vesselMaxId);
-                        var vesselVisitedPort = await context.Vessels.FindAsync(vesselRandomId);
-                        if (vesselVisitedPort != null)
-                        {
-                            portOfCall.Vessels.Add(vesselVisitedPort);
-                            await context.PortsOfCall.AddAsync(portOfCall);
-
-                            if (vesselVisitedPort.PortsOfCall.Contains(portOfCall))
-                            {
-                                vesselVisitedPort.PortsOfCall.Add(portOfCall);
-                                context.Update<Vessel>(vesselVisitedPort);
-
-                            }
-
-                        }
-                    }
-                    await context.PortsOfCall.AddAsync(portOfCall);
-
-
+                    await seederService.SeedPortsOfCall(portsJsonInput);
                 }
-                await context.SaveChangesAsync();
+                catch (Exception ex)
+                {
+
+                    throw new ApplicationException("PortsOfCall could not be saved properly into Data Base", ex);
+                }
+
             }
-            if (context.CrewMembers.Count() == 0)
+            if (await repository.AllReadonly<CrewMember>().CountAsync() == 0)
             {
-                string jsonString = File.ReadAllText("bin\\Debug\\net6.0\\DataSeeder\\DataImportSets\\CrewMembers.json");
+                string jsonString = File.ReadAllText(GlobalConstants.CREW_MEMBERS_SEEDING);
                 var crewMembersJsonInput = JsonConvert.DeserializeObject<CrewMember[]>(jsonString);
-                foreach (var member in crewMembersJsonInput)
+
+                try
                 {
-                    var crewMember = new CrewMember()
-                    {
-                        Nationality = member.Nationality,
-                        FirstName = member.FirstName,
-                        LastName = member.LastName,
-                        Age = member.Age,
-                        IsPartOfACrew = member.IsPartOfACrew,
-                        VesselId = member.VesselId,
-                    };
-                    context.CrewMembers.Add(crewMember);
+                    await seederService.SeedCrewMembers(crewMembersJsonInput);
                 }
-                await context.SaveChangesAsync();
+                catch (Exception ex)
+                {
+
+                    throw new ApplicationException("CrewMembers could not be saved properly into Data Base", ex);
+                }
+
+            }
+            if (await repository.AllReadonly<DestinationPort>().CountAsync() == 0)
+            {
+                string jsonString = File.ReadAllText(GlobalConstants.DESTINATION_PORTS_SEEDING);
+                var destinationsJsonInput = JsonConvert.DeserializeObject<DestinationPort[]>(jsonString);
+
+                try
+                {
+                    await seederService.SeedDestinationPorts(destinationsJsonInput);
+                }
+                catch (Exception ex)
+                {
+
+                    throw new ApplicationException("DestinationPorts could not be saved properly into Data Base", ex);
+                }
 
             }
         }
-    }    
+    }
 }
 

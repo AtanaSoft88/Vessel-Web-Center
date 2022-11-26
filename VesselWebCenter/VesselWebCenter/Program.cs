@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VesselWebCenter.Data;
 using VesselWebCenter.Data.Constants;
+using VesselWebCenter.Data.DataSeeder.Contracts;
 using VesselWebCenter.Data.DataSeeder;
+using VesselWebCenter.Data.DataSeeder.DataSeedingServices;
 using VesselWebCenter.Data.Models.Accounts;
 using VesselWebCenter.Data.Repositories;
 using VesselWebCenter.Services;
@@ -49,13 +51,15 @@ builder.Services.AddScoped<IVesselDataService, VesselDataService>();
 builder.Services.AddScoped<ICrewService, CrewService>(); 
 builder.Services.AddScoped<IPortService, PortService>(); 
 builder.Services.AddScoped<IAccountSupportService, AccountSupportService>();
+builder.Services.AddScoped<ISeederService, SeederService>();
 
 var app = builder.Build();
 
 using (var serviceScope = app.Services.CreateScope())
 {
-    var dbContext = serviceScope.ServiceProvider.GetRequiredService<VesselAppDbContext>();    
-    await new DbApplicationSeeder().SeedDataBaseAsync(dbContext);
+    IRepository repository = serviceScope.ServiceProvider.GetRequiredService<IRepository>();
+    ISeederService seederService = serviceScope.ServiceProvider.GetRequiredService<ISeederService>();     
+    await new DbApplicationSeeder().SeedDataBaseAsync(repository, seederService);
 }
 
 if (app.Environment.IsDevelopment())

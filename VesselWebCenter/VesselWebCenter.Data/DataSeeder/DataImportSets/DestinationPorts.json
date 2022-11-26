@@ -1,0 +1,66 @@
+[
+  {
+    "PortName": "Mariupol",
+    "UNLocode": "UAMPW",
+    "Latitude": "47.03 N",
+    "Longitude": "37.30 E",
+    "Country": "Ukraine"
+  },
+  {
+    "PortName": "Ochakov",
+    "UNLocode": "UAOCHW",
+    "Latitude": "46.59 N",
+    "Longitude": "31.58 E",
+    "Country": "Ukraine"
+  },
+  {
+    "PortName": "Sevastopol",
+    "UNLocode": "UASVP",
+    "Latitude": "44.35 N",
+    "Longitude": "33.30 E",
+    "Country": "Ukraine"
+  },
+  {
+    "PortName": "Theodosia",
+    "UNLocode": "UATEVP",
+    "Latitude": "45.01 N",
+    "Longitude": "35.23 E",
+    "Country": "Ukraine"
+  },
+  {
+    "PortName": "Istanbul",
+    "UNLocode": "TRIST",
+    "Latitude": "41.01 N",
+    "Longitude": "28.59 E",
+    "Country": "Turkey"
+  }, 
+  {
+    "PortName": "Bandirma",
+    "UNLocode": "TRBDM-0005",
+    "Latitude": "40.20 N",
+    "Longitude": "27.57 E",
+    "Country": "Turkey"
+  },
+  {
+    "PortName": "Eregli",
+    "UNLocode": "TRERE",
+    "Latitude": "41.16 N",
+    "Longitude": "31.24 E",
+    "Country": "Turkey"
+  },
+  {
+    "PortName": "Port Said",
+    "UNLocode": "EGPSD",
+    "Latitude": "31.15 N",
+    "Longitude": "32.18 E",
+    "Country": "Egypt"
+  },
+  {
+    "PortName": "Damietta",
+    "UNLocode": "EGDAM",
+    "Latitude": "31.27 N",
+    "Longitude": "31.44 E",
+    "Country": "Egypt"
+  }
+
+]

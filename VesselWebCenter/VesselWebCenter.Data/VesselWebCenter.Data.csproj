@@ -30,6 +30,9 @@
     <None Update="DataSeeder\DataImportSets\CrewMembers.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="DataSeeder\DataImportSets\DestinationPorts.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="DataSeeder\DataImportSets\PortsOfCall.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
