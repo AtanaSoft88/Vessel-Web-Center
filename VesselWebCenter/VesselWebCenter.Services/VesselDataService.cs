@@ -24,7 +24,7 @@ namespace VesselWebCenter.Services
         }
         public async Task<SingleVesselViewModel> GetChoosenVessel(int idVessel)
         {
-            return await repo.AllReadonly<Vessel>().Select(x => new SingleVesselViewModel
+            return await repo.AllReadonly<Vessel>().Where(x=>x.Id==idVessel).Select(x => new SingleVesselViewModel
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -37,15 +37,14 @@ namespace VesselWebCenter.Services
                 CargoTypeOnBoard = x.CargoTypeOnBoard ?? "Unavailable",
                 CrewMembersOnBoard = x.CrewMembers.Count(),
                 ManningCompanyName = x.ManningCompany.Name,
-                PortsOfCall = x.PortsOfCall.ToList(),
-                
-            }).FirstAsync(x=>x.Id==idVessel);       
-                        
+                PortsOfCall = x.PortsOfCall.ToList(),                
+            }).FirstAsync();     
+                  
         }
 
-        public async Task<IQueryable<VesselsViewModel>> GetAll()
+        public IQueryable<VesselsViewModel> GetAll()
         {
-            return repo.AllReadonly<Vessel>().Select(x => new VesselsViewModel
+            var allVessels = repo.AllReadonly<Vessel>().Select(x => new VesselsViewModel
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -55,6 +54,7 @@ namespace VesselWebCenter.Services
                 VesselType = x.VesselType,
                 PortsOfCall = x.PortsOfCall.ToList(),
             });
+            return allVessels.AsNoTracking();
              
         }
 
