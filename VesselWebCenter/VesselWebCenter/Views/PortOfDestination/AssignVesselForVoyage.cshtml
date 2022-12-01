@@ -4,56 +4,59 @@
 }
 <h2>@ViewData["Title"]</h2>
 
-<form method="get">
-	<table class="table table-striped table-hover table-bordered border-success table-sm w-50">
-		<thead>
-			<tr class="bg-success shadow-lg text-warning">
-
-				<td class="bg-body" align="center">Vessel Name</td>
-				<td class="bg-body" align="center">Vessel Type</td>
-				<td class="bg-body" align="center">Last Port Name</td>
-				<td class="bg-body" align="center">Last Port of Call Lat/Long</td>
-				<td class="bg-body" align="center">Select Vessel for Voyage</td>
-
-			</tr>
-		</thead>
-		<tbody class="table-hover">
-			@foreach (var vsl in Model)
-			{
-				<tr>
-					<td>@vsl.VesselName</td>
-					<td>@vsl.VesselType</td>
-					<td>
-						@vsl.LastPortName
-					</td>
-					<td>
-						Latitude: @(
-						vsl.LatitudeLastPort
-						)<br>
-						Longitude: @(
-					vsl.LongitudeLastPort
-					)
-					</td>
-
-
-					<td>
-						<button formmethod="post" disabled id="btn+@(vsl.VesselId)" class="btn-sm btn-success rounded-circle btn-outline-dark"
-							asp-action="AssignVesselForVoyage" asp-controller="PortOfDestination"
-							asp-route-vesselParams="@(vsl.VesselId +" "+ vsl.LatitudeLastPort +" "+ vsl.LongitudeLastPort)">
-							Select
-						</button>
-						<input type="checkbox" onchange="document.getElementById('btn+@(vsl.VesselId)').disabled = !this.checked;"
-						name="progress" id="progress+@vsl.VesselId" value="@vsl.VesselId" tabIndex="@vsl.VesselId" onClick="ckChange(this)">
-
-					</td>
-
+<div class="card-body bg-success bg-opacity-25 rounded-3 shadow-lg">
+	<form method="get">
+		<table class="table border-secondary table-bordered border-5 table-striped table-hover form-control-sm w-75 bg-success bg-opacity-25">
+			<thead>
+				<tr class="bg-info shadow-lg text-dark border-secondary border-3">
+					<td align="center">Vessel Name</td>
+					<td align="center">Vessel Type</td>
+					<td align="center">Last Port Name</td>
+					<td align="center">Last Port of Call Lat/Long</td>
+					<td align="center">Select Vessel for Voyage</td>
 				</tr>
+			</thead>
+			<tbody>
+				@foreach (var vsl in Model)
+				{
+					<tr>
+						<td>@vsl.VesselName</td>
+						<td>@vsl.VesselType</td>
+						<td>
+							@vsl.LastPortName
+						</td>
+						<td>
+							Latitude: @(
+							vsl.LatitudeLastPort
+							)<br>
+							Longitude: @(
+						vsl.LongitudeLastPort
+						)
+						</td>
 
-			}
-		</tbody>
-	</table>
 
-</form>
+						<td>
+							<div class="text-center">
+								<button formmethod="post" disabled id="btn+@(vsl.VesselId)" class="btn btn-primary btn-outline-dark bg-opacity-75 rounded-pill"
+									asp-action="AssignVesselForVoyage" asp-controller="PortOfDestination"
+									asp-route-vesselParams="@(vsl.VesselId +" "+ vsl.LatitudeLastPort +" "+ vsl.LongitudeLastPort)">
+									Select
+								</button>
+								<input class="form-check-input bg-dark bg-opacity-75" type="checkbox" onchange="document.getElementById('btn+@(vsl.VesselId)').disabled = !this.checked;"
+								   name="progress" id="progress+@vsl.VesselId" value="@vsl.VesselId" tabIndex="@vsl.VesselId" onClick="ckChange(this)">
+							</div>
+
+
+						</td>
+
+					</tr>
+
+				}
+			</tbody>
+		</table>
+
+	</form>
+</div>
 
 <script src="~/js/MyCheckBox.js" asp-append-version="true"></script>
 
