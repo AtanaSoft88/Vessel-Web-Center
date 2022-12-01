@@ -52,6 +52,7 @@ namespace VesselWebCenter.Services
                 Breadth = x.BreadthMax,
                 LOA = x.LengthOverall,
                 VesselType = x.VesselType,
+                VesselAvailableForVoyage = x.CrewMembers.Count()>=15? true : false,
                 PortsOfCall = x.PortsOfCall.ToList(),
             });
             return allVessels.AsNoTracking();

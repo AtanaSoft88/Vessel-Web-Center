@@ -14,6 +14,8 @@ namespace VesselWebCenter.Services.ViewModels
 
         public int LOA { get; set; }
         public int Breadth { get; set; }
+
+        public bool VesselAvailableForVoyage { get; set; } = false;
         public List<PortOfCall>? PortsOfCall { get; set; }
     }
 }
