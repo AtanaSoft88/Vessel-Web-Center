@@ -39,6 +39,10 @@
 							<li class="my-re nav-item m-1">
 								<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="" asp-controller="Crew" asp-action="AddCrewMemberAsUnassigned">✯Register a crew member</a>
 							</li>
+
+							<li class="my-re nav-item m-1">
+								<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="" asp-controller="PortOfDestination" asp-action="AssignVesselForVoyage">✯Voyage Planner</a>
+							</li>
 						}
 						@if ((await AuthorizationService.AuthorizeAsync(User, "myFullPermissionPolicy")).Succeeded)
 						{

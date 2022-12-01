@@ -1,0 +1,56 @@
+﻿@model DestinationViewModel
+@{
+	ViewData["Title"] = "Voyage Planning";
+	int index = 0;
+}
+<h2>@ViewData["Title"]</h2>
+
+<form method="post" class="rounded-pill card-body bg-success bg-opacity-50">
+	<table class="table-responsive-md rounded-pill table-hover table-bordered border-warning table-sm w-75">
+		<thead class="">
+			<tr>
+				<td class="bg-primary" align="center">Vessel Name</td>
+				<td class="bg-primary" align="center">Vessel Type</td>
+				<td class="bg-primary" align="center">Last Port of Call Lat</td>
+				<td class="bg-primary" align="center">Last Port of Call Long</td>
+				<td class="bg-primary" align="center">Select Destination for Voyage</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					@Model.VesselName
+				</td>
+				<td>
+					@Model.VesselType
+				</td>
+				<td>
+					Lat Last Port: @Model.LastPortLatitude
+				</td>
+				<td>
+					Long Last Port: @Model.LastPortLongitude
+				</td>
+				<td>
+					<select id="field1" asp-for="@Model.DestinationId">
+						
+						@foreach (var item in Model.DestinationPorts)
+						{							
+							<option value="@item.Text Lat: @Model.LastPortLatitude Long: @Model.LastPortLongitude ">@item.Text</option>
+						}
+					</select>				
+
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+<form method="post">
+	<div>
+		<input id="field2" name="value" type="hidden" />
+		<input onclick="myDestination()" asp-action="CollectVoyageInformation" asp-controller="PortOfDestination" type="submit" class="btn btn-warning btn-outline-primary">
+	</div>
+</form>
+
+<script src="~/js/selectDestination.js" asp-append-version="true"></script>
+
+
