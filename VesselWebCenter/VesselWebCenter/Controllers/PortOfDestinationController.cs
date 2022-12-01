@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using VesselWebCenter.Data.Constants;
 using VesselWebCenter.Services.Contracts;
 using VesselWebCenter.Services.ViewModels;
 
@@ -15,7 +16,7 @@ namespace VesselWebCenter.Controllers
             this.service = _service;
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles =RoleConstants.USER_OWNER)]
         [HttpGet]
         public async Task<IActionResult> AssignVesselForVoyage()
         {
@@ -24,7 +25,7 @@ namespace VesselWebCenter.Controllers
             return View(model);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = RoleConstants.USER_OWNER)]
         [HttpPost]
         public async Task<IActionResult> AssignVesselForVoyage(string vesselParams)
         {
@@ -37,7 +38,7 @@ namespace VesselWebCenter.Controllers
             return RedirectToAction(nameof(ChooseDestinationForCurrentVessel), new { vesselParams });
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = RoleConstants.USER_OWNER)]
         [HttpGet]
         public async Task<IActionResult> ChooseDestinationForCurrentVessel(string vesselParams)
         {
@@ -46,7 +47,7 @@ namespace VesselWebCenter.Controllers
         }
 
 
-        [AllowAnonymous]
+        [Authorize(Roles = RoleConstants.USER_OWNER)]
         [HttpPost]
         public async Task<IActionResult> CollectVoyageInformation(string value)
         {
@@ -62,9 +63,10 @@ namespace VesselWebCenter.Controllers
             return RedirectToAction(nameof(ProcessVoyageDetails), new {portName, destPortLat, destPortLong, lastPortLat, lastPortLong, destCountry, destUNLocode });
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = RoleConstants.USER_OWNER)]
         [HttpGet]
-        public async Task<IActionResult> ProcessVoyageDetails(string portName, string destPortLat, string destPortLong, string lastPortLat, string lastPortLong, string destCountry, string destUNLocode)
+        public async Task<IActionResult> ProcessVoyageDetails(string portName, string destPortLat, string destPortLong,
+            string lastPortLat, string lastPortLong, string destCountry, string destUNLocode)
         {
             var model = new VoyageDataViewModel()
             {

@@ -69,15 +69,13 @@ namespace VesselWebCenter.Services
                                    .Replace("Lat: ", "")
                                    .Replace(" N Long: ", " ")
                                    .Replace(" E ", " ")
-                                   .Replace(" N ", " ")
-                                   //.Replace(" W", "")
-                                   //.Replace(" E", "")
+                                   .Replace(" N ", " ")                                   
                                    .Replace(" Country: "," ")
                                    .Replace(" Locode: ", " ");
             var portName = parameters.Substring(indexDestPortName + 1, parameters.Length - (parameters.Length - index + 7));
             var destPortLat = resultValue.Split(" ")[0];
             var destPortLong = resultValue.Split(" ")[1];
-            var lastPortLat = resultValue.Split(" ")[4]; // ok here
+            var lastPortLat = resultValue.Split(" ")[4]; 
             var lastPortLong = resultValue.Split(" ")[5];
             var destCountry = resultValue.Split(" ")[2];
             var destUNLocode = resultValue.Split(" ")[3];
