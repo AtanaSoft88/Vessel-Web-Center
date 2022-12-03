@@ -1,0 +1,60 @@
+﻿@model VoyageDataViewModel
+@{
+	ViewData["Title"] = "Voyage Estimated Details";
+}
+<h2>@ViewData["Title"]</h2>
+<div class="form-control-sm card-header-pills card-body">
+	<table class=" table table-responsive border-success bs-popover-bottom">
+		<thead>
+			<tr>
+				<th>
+					⎈ Last Port
+				</th>
+				<th>
+					⎈ Destination Port
+				</th>
+				<th>
+					⎈ Sailing duration
+				</th>
+				<th>
+					⎈ Total Distance sailed
+				</th>
+				<th>
+					⎈ Departure Time
+				</th>
+				<th>
+					⎈ ETA
+				</th>
+				<th>
+					⎈ Speed ⫷ In knots⫸
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td> @Model.LastPortName / @Model.LastPortCountry</td>
+
+				<td> @Model.DestPortName / @Model.Country</td>
+
+				<td> @((Model.CalculatedTime / 24.0).ToString("f2")) days</td>
+
+				<td> @Model.CalculatedDistance.ToString("f2") nm</td>
+
+				<td> @Model.DepartureTime.ToString("dd.MM.yyyy HH:MM") </td>
+
+				<td> @Model.ETA.Value.ToString("dd.MM.yyyy HH:MM")</td>
+
+				<td> @Model.ExpectedSpeed</td>
+			</tr>
+		</tbody>
+
+	</table>
+</div>
+<form method="post">
+	<input id="field1" type="hidden" value="@Model.DestinationId" />
+	<input id="field2" type="submit" name="destinationId" value="Start Voyage" onclick="myDestination()"  asp-action="SetVesselNewDestination" asp-controller="PortOfDestination" asp-route-vslId="@Model.VesselId" />
+</form>
+
+@section Scripts {	
+	<script src="~/js/selectDestination.js" asp-append-version="true"></script>
+}

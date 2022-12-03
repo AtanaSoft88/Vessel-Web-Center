@@ -16,7 +16,7 @@ namespace VesselWebCenter.Services
         {
             this.repo = _repo;
         }
-        public async Task<IEnumerable<VesselAssignViewModel>> GetAllAvaliableForVoyage()
+        public async Task<IEnumerable<VesselAssignViewModel>> GetAllAvailableForVoyage()
         {
             var vessels = await repo.AllReadonly<Vessel>().Where(x => x.CrewMembers.Count() >= 15).Select(x => new VesselAssignViewModel
             {
@@ -26,13 +26,14 @@ namespace VesselWebCenter.Services
                 LatitudeLastPort = x.PortsOfCall.OrderByDescending(x => x.Id).Select(x => x.Latitude).First(),
                 LongitudeLastPort = x.PortsOfCall.OrderByDescending(x => x.Id).Select(x => x.Longitude).First(),
                 LastPortName = x.PortsOfCall.OrderByDescending(x => x.Id).Select(x => x.PortName).First(),
+                LastPortCountry = x.PortsOfCall.OrderByDescending(x => x.Id).Select(x => x.Country).First(),
             }).ToListAsync();
             return vessels;
         }
 
-        public async Task<DestinationViewModel> GetDestinationPorts(string vesselId)
+        public async Task<DestinationViewModel> GetDestinationPorts(string vesselParams)
         {
-            var vslId = int.Parse(vesselId.Split(" ")[0]);            
+            var vslId = int.Parse(vesselParams.Split(" ")[0]);            
             
             var destinationListItems = repo.AllReadonly<DestinationPort>().Select(x => new SelectListItem 
             { 
@@ -42,23 +43,29 @@ namespace VesselWebCenter.Services
             var vessel = await repo.AllReadonly<Vessel>().Include(x=>x.PortsOfCall).Where(x=>x.Id==vslId).FirstOrDefaultAsync();
             var latLP = vessel.PortsOfCall.Select(x=>x.Latitude).Last();
             var lonLP = vessel.PortsOfCall.Select(x=>x.Longitude).Last();
+            var lastPortName = vessel.PortsOfCall.Select(x=>x.PortName).Last();
+            var countryLP = vessel.PortsOfCall.Select(x=>x.Country).Last();
 
-            var destPorts = await repo.AllReadonly<DestinationPort>().Include(x=>x.Vessels).ThenInclude(x=>x.PortsOfCall).Select(x => new DestinationViewModel
-            {     
+            var modelResult = await repo.AllReadonly<DestinationPort>().Include(x=>x.Vessels).ThenInclude(x=>x.PortsOfCall).Select(x => new DestinationViewModel
+            {
+                VesselId = vslId,
                 DestinationId = x.Id,
+                VesselImage = vessel.VesselImageUrl,
                 VesselName = vessel.Name,                
                 VesselType = vessel.VesselType.ToString(),
                 LastPortLatitude = latLP,
                 LastPortLongitude = lonLP,
-                Country = x.Country,
+                LastPortName = lastPortName,
+                LastPortCountry = countryLP,                
+                DestinationPortCountry = x.Country,
                 UNLocode = x.UNLocode,
                 DestinationPortLatitude = x.Latitude,
-                DestinationPortLongitude = x.Longitude,
+                DestinationPortLongitude = x.Longitude,               
                 DestinationPorts = destinationListItems.ToList(),
                 
             }).FirstOrDefaultAsync();
             
-            return destPorts;
+            return modelResult;
         }
 
         public async Task<IEnumerable<string>> GetCoordinates(string parameters)
@@ -80,6 +87,57 @@ namespace VesselWebCenter.Services
             var destCountry = resultValue.Split(" ")[2];
             var destUNLocode = resultValue.Split(" ")[3];
             return new List<string>() { portName, destPortLat, destPortLong, lastPortLat, lastPortLong, destCountry, destUNLocode };
+        }
+
+        public async Task<VoyageDataViewModel> GetDataForCalculation(IEnumerable<string> extractedCoordinates, int spd, int vslId)
+        {
+            var portName = extractedCoordinates.ToList()[0];
+            var destPortLat = extractedCoordinates.ToList()[1];
+            var destPortLong = extractedCoordinates.ToList()[2];
+            var lastPortLat = extractedCoordinates.ToList()[3];
+            var lastPortLong = extractedCoordinates.ToList()[4];
+            var destCountry = extractedCoordinates.ToList()[5];
+            var destUNLocode = extractedCoordinates.ToList()[6];
+
+            var destinationId = await repo.AllReadonly<DestinationPort>().Where(x=>x.PortName==portName).Select(x => x.Id).FirstOrDefaultAsync(); 
+            var currentVessel = await repo.AllReadonly<Vessel>().Include(x => x.PortsOfCall).Where(x => x.Id == vslId).FirstOrDefaultAsync();
+            var lastPortName = currentVessel.PortsOfCall.Select(x => x.PortName).Last();
+            var lastPortCountry = currentVessel.PortsOfCall.Select(x => x.Country).Last();
+            var model = new VoyageDataViewModel() 
+            {   
+                DestinationId=destinationId,
+                VesselId = vslId,
+                LastPortLat = lastPortLat,
+                LastPortLong = lastPortLong,
+                LastPortName = lastPortName,
+                LastPortCountry = lastPortCountry,
+                DestPortLat = destPortLat,
+                DestPortLong = destPortLong,
+                DestPortName = portName,
+                Country = destCountry,
+                UNLocode = destUNLocode,
+                ExpectedSpeed = spd,
+                CalculatedDistance = GetDistanceBetweenPorts(double.Parse(lastPortLat), double.Parse(lastPortLong), 
+                                                             double.Parse(destPortLat), double.Parse(destPortLong)),                
+            };
+            return model;
+        }
+
+        private double GetDistanceBetweenPorts(double lastPortLat, double lastPortLong, double destPortLat, double destPortLong)
+        {
+            var baseRad = Math.PI * lastPortLat / 180.0;
+            var targetRad = Math.PI * destPortLat / 180.0;
+            var theta = lastPortLong - destPortLong;
+            var thetaRad = Math.PI * theta / 180.0;
+
+            double dist =
+                Math.Sin(baseRad) * Math.Sin(targetRad) + Math.Cos(baseRad) *
+                Math.Cos(targetRad) * Math.Cos(thetaRad);
+            dist = Math.Acos(dist);
+
+            dist = dist * 180.0 / Math.PI;
+            dist = dist * 60.0 * 1.1515;
+            return dist;
         }
     }
 }

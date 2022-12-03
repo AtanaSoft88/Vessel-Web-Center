@@ -3,21 +3,27 @@
 	ViewData["Title"] = "Voyage Planning";
 }
 <h2>@ViewData["Title"]</h2>
-
-<div class="card-body bg-success bg-opacity-25 rounded-3 shadow-lg">
+<hr />
+<div class="table-responsive card-body bg-success bg-opacity-25 rounded-3 shadow-lg">
 	<form method="post">
-		<table class="bg-success bg-opacity-25 text-dark text-md-center table-hover table-bordered border-secondary w-75">
-			<thead>
+		<table class="table table-responsive border-secondary table-bordered border-5 table-striped table-hover bg-success bg-opacity-25 ">
+			<thead >
 				<tr class="bg-info border-darkborder-3">
-					<td align="center">Vessel Name</td>
-					<td align="center">Vessel Type</td>
-					<td align="center">Last Port of Call Lat</td>
-					<td align="center">Last Port of Call Long</td>
-					<td align="center">Select Destination for Voyage</td>
+					<th align="center">Vessel Image</th>
+					<th style="width:10%" align="center">Vessel Name</th>
+					<th style="width:10%" align="center">Vessel Type</th>
+					<th style="width:20%" align="center">Last Port</th>
+					<th style="width:10%" align="center">Last Port Latitude</th>
+					<th style="width:10%" align="center">Last Port Longitude</th>
+					<th style="width:40%" align="center">Select Destination for Voyage</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
+					<td>
+						<img class="card-img-top" style="width: 8rem; height:4rem"
+							 src="@Model.VesselImage" alt="Vessel Type">
+					</td>
 					<td>
 						@Model.VesselName
 					</td>
@@ -25,17 +31,21 @@
 						@Model.VesselType
 					</td>
 					<td>
-						Latitude: @Model.LastPortLatitude
+						@Model.LastPortName / @Model.LastPortCountry
 					</td>
 					<td>
-						Longitude: @Model.LastPortLongitude
+						@Model.LastPortLatitude
+					</td>
+					<td>
+						@Model.LastPortLongitude
 					</td>
 					<td>
 						<select id="field1" asp-for="@Model.DestinationId">
 
 							@foreach (var item in Model.DestinationPorts)
 							{
-								<option class="bg-info bg-opacity-25" value="@item.Text Lat: @Model.LastPortLatitude Long: @Model.LastPortLongitude ">@item.Text</option>
+								<option class="bg-info bg-opacity-25" value="@item.Text Lat: @Model.LastPortLatitude Long: @Model.LastPortLongitude @Model.DestinationId ">@item.Text</option>
+								
 							}
 						</select>
 
@@ -43,15 +53,25 @@
 				</tr>
 			</tbody>
 		</table>
-	</form>
-	<form method="post">
-		<div>
-			<input id="field2" name="value" type="hidden" />
-			<input onclick="myDestination()" asp-action="CollectVoyageInformation" asp-controller="PortOfDestination" type="submit" class="btn-lg rounded-pill btn-warning btn-outline-success">
-		</div>
-	</form>
+	
+		<div>			
+			<div
+				asp-validation-summary="All" class="text-danger">
+			</div>
+			<label
+				asp-for="@Model.ExpectedSpeed">Vessel's Expected average speed (In knots)
+			</label>
+			<input asp-for="@Model.ExpectedSpeed" type="number" name="spd" />
+			<input id="field2" name="value" type="hidden"/>			
+			<input onclick="myDestination()" asp-action="ChooseDestinationForCurrentVessel" asp-controller="PortOfDestination"
+				   type="submit" class="btn-lg rounded-pill btn-warning btn-outline-success" asp-route-vslId="@Model.VesselId">
+		</div>		
+	</form>		
 </div>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+	<script src="~/js/selectDestination.js" asp-append-version="true"></script>
+}
 
-<script src="~/js/selectDestination.js" asp-append-version="true"></script>
 
 

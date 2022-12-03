@@ -3,17 +3,17 @@
 	ViewData["Title"] = "Choose a Vessel for International Voyage";
 }
 <h2>@ViewData["Title"]</h2>
-
-<div class="card-body bg-success bg-opacity-25 rounded-3 shadow-lg">
-	<form method="get">
-		<table class="table border-secondary table-bordered border-5 table-striped table-hover form-control-sm w-75 bg-success bg-opacity-25">
+<hr class="w-75" />
+<div class="table-responsive card-body bg-success bg-opacity-25 rounded-3 shadow-lg col-8">
+	<form method="post">
+		<table class="table border-secondary table-bordered border-5 table-striped table-hover form-control-sm w-100 bg-success bg-opacity-25">
 			<thead>
 				<tr class="bg-info shadow-lg text-dark border-secondary border-3">
-					<td align="center">Vessel Name</td>
-					<td align="center">Vessel Type</td>
-					<td align="center">Last Port Name</td>
-					<td align="center">Last Port of Call Lat/Long</td>
-					<td align="center">Select Vessel for Voyage</td>
+					<th align="center">Vessel Name</th>
+					<th align="center">Vessel Type</th>
+					<th align="center">Last Port Name</th>
+					<th align="center">Last Port of Call Lat/Long</th>
+					<th align="center">Select Vessel for Voyage</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,7 +23,7 @@
 						<td>@vsl.VesselName</td>
 						<td>@vsl.VesselType</td>
 						<td>
-							@vsl.LastPortName
+							@vsl.LastPortName / @vsl.LastPortCountry
 						</td>
 						<td>
 							Latitude: @(
@@ -37,7 +37,7 @@
 
 						<td>
 							<div class="text-center">
-								<button formmethod="post" disabled id="btn+@(vsl.VesselId)" class="btn btn-primary btn-outline-dark bg-opacity-75 rounded-pill"
+								<button disabled id="btn+@(vsl.VesselId)" class="btn btn-primary btn-outline-dark bg-opacity-75 rounded-pill"
 									asp-action="AssignVesselForVoyage" asp-controller="PortOfDestination"
 									asp-route-vesselParams="@(vsl.VesselId +" "+ vsl.LatitudeLastPort +" "+ vsl.LongitudeLastPort)">
 									Select
@@ -58,7 +58,9 @@
 	</form>
 </div>
 
-<script src="~/js/MyCheckBox.js" asp-append-version="true"></script>
+@section Scripts{
+	<script src="~/js/MyCheckBox.js" asp-append-version="true"></script>
+}
 
 
 

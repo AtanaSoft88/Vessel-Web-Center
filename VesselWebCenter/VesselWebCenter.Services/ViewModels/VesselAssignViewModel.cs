@@ -9,6 +9,7 @@ namespace VesselWebCenter.Services.ViewModels
 		public string VesselName { get; set; }
 		public string VesselType { get; set; }
 		public string LastPortName { get; set; }
+		public string LastPortCountry { get; set; }
 		public string LatitudeLastPort { get; set; }
 		public string LongitudeLastPort { get; set; }	
 

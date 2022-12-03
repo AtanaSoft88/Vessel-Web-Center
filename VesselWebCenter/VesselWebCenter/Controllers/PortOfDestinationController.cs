@@ -7,6 +7,7 @@ using VesselWebCenter.Services.ViewModels;
 
 namespace VesselWebCenter.Controllers
 {
+    [Authorize(Roles = RoleConstants.USER_OWNER)]
     public class PortOfDestinationController : BaseController
     {
         private readonly IPortOfDestinationService service;
@@ -15,17 +16,16 @@ namespace VesselWebCenter.Controllers
         {
             this.service = _service;
         }
-
-        [Authorize(Roles =RoleConstants.USER_OWNER)]
+        
         [HttpGet]
         public async Task<IActionResult> AssignVesselForVoyage()
         {
-            var model = await service.GetAllAvaliableForVoyage();
+            var model = await service.GetAllAvailableForVoyage();
 
             return View(model);
         }
 
-        [Authorize(Roles = RoleConstants.USER_OWNER)]
+       
         [HttpPost]
         public async Task<IActionResult> AssignVesselForVoyage(string vesselParams)
         {
@@ -37,49 +37,51 @@ namespace VesselWebCenter.Controllers
 
             return RedirectToAction(nameof(ChooseDestinationForCurrentVessel), new { vesselParams });
         }
-
-        [Authorize(Roles = RoleConstants.USER_OWNER)]
+                
         [HttpGet]
         public async Task<IActionResult> ChooseDestinationForCurrentVessel(string vesselParams)
         {
-            var model = await service.GetDestinationPorts(vesselParams);
-            return View(model);
-        }
-
-
-        [Authorize(Roles = RoleConstants.USER_OWNER)]
-        [HttpPost]
-        public async Task<IActionResult> CollectVoyageInformation(string value)
-        {
-            var extractedCoordinates = await service.GetCoordinates(value);
-            var portName = extractedCoordinates.ToList()[0];
-            var destPortLat = extractedCoordinates.ToList()[1];
-            var destPortLong = extractedCoordinates.ToList()[2];
-            var lastPortLat = extractedCoordinates.ToList()[3];
-            var lastPortLong = extractedCoordinates.ToList()[4];
-            var destCountry = extractedCoordinates.ToList()[5];
-            var destUNLocode = extractedCoordinates.ToList()[6];
-           
-            return RedirectToAction(nameof(ProcessVoyageDetails), new {portName, destPortLat, destPortLong, lastPortLat, lastPortLong, destCountry, destUNLocode });
-        }
-
-        [Authorize(Roles = RoleConstants.USER_OWNER)]
-        [HttpGet]
-        public async Task<IActionResult> ProcessVoyageDetails(string portName, string destPortLat, string destPortLong,
-            string lastPortLat, string lastPortLong, string destCountry, string destUNLocode)
-        {
-            var model = new VoyageDataViewModel()
+            try
             {
-                DestPortName = portName,
-                LastPortLat = lastPortLat,
-                LastPortLong = lastPortLong,
-                DestPortLat = destPortLat,
-                DestPortLong = destPortLong,
-                Country = destCountry,
-                UNLocode = destUNLocode
-            };
+                var model = await service.GetDestinationPorts(vesselParams);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+
+                throw new ArgumentException("Error occurred on attempt to pass 'vesselParameters' and return correctly filled model", ex);
+            }
+        }
+                
+        [HttpPost]
+        public async Task<IActionResult> ChooseDestinationForCurrentVessel(string value, int spd, int vslId)
+        {
+            try
+            {
+                var extractedCoordinates = await service.GetCoordinates(value);                                
+                return RedirectToAction(nameof(ProcessVoyageDetails), new { extractedCoordinates, spd, vslId });
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Error occurred on attempt to set last port and destination port parameters",ex);
+               
+            }        
+                        
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> ProcessVoyageDetails(IEnumerable<string> extractedCoordinates,int spd,int vslId)
+        {
+            var model = await service.GetDataForCalculation(extractedCoordinates,spd, vslId);
+            
             return View(model);
 
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> SetVesselNewDestination(int vslId, int destinationId) 
+        { 
+            return View();
         }
     }
 }

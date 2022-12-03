@@ -11,8 +11,9 @@ namespace VesselWebCenter.Services.Contracts
 {
 	public interface IPortOfDestinationService
 	{
-        Task<IEnumerable<VesselAssignViewModel>> GetAllAvaliableForVoyage();
+        Task<IEnumerable<VesselAssignViewModel>> GetAllAvailableForVoyage();
         Task<IEnumerable<string>> GetCoordinates(string parameters);
         Task<DestinationViewModel> GetDestinationPorts(string vesselId);
+        Task<VoyageDataViewModel> GetDataForCalculation(IEnumerable<string> extractedCoordinates, int spd, int VesselId);
     }
 }
