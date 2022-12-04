@@ -214,7 +214,7 @@ namespace VesselWebCenter.Controllers
             if (User.IsInRole(RoleConstants.ADMINISTRATOR) && User.IsInRole(RoleConstants.MANAGER)
                                                            && User?.Identity?.Name == account.EmailAddress)
             {                
-                return RedirectToAction("UserMessages", "Account");
+                return RedirectToAction(nameof(UserMessages), "Account");
             }
             var currentUserToDelete = userManager.Users.FirstOrDefault(x => x.Email == account.EmailAddress);
             if ((!userManager.Users.Any(x => x.Email == account.EmailAddress)) || currentUserToDelete.IsDeleted == true)
@@ -226,7 +226,7 @@ namespace VesselWebCenter.Controllers
             await accountSupportService.DeleteUserAccount(account);
             TempData["delUser"] = userManager.Users.Where(x => x.Email == account.EmailAddress).FirstOrDefault()?.FirstName;
             TempData["delEmail"] = userManager.Users.Where(x => x.Email == account.EmailAddress).FirstOrDefault()?.Email;
-            return RedirectToAction("UserMessages", "Account");
+            return RedirectToAction(nameof(UserMessages), "Account");
         }
         
         /// <summary>
@@ -256,7 +256,7 @@ namespace VesselWebCenter.Controllers
             }
             await accountSupportService.GetUserAccountRecovered(account);
             TempData["recoverMsg"] = "recover";
-            return RedirectToAction("UserMessages", "Account");            
+            return RedirectToAction(nameof(UserMessages), "Account");            
         }   
 
             /// <summary>
