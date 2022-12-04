@@ -6,19 +6,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 </head>
-<body>
+<body>	
 	<div id="mySidenav" class="sidenav">
+		<h4 class="text-dark"><strong>⚝✯✯𝕄𝔼ℕ𝕌✯✯⚝</strong></h4>
+		<h4 class="text-secondary"> ‿‿‿‿‿‿‿‿</h4>
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">⌫</a>
-		<a asp-controller="Port" asp-action="MostVisitedPorts" class="btn-outline-dark">⚝Most Visited Ports</a>
-		<a class="btn-outline-dark" href="#">⚝Services</a>
-		<a class="btn-outline-dark" href="#">⚝Clients</a>
+		<a asp-controller="Crew" asp-action="GetAllCrewMembers" class="btn-outline-dark">⚝About Crew</a>		
+		<a asp-controller="Port" asp-action="MostVisitedPorts" class="btn-outline-dark">⚝Ports</a>		
 		<a class="btn-outline-dark" href="#">⚝Contact</a>		
-
+		
 	</div>
 	
 	<p class="txtSidebar">➲ Navigational Side menu ⤵⤵⤵</p>	
-	<button class="button sidebarPsn-Btn btn-outline-light badge" onclick="openNav()" style="vertical-align:middle"><span>⚝pen side menu⫸ </span></button>
+	<button class="button sidebarPsn-Btn btn-outline-light badge" onclick="openNav()" style="vertical-align:middle"><span>⚝pen side menu⫸ </span></button>	
 	
-	<script src="~/js/sidebar.js"></script>
 </body>
-</html> 
+</html>
+<script src="~/js/sidebar.js"></script>
