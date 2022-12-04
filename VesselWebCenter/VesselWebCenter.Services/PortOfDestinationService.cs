@@ -97,7 +97,7 @@ namespace VesselWebCenter.Services
             return new List<string>() { portName, destPortLat, destPortLong, lastPortLat, lastPortLong, destCountry, destUNLocode };
         }
 
-        public async Task<VoyageDataViewModel> GetDataForCalculation(IEnumerable<string> extractedCoordinates, int spd, int vslId)
+        public async Task<VoyageDataViewModel> GetDataForCalculation(IEnumerable<string> extractedCoordinates, double spd, int vslId)
         {
             var portName = extractedCoordinates.ToList()[0];
             var destPortLat = extractedCoordinates.ToList()[1];

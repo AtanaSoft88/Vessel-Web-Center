@@ -22,7 +22,7 @@ namespace VesselWebCenter.Services.ViewModels
         public string UNLocode { get; set; } = null!;
         [Required]
         [Range(1,18,ErrorMessage ="Vessel's speed must be between 1 and 18 knots!")]
-        public int ExpectedSpeed { get; set; }
+        public double ExpectedSpeed { get; set; }
         public IEnumerable<SelectListItem> DestinationPorts { get; set; } = new List<SelectListItem>();
     }
 }

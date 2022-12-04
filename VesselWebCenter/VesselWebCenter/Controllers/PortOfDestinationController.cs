@@ -54,7 +54,7 @@ namespace VesselWebCenter.Controllers
         }
                 
         [HttpPost]
-        public async Task<IActionResult> ChooseDestinationForCurrentVessel(string value, int spd, int vslId, bool isDestinationValid=true)
+        public async Task<IActionResult> ChooseDestinationForCurrentVessel(string value, double spd, int vslId)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace VesselWebCenter.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> ProcessVoyageDetails(IEnumerable<string> extractedCoordinates,int spd,int vslId)
+        public async Task<IActionResult> ProcessVoyageDetails(IEnumerable<string> extractedCoordinates,double spd,int vslId)
         {
             var model = await service.GetDataForCalculation(extractedCoordinates,spd, vslId);
             

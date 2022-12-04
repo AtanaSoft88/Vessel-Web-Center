@@ -1,32 +1,32 @@
 ﻿@model VoyageDataViewModel
 @{
-	ViewData["Title"] = "Voyage Estimated Details";
+	ViewData["Title"] = "Voyage Estimated Det⚝ils ";
 }
 <h2>@ViewData["Title"]</h2>
-<div class="form-control-sm card-header-pills card-body">
-	<table class=" table table-responsive border-success bs-popover-bottom">
+<div class="form-control-sm card-header-pills card-body	">
+	<table class=" table table-responsive border-success bs-popover-bottom ">
 		<thead>
 			<tr>
 				<th>
-					⎈ Last Port
+					┊Last Port┊
 				</th>
 				<th>
-					⎈ Destination Port
+					┊Destination Port┊
 				</th>
 				<th>
-					⎈ Sailing duration
+					┊Speed🔥┊
 				</th>
 				<th>
-					⎈ Total Distance sailed
+					┊Total Distance sailed┊
 				</th>
 				<th>
-					⎈ Departure Time
+					┊Departure Time📅┊
 				</th>
 				<th>
-					⎈ ETA
+					┊E.T.A.📅┊
 				</th>
 				<th>
-					⎈ Speed ⫷ In knots⫸
+					┊Sailing duration🕒┊
 				</th>
 			</tr>
 		</thead>
@@ -36,25 +36,27 @@
 
 				<td> @Model.DestPortName / @Model.Country</td>
 
-				<td> @((Model.CalculatedTime / 24.0).ToString("f2")) days</td>
+				<td> @Model.ExpectedSpeed knots</td>
 
 				<td> @Model.CalculatedDistance.ToString("f2") nm</td>
 
-				<td> @Model.DepartureTime.ToString("dd.MM.yyyy HH:MM") </td>
+				<td> @Model.DepartureTime.ToString("dd.MM.yyyy HH:MM")</td>
 
 				<td> @Model.ETA.Value.ToString("dd.MM.yyyy HH:MM")</td>
 
-				<td> @Model.ExpectedSpeed</td>
+				<td>🌕@((Model.CalculatedTime / 24.0).ToString("f2")) days ≈ ⌚@(Model.CalculatedTime.ToString("f2")) hrs</td>
 			</tr>
 		</tbody>
 
 	</table>
-</div>
-<form method="post">
-	<input id="field1" type="hidden" value="@Model.DestinationId" />
-	<input id="field2" type="submit" name="destinationId" value="Start Voyage" onclick="myDestination()"  asp-action="SetVesselNewDestination" asp-controller="PortOfDestination" asp-route-vslId="@Model.VesselId" />
-</form>
 
-@section Scripts {	
+	<div>
+		<form method="post">
+			<input id="field1" type="hidden" value="@Model.DestinationId" />
+			<input id="field2" type="submit" name="destinationId" value="Start Voyage🌀" onclick="myDestination()" class="btn btn-dark btn-outline-success rounded-pill" asp-action="SetVesselNewDestination" asp-controller="PortOfDestination" asp-route-vslId="@Model.VesselId" />
+		</form>
+	</div>
+</div>
+@section Scripts {
 	<script src="~/js/selectDestination.js" asp-append-version="true"></script>
 }
