@@ -30,7 +30,7 @@ namespace VesselWebCenter.Services
                 await repo.SaveChangesAsync();
             }            
 
-        }
+        }       
 
         public async Task<IEnumerable<SelectListItem>> GetAllAvailableCrewMembers()
         {
@@ -53,10 +53,23 @@ namespace VesselWebCenter.Services
                 crewMember.IsPartOfACrew = true;
                 crewMember.VesselId = model.VesselId;
                 crewMember.Vessel = vessel;
+                crewMember.DateHired = DateTime.UtcNow;
                 vessel.CrewMembers.Add(crewMember);
                 await repo.SaveChangesAsync();
             }
 
+        }
+        public async Task<IEnumerable<CrewAllViewModel>> GetAll()
+        {
+            return await repo.AllReadonly<CrewMember>().Select(x => new CrewAllViewModel() 
+            {
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Age = x.Age,
+                Nationality = x.Nationality,
+                HiredToVessel = x.IsPartOfACrew,
+                VesselId = x.VesselId
+            }).ToListAsync();
         }
     }
 }

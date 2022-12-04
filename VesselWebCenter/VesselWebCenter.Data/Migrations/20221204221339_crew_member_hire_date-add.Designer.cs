@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VesselWebCenter.Data;
 
@@ -11,9 +12,10 @@ using VesselWebCenter.Data;
 namespace VesselWebCenter.Data.Migrations
 {
     [DbContext(typeof(VesselAppDbContext))]
-    partial class VesselAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221204221339_crew_member_hire_date-add")]
+    partial class crew_member_hire_dateadd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

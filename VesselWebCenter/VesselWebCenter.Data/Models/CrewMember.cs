@@ -23,6 +23,7 @@ namespace VesselWebCenter.Data.Models
         [StringLength(30)]
         public string Nationality { get; set; } = null!;
         public bool IsPartOfACrew { get; set; }
+        public DateTime? DateHired { get; set; }
 
         [ForeignKey(nameof(Vessel))]
         public int? VesselId { get; set; }

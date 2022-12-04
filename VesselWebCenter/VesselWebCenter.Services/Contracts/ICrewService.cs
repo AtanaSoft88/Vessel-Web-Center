@@ -13,5 +13,6 @@ namespace VesselWebCenter.Services.Contracts
         Task AddCrewMemberToDataBase(CrewMemberViewModel model);
         Task GetCrewMember(CrewMembersDropDownViewModel model);
         Task<IEnumerable<SelectListItem>> GetAllAvailableCrewMembers();
+        Task<IEnumerable<CrewAllViewModel>> GetAll();
     }
 }

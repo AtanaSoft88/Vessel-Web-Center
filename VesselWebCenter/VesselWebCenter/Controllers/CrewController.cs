@@ -64,5 +64,14 @@ namespace VesselWebCenter.Controllers
             return RedirectToAction("ChooseAVessel","Vessel", new { Id});
 
         }
+
+        [HttpGet]
+        [Authorize(Roles = RoleConstants.USER_OWNER)]
+        public async Task<IActionResult> GetAllCrewMembers()
+        {
+            var model = await service.GetAll();
+            
+            return this.View(model);
+        }
     }
 }
