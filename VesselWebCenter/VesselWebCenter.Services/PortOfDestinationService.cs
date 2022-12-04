@@ -33,42 +33,42 @@ namespace VesselWebCenter.Services
 
         public async Task<DestinationViewModel> GetDestinationPorts(string vesselParams)
         {
-            var vslId = int.Parse(vesselParams.Split(" ")[0]);            
-            
-            var destinationListItems = repo.AllReadonly<DestinationPort>().Select(x => new SelectListItem 
-            { 
+            var vslId = int.Parse(vesselParams.Split(" ")[0]);
+
+            var destinationListItems = repo.AllReadonly<DestinationPort>().Select(x => new SelectListItem
+            {
                 Text = $"Port: {x.PortName} Lat: {x.Latitude} Long: {x.Longitude} Country: {x.Country} Locode: {x.UNLocode}",
                 Value = x.Id.ToString(),
             });
-            var vessel = await repo.AllReadonly<Vessel>().Include(x=>x.PortsOfCall).Where(x=>x.Id==vslId).FirstOrDefaultAsync();
-            var latLP = vessel.PortsOfCall.Select(x=>x.Latitude).Last();
-            var lonLP = vessel.PortsOfCall.Select(x=>x.Longitude).Last();
-            var lastPortName = vessel.PortsOfCall.Select(x=>x.PortName).Last();
-            var countryLP = vessel.PortsOfCall.Select(x=>x.Country).Last();
+            var vessel = await repo.AllReadonly<Vessel>().Include(x => x.PortsOfCall).Where(x => x.Id == vslId).FirstOrDefaultAsync();
+            var latLP = vessel.PortsOfCall.Select(x => x.Latitude).Last();
+            var lonLP = vessel.PortsOfCall.Select(x => x.Longitude).Last();
+            var lastPortName = vessel.PortsOfCall.Select(x => x.PortName).Last();
+            var countryLP = vessel.PortsOfCall.Select(x => x.Country).Last();
 
-            var modelResult = await repo.AllReadonly<DestinationPort>().Include(x=>x.Vessels).ThenInclude(x=>x.PortsOfCall).Select(x => new DestinationViewModel
+            var modelResult = await repo.AllReadonly<DestinationPort>().Include(x => x.Vessels).ThenInclude(x => x.PortsOfCall).Select(x => new DestinationViewModel
             {
                 VesselId = vslId,
                 DestinationId = x.Id,
                 VesselImage = vessel.VesselImageUrl,
-                VesselName = vessel.Name,                
+                VesselName = vessel.Name,
                 VesselType = vessel.VesselType.ToString(),
                 LastPortLatitude = latLP,
                 LastPortLongitude = lonLP,
                 LastPortName = lastPortName,
-                LastPortCountry = countryLP,                
+                LastPortCountry = countryLP,
                 DestinationPortCountry = x.Country,
                 UNLocode = x.UNLocode,
                 DestinationPortLatitude = x.Latitude,
-                DestinationPortLongitude = x.Longitude,               
+                DestinationPortLongitude = x.Longitude,
                 DestinationPorts = destinationListItems.ToList(),
-                
+
             }).FirstOrDefaultAsync();
-            
+
             return modelResult;
         }
 
-        public async Task<IEnumerable<string>> GetCoordinates(string parameters)
+        public async Task<IEnumerable<string>> GetCoordinates(string parameters, int vslId)
         {
             var indexDestPortName = parameters.IndexOf(" ");
             var index = parameters.IndexOf("Lat: ");
@@ -76,16 +76,24 @@ namespace VesselWebCenter.Services
                                    .Replace("Lat: ", "")
                                    .Replace(" N Long: ", " ")
                                    .Replace(" E ", " ")
-                                   .Replace(" N ", " ")                                   
-                                   .Replace(" Country: "," ")
+                                   .Replace(" N ", " ")
+                                   .Replace(" Country: ", " ")
                                    .Replace(" Locode: ", " ");
             var portName = parameters.Substring(indexDestPortName + 1, parameters.Length - (parameters.Length - index + 7));
             var destPortLat = resultValue.Split(" ")[0];
             var destPortLong = resultValue.Split(" ")[1];
-            var lastPortLat = resultValue.Split(" ")[4]; 
+            var lastPortLat = resultValue.Split(" ")[4];
             var lastPortLong = resultValue.Split(" ")[5];
             var destCountry = resultValue.Split(" ")[2];
             var destUNLocode = resultValue.Split(" ")[3];
+
+            var vessel = await repo.AllReadonly<Vessel>().Include(x => x.PortsOfCall).Where(x => x.Id == vslId).FirstOrDefaultAsync();
+            var lastPortName = vessel.PortsOfCall.Select(x => x.PortName).Last();
+            var lastPortUnlocode = vessel.PortsOfCall.Select(x => x.UNLocode).Last();
+            if (lastPortName == portName && lastPortUnlocode == destUNLocode && lastPortLat == destPortLat)
+            {
+                return null;
+            }
             return new List<string>() { portName, destPortLat, destPortLong, lastPortLat, lastPortLong, destCountry, destUNLocode };
         }
 
@@ -99,13 +107,13 @@ namespace VesselWebCenter.Services
             var destCountry = extractedCoordinates.ToList()[5];
             var destUNLocode = extractedCoordinates.ToList()[6];
 
-            var destinationId = await repo.AllReadonly<DestinationPort>().Where(x=>x.PortName==portName).Select(x => x.Id).FirstOrDefaultAsync(); 
+            var destinationId = await repo.AllReadonly<DestinationPort>().Where(x => x.PortName == portName).Select(x => x.Id).FirstOrDefaultAsync();
             var currentVessel = await repo.AllReadonly<Vessel>().Include(x => x.PortsOfCall).Where(x => x.Id == vslId).FirstOrDefaultAsync();
             var lastPortName = currentVessel.PortsOfCall.Select(x => x.PortName).Last();
             var lastPortCountry = currentVessel.PortsOfCall.Select(x => x.Country).Last();
-            var model = new VoyageDataViewModel() 
-            {   
-                DestinationId=destinationId,
+            var model = new VoyageDataViewModel()
+            {
+                DestinationId = destinationId,
                 VesselId = vslId,
                 LastPortLat = lastPortLat,
                 LastPortLong = lastPortLong,
@@ -117,8 +125,8 @@ namespace VesselWebCenter.Services
                 Country = destCountry,
                 UNLocode = destUNLocode,
                 ExpectedSpeed = spd,
-                CalculatedDistance = GetDistanceBetweenPorts(double.Parse(lastPortLat), double.Parse(lastPortLong), 
-                                                             double.Parse(destPortLat), double.Parse(destPortLong)),                
+                CalculatedDistance = GetDistanceBetweenPorts(double.Parse(lastPortLat), double.Parse(lastPortLong),
+                                                             double.Parse(destPortLat), double.Parse(destPortLong)),
             };
             return model;
         }
@@ -138,6 +146,28 @@ namespace VesselWebCenter.Services
             dist = dist * 180.0 / Math.PI;
             dist = dist * 60.0 * 1.1515;
             return dist;
+        }
+
+        public async Task AddDestinationToVessel(int vesselId, int destinationId)
+        {
+            var vessel = await repo.All<Vessel>().Include(x => x.PortsOfCall).FirstOrDefaultAsync(x => x.Id == vesselId);
+
+            var destinationPort = await repo.GetByIdAsync<DestinationPort>(destinationId);
+            var portOfCall = new PortOfCall()
+            {
+                Country = destinationPort.Country,
+                UNLocode = destinationPort.UNLocode,
+                Latitude = destinationPort.Latitude,
+                Longitude = destinationPort.Longitude,
+                PortName = destinationPort.PortName,
+            };            
+            if (vessel.PortsOfCall.Last().UNLocode != portOfCall.UNLocode)
+            {
+                vessel.DestinationPortId = destinationId;
+                vessel.PortsOfCall.Add(portOfCall);
+
+                await repo.SaveChangesAsync();
+            }
         }
     }
 }

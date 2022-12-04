@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 using VesselWebCenter.Data.Models;
 using VesselWebCenter.Data.Repositories;
 using VesselWebCenter.Services.Contracts;
@@ -21,7 +22,7 @@ namespace VesselWebCenter.Services
                 PortName = p.PortName,
                 CountryName = p.Country,
                 TotalVesselsVisited = p.Vessels.Count(),
-            }).OrderByDescending(vc=>vc.TotalVesselsVisited).ThenBy(c=>c.CountryName).Take(n).ToListAsync();
+            }).OrderByDescending(vc=>vc.TotalVesselsVisited).Take(n).ToListAsync();
         }        
     }
 }

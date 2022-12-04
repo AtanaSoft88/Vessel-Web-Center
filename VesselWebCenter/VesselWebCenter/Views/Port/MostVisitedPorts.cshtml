@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<MostVisitedPortsViewModel>
 @{
 	ViewData["Title"] = "Most Visited Ports";
-	var count = 1;		
+	var count = 1;
+	var dict = new Dictionary<string,int>(); 
 }
 <link rel="stylesheet" href="~/css/Img-Backgrnd.css">
 <link rel="stylesheet" href="~/css/MostVisitedPorts_HC.css">
@@ -57,25 +58,36 @@
 				<tr class="table-dark bg-light bg-opacity-75">
 					<td>No</td>
 					<td>Port Name</td>
-					<td>Country Name</td>
+					<td>Country Name</td>					
 					<td>Vessel Visited Count</td>
 				</tr>
 			</thead>
 			<tbody class="w-25">
 				@foreach (var port in Model)
 				{
+					var portNameCountry = port.PortName+" :"+port.CountryName;
+					@if (!dict.ContainsKey(portNameCountry))
+					{
+						dict.Add(portNameCountry, port.TotalVesselsVisited);
+						
+					}					
+					dict[portNameCountry]++;
+					
+				}
+			     @foreach (var item in dict.OrderByDescending(x=>x.Value))
+				{
 					<tr>
 						<td>
 							@(count++)
 						</td>
 						<td>
-							@port.PortName
+							@(item.Key.Split(" :")[0])
 						</td>
 						<td>
-							@port.CountryName
+							@(item.Key.Split(" :")[1])
 						</td>
 						<td>
-							@port.TotalVesselsVisited
+							@(item.Value-1)
 						</td>
 					</tr>
 				}

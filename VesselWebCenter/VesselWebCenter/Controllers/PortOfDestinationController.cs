@@ -54,11 +54,16 @@ namespace VesselWebCenter.Controllers
         }
                 
         [HttpPost]
-        public async Task<IActionResult> ChooseDestinationForCurrentVessel(string value, int spd, int vslId)
+        public async Task<IActionResult> ChooseDestinationForCurrentVessel(string value, int spd, int vslId, bool isDestinationValid=true)
         {
             try
             {
-                var extractedCoordinates = await service.GetCoordinates(value);                                
+                var extractedCoordinates = await service.GetCoordinates(value,vslId);
+                if (extractedCoordinates == null) 
+                {
+                    return RedirectToAction(nameof(AssignVesselForVoyage), "PortOfDestination");
+                }
+                
                 return RedirectToAction(nameof(ProcessVoyageDetails), new { extractedCoordinates, spd, vslId });
             }
             catch (Exception ex)
@@ -80,8 +85,9 @@ namespace VesselWebCenter.Controllers
         
         [HttpPost]
         public async Task<IActionResult> SetVesselNewDestination(int vslId, int destinationId) 
-        { 
-            return View();
+        {
+            await service.AddDestinationToVessel(vslId, destinationId);
+            return RedirectToAction(nameof(AssignVesselForVoyage), "PortOfDestination");
         }
     }
 }
