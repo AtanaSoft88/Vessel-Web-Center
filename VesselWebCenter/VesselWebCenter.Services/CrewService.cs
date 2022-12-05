@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing.Text;
 using VesselWebCenter.Data.Models;
 using VesselWebCenter.Data.Repositories;
 using VesselWebCenter.Services.Contracts;
@@ -59,17 +60,20 @@ namespace VesselWebCenter.Services
             }
 
         }
-        public async Task<IEnumerable<CrewAllViewModel>> GetAll()
+        public async Task<IQueryable<CrewAllViewModel>> GetAll()
         {
-            return await repo.AllReadonly<CrewMember>().Select(x => new CrewAllViewModel() 
-            {
+            return repo.AllReadonly<CrewMember>().Include(x=>x.Vessel).ThenInclude(x=>x.ManningCompany).Select( x => new CrewAllViewModel() 
+            { 
+                CrewMemberId = x.Id,
+                VesselName = x.Vessel.Name,
+                ManningCompanyName = x.Vessel.ManningCompany.Name,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 Age = x.Age,
                 Nationality = x.Nationality,
-                HiredToVessel = x.IsPartOfACrew,
-                VesselId = x.VesselId
-            }).ToListAsync();
-        }
+                HiredToVessel = x.IsPartOfACrew,                
+                DateHired = x.IsPartOfACrew==true?x.DateHired.Value.Date.ToString("dd-MM-yyyy") : "N/A",                
+            }).AsNoTracking();            
+        }        
     }
 }

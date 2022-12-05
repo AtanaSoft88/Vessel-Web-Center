@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VesselWebCenter.Data.Constants;
-
-namespace VesselWebCenter.Services.ViewModels
+﻿namespace VesselWebCenter.Services.ViewModels
 {
 	public class CrewAllViewModel
 	{
+        public int CrewMemberId { get; set; }
         public int? VesselId { get; set; }
+        public string? VesselName { get; set; }
+        public string? ManningCompanyName { get; set; }
         public string FirstName { get; set; } = null!;       
         public string LastName { get; set; } = null!;        
         public int Age { get; set; }        
         public string Nationality { get; set; } = null!;
         public bool HiredToVessel { get; set; }
+        public string? DateHired { get; set; }
     }
 }

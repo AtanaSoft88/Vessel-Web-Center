@@ -1,25 +1,78 @@
-﻿@model IEnumerable<CrewAllViewModel>
+﻿@model PagingList<CrewAllViewModel>
 @{
-	ViewData["Title"] = "Details for Crew members";
+	ViewData["Title"] = "Details for Crew members";	
 }
 <h2>@ViewData["Title"]</h2>
 
-<div class="table-responsive card-body bg-primary bg-opacity-25 rounded-3 shadow-lg col-8">
+<div class="table-responsive card-body bg-primary bg-opacity-25 rounded-3 shadow-lg col-12">
 	<form method="post">
 		<table class="table border-secondary table-bordered border-5 table-striped table-hover form-control-sm w-100 bg-success bg-opacity-25">
 			<thead>
-				<tr class="shadow-lg text-dark border-secondary border-3" style="background-color:slateblue">
+				<tr class="shadow-lg text-dark border-secondary border-3" style="background-color:sandybrown">
+					<th align="center">❖ No</th>
 					<th align="center">❖ First Name</th>
 					<th align="center">❖ Last Name</th>
-					<th align="center">❖ Last Port Name</th>
-					<th align="center">❖ Last Port of Call Lat/Long</th>
-					<th align="center">❖ Select Vessel for Voyage ✔</th>
+					<th align="center">❖ Nationality</th>
+					<th align="center">❖ Age</th>
+					<th align="center">❖ Status Hired ✔</th>
+					<th align="center">❖ Contract Dated📅</th>
+					<th align="center">❖ Hired On Vessel</th>
+					<th align="center">❖ Manning Company</th>
 				</tr>
 			</thead>
-			<tbody>
-				
+			<tbody class="table-hover link-success">
+				@foreach (var member in Model)
+				{
+					<tr>
+						<td>
+							@(member.CrewMemberId)
+						</td>
+						<td>
+							@member.FirstName
+						</td>
+						<td>
+							@member.LastName
+						</td>
+						<td>
+							@member.Nationality
+						</td>
+						<td>
+							@member.Age
+						</td>
+						<td>
+							@(member.HiredToVessel == true ? "✔" : "✘")
+						</td>
+						<td>
+							@(member.DateHired)
+						</td>
+						<td>
+							@(member.VesselName == null ? "N/A" : member.VesselName)
+						</td>
+						<td>
+							@(member.ManningCompanyName == null ? "N/A" : member.ManningCompanyName)
+						</td>
+					</tr>
+				}
 			</tbody>
 		</table>
 
 	</form>
+</div>
+
+@{
+	var previousDisabled = !Model.PreviousPage ? "disabled" : "";
+	var nextDisabled = !Model.NextPage ? "disabled" : "";
+}
+<div class="rounded-3 rounded-pill form-control bg-success bg-opacity-75 w-25">
+	<a asp-action="GetAllCrewMembers"
+	   asp-route-pageNumber="@(Model.PageIndex-1)"
+	   class="btn btn-warning  btn-outline-dark rounded-pill @previousDisabled">
+		⫷Previous⚝
+	</a>
+
+	<a asp-action="GetAllCrewMembers"
+	   asp-route-pageNumber="@(Model.PageIndex+1)"
+	   class="btn btn-warning  btn-outline-dark rounded-pill @nextDisabled">
+		⚝Next⫸
+	</a>
 </div>

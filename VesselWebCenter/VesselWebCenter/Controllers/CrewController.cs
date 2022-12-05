@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using VesselWebCenter.Data.Constants;
+using VesselWebCenter.Data.Models;
 using VesselWebCenter.Services.Contracts;
 using VesselWebCenter.Services.ViewModels;
 
@@ -67,11 +69,15 @@ namespace VesselWebCenter.Controllers
 
         [HttpGet]
         [Authorize(Roles = RoleConstants.USER_OWNER)]
-        public async Task<IActionResult> GetAllCrewMembers()
+        public async Task<IActionResult> GetAllCrewMembers(int pageNumber = 1)
         {
-            var model = await service.GetAll();
-            
-            return this.View(model);
+            IQueryable<CrewAllViewModel>? crewMembers = await service.GetAll();
+            if (await crewMembers.CountAsync() > 0 && crewMembers != null)
+            {
+                var model = await PagingList<CrewAllViewModel>.CreatePagesAsync(crewMembers, pageNumber, 15);
+                return View(model);
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }
