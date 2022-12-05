@@ -1,4 +1,5 @@
 ﻿@using VesselWebCenter.Data.Enums
+@using VesselWebCenter.Data.Constants
 @model SingleVesselViewModel
 @{
 	ViewData["Title"] = $"Vessel Name : {Model.Name}";
@@ -33,7 +34,9 @@
 				</li>
 
 				<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
-					Crew Members on Board: @(Model.CrewMembersOnBoard == 0 ? "No crew members assigned to this vessel" : Model.CrewMembersOnBoard)
+					Crew Members on Board: 
+					@(Model.CrewMembersOnBoard == 0 ? "No Crew available" : Model.CrewMembersOnBoard >= 25 ? Model.CrewMembersOnBoard +
+					" [Full Crew]": Model.CrewMembersOnBoard)
 				</li>
 
 				<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
@@ -71,7 +74,7 @@
 	asp-controller="Vessel" asp-action="GetAllVessels" class="btn btn-danger btn-outline-warning"></>
 </form>
 
-@if (User.IsInRole("User-Owner"))
+@if (User.IsInRole(RoleConstants.USER_OWNER) && Model.CrewMembersOnBoard<25)
 {
 	<form method="get" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="AssignCrewToVessel">
 		<label style="position:absolute;top:770px;left:200px">Choose crew members for this vessel</label>

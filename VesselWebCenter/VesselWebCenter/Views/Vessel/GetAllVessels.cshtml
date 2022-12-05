@@ -2,10 +2,10 @@
 @using VesselWebCenter.Data.Constants
 @model PagingList<VesselsViewModel>
 @{
-	ViewData["Title"] = "Vessels currently registered";
+	ViewData["Title"] = "◦•● 𝕍𝕖𝕤𝕤𝕖𝕝𝕤 𝕔𝕦𝕣𝕣𝕖𝕟𝕥𝕝𝕪 𝕣𝕖𝕘𝕚𝕤𝕥𝕖𝕣𝕖𝕕 ●•◦";
 }
 <link rel="stylesheet" href="~/css/interactiveButton.css" asp-append-version="true" />
-<h1 class="rounded-pill  shadow fst-italic" style="-webkit-text-fill-color:lightseagreen">@ViewData["Title"]</h1>
+<h1 class="text-black shadow-lg rounded-pill bg-primary bg-opacity-25 w-75">@ViewData["Title"]</h1>
 <div class="card-body form-control border-primary shadow-lg">
 	<table class="table table-striped table-hover table-bordered border-success bg-primary bg-opacity-10">
 		<thead>
@@ -21,8 +21,8 @@
 				@if (User.IsInRole(RoleConstants.USER_OWNER))
 				{
 					<td class="bg-body" align="center">
-						Voyage Availability <br /><label title="For Vessels with minimum 15 Crew members on board">
-							«〈Show Info〉»
+						Voyage Availability <br /><label class="text-primary rounded-pill btn-outline-warning" title="For Vessels with minimum 15 Crew members on board">
+							Show Info
 						</label>
 					</td>
 				}
