@@ -4,8 +4,8 @@
 @{
 	ViewData["Title"] = "Vessels currently registered";
 }
+<link rel="stylesheet" href="~/css/interactiveButton.css" asp-append-version="true" />
 <h1 class="rounded-pill  shadow fst-italic" style="-webkit-text-fill-color:lightseagreen">@ViewData["Title"]</h1>
-
 <div class="card-body form-control border-primary shadow-lg">
 	<table class="table table-striped table-hover table-bordered border-success bg-primary bg-opacity-10">
 		<thead>
@@ -83,18 +83,28 @@
 	@{
 		var previousDisabled = !Model.PreviousPage ? "disabled" : "";
 		var nextDisabled = !Model.NextPage ? "disabled" : "";
+		
 	}
-	<div class="rounded-3 rounded-pill form-control bg-success bg-opacity-75">
+	<div class="btn-group-sm">
 		<a asp-action="GetAllVessels"
 		   asp-route-pageNumber="@(Model.PageIndex-1)"
-		   class="btn btn-warning  btn-outline-dark rounded-pill @previousDisabled">
-			⫷Previous⚝
+		   class="btn btn-outline-dark rounded-pill @previousDisabled" style="background-color:darkorchid">
+			⫷Previous
 		</a>
-
+		@for (int i = 1; i <= Model.TotalPages; i++)
+		{
+			<a asp-action="GetAllVessels"
+		   asp-route-pageNumber="@(i)"
+		   class="buttonZ btn-group rounded-pill @nextDisabled" >
+				@i
+			</a>
+		}
 		<a asp-action="GetAllVessels"
 		   asp-route-pageNumber="@(Model.PageIndex+1)"
-		   class="btn btn-warning  btn-outline-dark rounded-pill @nextDisabled">
-			⚝Next⫸
-		</a>
+		   class="btn btn-outline-dark rounded-pill @nextDisabled" style="background-color:darkorchid">
+			Next⫸
+		</a>		
+
 	</div>
 </div>
+

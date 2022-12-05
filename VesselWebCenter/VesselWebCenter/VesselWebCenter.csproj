@@ -27,6 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\css\interactiveButton.css">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\css\nav-Acc-Dropdown.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
