@@ -16,30 +16,17 @@ namespace VesselWebCenter.Controllers
         [AllowAnonymous]
         [HttpGet]        
         public async Task<IActionResult> MostVisitedPorts()
-        {
-            int n = 0;
-            var mostVisitedPorts = await service.GetMostVisitedPorts(n);
+        {            
+            var mostVisitedPorts = await service.GetMostVisitedPorts();
 
             return View(mostVisitedPorts);
-
-        }
-
-        [AllowAnonymous]        
-        [HttpPost]
-        public async Task<IActionResult> MostVisitedPorts([FromForm]int n)
-        {
-            var mostVisitedPorts = await service.GetMostVisitedPorts(n);
-
-            return View(mostVisitedPorts);
-
-        }
+        }        
 
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> TopTenVisitedPortsHighCharts()
-        {
-            int n = 10; 
-            return Json(await service.GetMostVisitedPorts(n));
+        {             
+            return Json(await service.GetMost10VisitedPorts());
 
         }        
         

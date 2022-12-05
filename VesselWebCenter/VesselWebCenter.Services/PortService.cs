@@ -15,14 +15,24 @@ namespace VesselWebCenter.Services
         {
             this.repo = _repo;
         }
-        public async Task<IEnumerable<MostVisitedPortsViewModel>> GetMostVisitedPorts(int n)
+        public async Task<IEnumerable<MostVisitedPortsViewModel>> GetMostVisitedPorts()
         {            
             return await repo.AllReadonly<PortOfCall>().Select(p => new MostVisitedPortsViewModel
             {
                 PortName = p.PortName,
                 CountryName = p.Country,
                 TotalVesselsVisited = p.Vessels.Count(),
-            }).OrderByDescending(vc=>vc.TotalVesselsVisited).Take(n).ToListAsync();
-        }        
+            }).OrderByDescending(vc=>vc.TotalVesselsVisited).ToListAsync();
+        }
+
+        public async Task<IEnumerable<MostVisitedPortsViewModel>> GetMost10VisitedPorts()
+        {
+            return await repo.AllReadonly<PortOfCall>().Select(p => new MostVisitedPortsViewModel
+            {
+                PortName = p.PortName,
+                CountryName = p.Country,
+                TotalVesselsVisited = p.Vessels.Count(),
+            }).OrderByDescending(vc => vc.TotalVesselsVisited).Take(10).ToListAsync();
+        }
     }
 }
