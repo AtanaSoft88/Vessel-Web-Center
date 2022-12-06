@@ -49,7 +49,7 @@ namespace VesselWebCenter.Services
                 LOA = x.LengthOverall,
                 VesselType = x.VesselType,
                 VesselAvailableForVoyage = x.CrewMembers.Count()>=15? true : false,
-                CrewMembersCount = x.CrewMembers.Count()==0?"N/A": x.CrewMembers.Count().ToString(),
+                CrewMembersCount = x.CrewMembers.Count()==0?"n/a": x.CrewMembers.Count().ToString(),
                 PortsOfCall = x.PortsOfCall.ToList(),
             });
             return allVessels.AsNoTracking();
