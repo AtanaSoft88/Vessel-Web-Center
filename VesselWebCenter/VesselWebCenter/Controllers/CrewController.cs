@@ -62,7 +62,7 @@ namespace VesselWebCenter.Controllers
             {
                 return this.View(model);
             }
-            await service.GetCrewMember(model);
+            await service.GetCrewMemberAdd(model);
             return RedirectToAction("ChooseAVessel","Vessel", new { Id});
 
         }
