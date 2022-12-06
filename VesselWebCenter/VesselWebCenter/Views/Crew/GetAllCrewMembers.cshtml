@@ -56,29 +56,30 @@
 			</tbody>
 		</table>
 	</form>
-</div>
-
-<div class="btn-group-sm">
-	<a asp-action="GetAllCrewMembers"
-	   asp-route-pageNumber="@(Model.PageIndex-1)"
-	   class="btn btn-outline-dark rounded-pill @previousDisabled" style="background-color:darkorchid">
-		⫷Previous
-	</a>
-	@for (int i = 1; i <= Model.TotalPages; i++)
-	{
+	<div class="btn-group-sm">
 		<a asp-action="GetAllCrewMembers"
-	   asp-route-pageNumber="@(i)"
-	   class="buttonZ btn-group rounded-pill @nextDisabled">
-			@i
+		   asp-route-pageNumber="@(Model.PageIndex-1)"
+		   class="btn btn-outline-dark rounded-pill @previousDisabled" style="background-color:orange">
+			⫷Previous
 		</a>
-	}
-	<a asp-action="GetAllCrewMembers"
-	   asp-route-pageNumber="@(Model.PageIndex+1)"
-	   class="btn btn-outline-dark rounded-pill @nextDisabled" style="background-color:darkorchid">
-		Next⫸
-	</a>
+		@for (int i = 1; i <= Model.TotalPages; i++)
+		{
+			<a asp-action="GetAllCrewMembers"
+		   asp-route-pageNumber="@(i)"
+		   class="buttonZ btn-group rounded-pill @nextDisabled">
+				@i
+			</a>
+		}
+		<a asp-action="GetAllCrewMembers"
+		   asp-route-pageNumber="@(Model.PageIndex+1)"
+		   class="btn btn-outline-dark rounded-pill @nextDisabled" style="background-color:orange">
+			Next⫸
+		</a>
 
+	</div>
 </div>
+
+
 
 
 
