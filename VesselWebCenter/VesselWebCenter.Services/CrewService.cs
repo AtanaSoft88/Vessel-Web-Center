@@ -45,9 +45,24 @@ namespace VesselWebCenter.Services
 
             return dropDownMembers;
         }
-        public async Task GetCrewMember(CrewMembersDropDownViewModel model)
+
+        public async Task<IEnumerable<SelectListItem>> GetAllCrewMembers(int vesselId)
+        {
+            var dropDownMembers = await repo.AllReadonly<CrewMember>().Include(x=>x.Vessel).Where(x => x.IsPartOfACrew == true && x.VesselId==vesselId).Select(x => new SelectListItem
+            {
+                Value = $"{x.FirstName} {x.LastName}, Age: {x.Age}, Nationality: [{x.Nationality}]",
+                Text = x.Id.ToString(),
+
+            }).ToListAsync();
+
+
+            return dropDownMembers;
+        }
+
+        public async Task GetCrewMemberAdd(CrewMembersDropDownViewModel model)
         {
             var vessel = await repo.GetByIdAsync<Vessel>(model.VesselId);
+            
             var crewMember = await repo.GetByIdAsync<CrewMember>(model.memberId);
             if (vessel != null && crewMember != null)
             {
@@ -60,6 +75,23 @@ namespace VesselWebCenter.Services
             }
 
         }
+
+        public async Task GetCrewMemberRemoved(CrewMembersDropDownViewModel model)
+        {
+            var vessel = await repo.AllReadonly<Vessel>().Include(x=>x.CrewMembers).Where(x=>x.Id==model.VesselId).FirstOrDefaultAsync();
+
+            var crewMember = await repo.GetByIdAsync<CrewMember>(model.memberId);
+            if (vessel != null && crewMember != null)
+            {
+                crewMember.IsPartOfACrew = false;
+                crewMember.VesselId = null;                
+                crewMember.DateHired = null;
+                vessel.CrewMembers.Remove(crewMember);
+                await repo.SaveChangesAsync();
+            }
+
+        }
+
         public async Task<IQueryable<CrewAllViewModel>> GetAll()
         {
             return repo.AllReadonly<CrewMember>().Include(x=>x.Vessel).ThenInclude(x=>x.ManningCompany).Select( x => new CrewAllViewModel() 

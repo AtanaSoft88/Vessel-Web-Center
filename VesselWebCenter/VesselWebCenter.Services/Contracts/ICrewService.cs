@@ -11,8 +11,10 @@ namespace VesselWebCenter.Services.Contracts
     public interface ICrewService
     {
         Task AddCrewMemberToDataBase(CrewMemberViewModel model);
-        Task GetCrewMember(CrewMembersDropDownViewModel model);
+        Task GetCrewMemberAdd(CrewMembersDropDownViewModel model);
+        Task GetCrewMemberRemoved(CrewMembersDropDownViewModel model);
         Task<IEnumerable<SelectListItem>> GetAllAvailableCrewMembers();
+        Task<IEnumerable<SelectListItem>> GetAllCrewMembers(int vesselId);
         Task<IQueryable<CrewAllViewModel>> GetAll();
     }
 }

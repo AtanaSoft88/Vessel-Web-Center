@@ -5,7 +5,7 @@ namespace VesselWebCenter.Services.ViewModels
 {
     public class CrewMembersDropDownViewModel
     {  
-        [Required]
+        [Required(ErrorMessage ="Selecting item is required")]
         public int memberId { get; set; }
         [Required]
         public int VesselId { get; set; }

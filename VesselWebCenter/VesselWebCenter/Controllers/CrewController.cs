@@ -69,6 +69,32 @@ namespace VesselWebCenter.Controllers
 
         [HttpGet]
         [Authorize(Roles = RoleConstants.USER_OWNER)]
+        public async Task<IActionResult> RemoveCrewFromVessel(int id)
+        {
+            var model = new CrewMembersDropDownViewModel
+            {
+                CrewMembers = await service.GetAllCrewMembers(id),
+                VesselId = id,                 
+            };
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = RoleConstants.USER_OWNER)]
+        public async Task<IActionResult> RemoveCrewFromVessel(CrewMembersDropDownViewModel model, int vslId)
+        {
+            model.VesselId = vslId;            
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+            await service.GetCrewMemberRemoved(model);
+            return RedirectToAction("ChooseAVessel", "Vessel", new { model.VesselId });
+
+        }
+
+        [HttpGet]
+        [Authorize(Roles = RoleConstants.USER_OWNER)]
         public async Task<IActionResult> GetAllCrewMembers(int pageNumber = 1)
         {
             IQueryable<CrewAllViewModel>? crewMembers = await service.GetAll();

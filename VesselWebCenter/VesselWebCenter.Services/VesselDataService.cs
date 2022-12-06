@@ -20,9 +20,9 @@ namespace VesselWebCenter.Services
         }        
         public async Task<SingleVesselViewModel> GetChoosenVessel(int idVessel)
         {
-            return await repo.AllReadonly<Vessel>().Where(x=>x.Id==idVessel).Select(x => new SingleVesselViewModel
+            return await repo.AllReadonly<Vessel>().Include(x=>x.CrewMembers).Where(x=>x.Id==idVessel).Select(x => new SingleVesselViewModel
             {
-                Id = x.Id,
+                Id = x.Id,                
                 Name = x.Name,
                 CallSign = x.CallSign,
                 IsLaden = x.IsLaden,

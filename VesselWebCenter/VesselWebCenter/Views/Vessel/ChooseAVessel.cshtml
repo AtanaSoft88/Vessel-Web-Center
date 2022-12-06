@@ -5,7 +5,7 @@
 	ViewData["Title"] = $"Vessel Name : {Model.Name}";
 
 }
-<h1 class="fst-italic bg-primary bg-opacity-25" style="-webkit-text-fill-color:blueviolet">@ViewData["Title"]</h1>
+<h1 class="fst-italic bg-primary bg-opacity-10 rounded-pill w-50" style="-webkit-text-fill-color:blueviolet">@ViewData["Title"]</h1>
 <hr />
 <ol style="font-family:'Book Antiqua';font-weight:700">
 	Vessel Owner Company: @Model.ManningCompanyName
@@ -13,76 +13,114 @@
 <ol style="font-family:'Book Antiqua';font-weight:700">
 	Vessel Type : @Model.VesselType
 </ol>
-<form>
-	<div class="card col-4" style="width: 46rem; background-color:lightcyan">
-		<img class="card-img-top" style="width: 18rem; height:10rem"
-			 src="@Model.VesselImageUrl" alt="Vessel Type">
-		<div class="card-body">
-			<ul class="list-group" style="-webkit-text-fill-color:olivedrab">
-				<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500;position:absolute;top:10px;left:300px;width:420px">
-					Vessel Call Sign : @Model.CallSign
-				</li>
-				<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
-					Vessel Cargo on Board : @(Model.IsLaden == false ? "No cargo on board" : Model.CargoTypeOnBoard)
-				</li>
-
-				<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500;position:absolute;top:55px;left:300px;width:420px">
-					Vessel Length Overall : @Model.LOA m
-				</li>
-				<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500;position:absolute;top:100px;left:300px;width:420px">
-					Vessel Breadth Max : @Model.Breadth m
-				</li>
-
-				<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
-					Crew Members on Board: 
-					@(Model.CrewMembersOnBoard == 0 ? "No Crew available" : Model.CrewMembersOnBoard >= 25 ? Model.CrewMembersOnBoard +
-					" [Full Crew]": Model.CrewMembersOnBoard)
-				</li>
-
-				<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
-					Vessel Last Port of call: @Model?.PortsOfCall?.LastOrDefault()?.PortName / @Model?.PortsOfCall?.LastOrDefault()?.Country
-				</li>
-				@if (Model?.PortsOfCall?.Any() ?? false)
-				{
-					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
-						Vessel Latitude: @Model?.PortsOfCall?.LastOrDefault()?.Latitude.Replace(".","˚")
+<div>
+	<form>
+		<div class="card col-4" style="width: 46rem; background-color:lightcyan">
+			<img class="card-img-top" style="width: 18rem; height:10rem"
+				 src="@Model.VesselImageUrl" alt="Vessel Type">
+			<div class="card-body">
+				<ul class="list-group" style="-webkit-text-fill-color:olivedrab">
+					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500;position:absolute;top:10px;left:300px;width:420px">
+						Vessel Call Sign : @Model.CallSign
 					</li>
 					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
-						Vessel Longitude: @Model?.PortsOfCall?.LastOrDefault()?.Longitude.Replace("-","").Replace(".","˚")
+						Vessel Cargo on Board : @(Model.IsLaden == false ? "No cargo on board" : Model.CargoTypeOnBoard)
 					</li>
-				}
-				<hr />
-				<select class="form-select w-25  position-static" style="background-color:lightgreen;touch-action:cross-slide-x;font-weight:400">
-					<option>All Visited Ports</option>
-					@for (int i = 0; i < Model?.PortsOfCall?.Count(); i++)
+
+					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500;position:absolute;top:55px;left:300px;width:420px">
+						Vessel Length Overall : @Model.LOA m
+					</li>
+					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500;position:absolute;top:100px;left:300px;width:420px">
+						Vessel Breadth Max : @Model.Breadth m
+					</li>
+
+					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
+						Crew Members on Board:
+						@(Model.CrewMembersOnBoard == 0 ? "No Crew available" : Model.CrewMembersOnBoard >= 25 ? Model.CrewMembersOnBoard +
+							" [Full Crew]" : Model.CrewMembersOnBoard)
+					</li>
+
+					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
+						Vessel Last Port of call: @Model?.PortsOfCall?.LastOrDefault()?.PortName / @Model?.PortsOfCall?.LastOrDefault()?.Country
+					</li>
+					@if (Model?.PortsOfCall?.Any() ?? false)
 					{
-						<option style="font-weight:400">
+						<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
+							Vessel Latitude: @Model?.PortsOfCall?.LastOrDefault()?.Latitude.Replace(".","˚")
+						</li>
+						<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
+							Vessel Longitude: @Model?.PortsOfCall?.LastOrDefault()?.Longitude.Replace("-","").Replace(".","˚")
+						</li>
+					}					
+					<select class="w-25  form-control-sm dropdown-divider" style="background-color:lightgreen;touch-action:cross-slide-x;font-weight:400">
+						<option>All Visited Ports</option>
+						@for (int i = 0; i < Model?.PortsOfCall?.Count(); i++)
+						{
+							<option style="font-weight:400">
 
-							@($"{i + 1}-{Model.PortsOfCall[i].PortName}")
+								@($"{i + 1}-{Model.PortsOfCall[i].PortName}")
 
-						</option>
+							</option>
+							
+						}
+						
+					</select>
+					<div class="form-control-sm bg-primary bg-opacity-25 rounded-3">
+						<h5 style="text-align:left">Tuk sloji proplavani mili</h5>
+					</div>
+				</ul>
+			</div>
 
-					}
-				</select>
-
-			</ul>
-		</div>
-
-	</div>
-	<hr class="shadow-lg" />
-	<input style="position:absolute;top:800px;left:610px;width:130px;" type="submit" value="Back to Vessels" title="Back" 
-	asp-controller="Vessel" asp-action="GetAllVessels" class="btn btn-danger btn-outline-warning"></>
-</form>
-
-@if (User.IsInRole(RoleConstants.USER_OWNER) && Model.CrewMembersOnBoard<25)
-{
-	<form method="get" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="AssignCrewToVessel">
-		<label style="position:absolute;top:770px;left:200px">Choose crew members for this vessel</label>
-		<input style="position:absolute;top:800px;left:200px;width:130px;" type="submit" value="Add crew member" title="Add"
-		   class="btn btn-success btn-outline-dark w-auto">
+		</div>		
 
 	</form>
-}
+</div>
+
+<div>
+	@if (User.IsInRole(RoleConstants.USER_OWNER) && Model.CrewMembersOnBoard < 25)
+	{
+		<h6 style="text-align:center" class="text-black shadow-lg rounded-3 w-50">Manage Crew Members</h6>
+		<form method="get" class="m-3" >
+			
+			<div class="shadow-lg bg-info bg-opacity-10 rounded-pill w-50" style="text-align:center">
+				<input style="text-align:left" type="submit" value="✔️ Add" title="Choose crew members for this vessel"
+				   class="btn btn-success btn-outline-dark rounded-pill" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="AssignCrewToVessel">
+
+				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>
+
+				<input style="text-align:left" type="submit" value="Remove" title="Remove crew members from this vessel"
+				   class="btn btn-danger btn-outline-dark rounded-pill" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="RemoveCrewFromVessel">
+
+				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>
+
+				<input style="text-align:center" type="submit" value="☒ Back" title="Back to Vessels"
+				   asp-controller="Vessel" asp-action="GetAllVessels" class="btn btn-warning btn-outline-dark rounded-pill">
+			</div>
+		</form>
+	}	
+	else
+	{
+		<h6 style="text-align:center" class="text-black shadow-lg rounded-3 w-50">Manage Crew Members</h6>
+		<form method="get" class="m-3">
+
+			<div class="shadow-lg bg-info bg-opacity-10 rounded-pill w-50" style="text-align:center">
+				<input disabled style="text-align:left" type="submit" value="✔️ Add" title="Choose crew members for this vessel"
+				   class="btn btn-success btn-outline-dark rounded-pill" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="AssignCrewToVessel">
+
+				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>
+
+				<input style="text-align:left" type="submit" value="Remove" title="Remove crew members from this vessel"
+				   class="btn btn-danger btn-outline-dark rounded-pill" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="RemoveCrewFromVessel">
+
+				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>
+
+				<input style="text-align:center" type="submit" value="☒ Back" title="Back to Vessels"
+				   asp-controller="Vessel" asp-action="GetAllVessels" class="btn btn-warning btn-outline-dark rounded-pill">
+			</div>
+		</form>
+	}
+</div>
+
 
 
 
