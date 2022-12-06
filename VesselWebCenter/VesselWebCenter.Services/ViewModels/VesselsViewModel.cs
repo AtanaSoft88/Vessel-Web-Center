@@ -8,6 +8,7 @@ namespace VesselWebCenter.Services.ViewModels
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string  CallSign { get; set; } = null!;
+        public string CrewMembersCount { get; set; } = null!;
         public VesselType VesselType { get; set; }
         public int LOA { get; set; }
         public int Breadth { get; set; }

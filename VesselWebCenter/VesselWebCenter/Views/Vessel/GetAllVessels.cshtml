@@ -18,6 +18,7 @@
 				<td class="bg-body col-1" align="center">Visited Ports Number</td>
 				<td class="bg-body" align="center">Last Port Of Call</td>
 				<td class="bg-body" align="center">Details for:</td>
+				<td class="bg-body col-1" align="center">Crew Members Count</td>
 				@if (User.IsInRole(RoleConstants.USER_OWNER))
 				{
 					<td class="bg-body" align="center">
@@ -56,8 +57,8 @@
 
 							@if (User?.Identity?.IsAuthenticated ?? false)
 							{
-								<label style="font-style:oblique;-moz-animation-fill-mode:forwards" asp-for="@vsl.Id">See more details⊳</label>
-								<input type="submit" class="btn-success btn-lg rounded-circle  border-3 btn-outline-warning shadow-lg rounded-3" title="@vsl.Name" name="vesselId" value="@vsl.Id" asp-controller="Vessel" asp-action="ChooseAVessel" />
+								<label style="font-style:oblique;-moz-animation-fill-mode:forwards" asp-for="@vsl.Id">More details⊳</label>
+								<input type="submit" style="backdrop-filter:blur()" class="btn-sm rounded-circle border-2 btn-dark btn-outline-warning shadow-lg rounded-3" title="@vsl.Name" name="vesselId" value="@vsl.Id" asp-controller="Vessel" asp-action="ChooseAVessel" />								
 							}
 							else
 							{
@@ -65,11 +66,24 @@
 									<a class="btn-outline-warning btn-success badge badge"
 							   asp-route-returnUrl="/Vessel/GetAllVessels" asp-controller="Account" asp-action="Login">Login for more Info</a>
 								</label>
-								<input type="submit" disabled="disabled" class="btn-success btn-lg btn" title="@vsl.Name" name="vesselId" value="@vsl.Id" asp-controller="Vessel" asp-action="ChooseAVessel" />
+								<input type="submit" disabled="disabled" class="btn-warning btn-lg btn" title="@vsl.Name" name="vesselId" value="@vsl.Id" asp-controller="Vessel" asp-action="ChooseAVessel" />
 							}
 
 						</form>
 					</td>
+					@if (User?.Identity?.IsAuthenticated ?? false) 
+					{
+						<td>
+							<p class="text-dark">@vsl.CrewMembersCount</p>
+						</td>
+					}
+					else
+					{
+						<td>
+							<p class="badge text-danger">Unavailable</p>
+						</td>
+					}
+					
 					@if (User.IsInRole(RoleConstants.USER_OWNER))
 					{
 						<td class="bg-primary bg-opacity-25 text-center">
@@ -88,7 +102,7 @@
 	<div class="btn-group-sm">
 		<a asp-action="GetAllVessels"
 		   asp-route-pageNumber="@(Model.PageIndex-1)"
-		   class="btn btn-outline-dark rounded-pill @previousDisabled" style="background-color:darkorchid">
+		   class="btn btn-outline-dark rounded-pill @previousDisabled" style="background-color:greenyellow">
 			⫷Previous
 		</a>
 		@for (int i = 1; i <= Model.TotalPages; i++)
@@ -101,7 +115,7 @@
 		}
 		<a asp-action="GetAllVessels"
 		   asp-route-pageNumber="@(Model.PageIndex+1)"
-		   class="btn btn-outline-dark rounded-pill @nextDisabled" style="background-color:darkorchid">
+		   class="btn btn-outline-dark rounded-pill @nextDisabled" style="background-color:greenyellow">
 			Next⫸
 		</a>		
 

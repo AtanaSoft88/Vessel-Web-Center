@@ -17,11 +17,7 @@ namespace VesselWebCenter.Services
         public VesselDataService(IRepository repo)
         {
             this.repo = repo;            
-        }
-        public void AddPortToVessel()
-        {
-
-        }
+        }        
         public async Task<SingleVesselViewModel> GetChoosenVessel(int idVessel)
         {
             return await repo.AllReadonly<Vessel>().Where(x=>x.Id==idVessel).Select(x => new SingleVesselViewModel
@@ -53,6 +49,7 @@ namespace VesselWebCenter.Services
                 LOA = x.LengthOverall,
                 VesselType = x.VesselType,
                 VesselAvailableForVoyage = x.CrewMembers.Count()>=15? true : false,
+                CrewMembersCount = x.CrewMembers.Count()==0?"N/A": x.CrewMembers.Count().ToString(),
                 PortsOfCall = x.PortsOfCall.ToList(),
             });
             return allVessels.AsNoTracking();
