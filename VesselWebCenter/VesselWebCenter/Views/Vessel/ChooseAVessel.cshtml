@@ -21,17 +21,17 @@
 			<div class="card-body">
 				<ul class="list-group" style="-webkit-text-fill-color:olivedrab">
 					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500;position:absolute;top:10px;left:300px;width:420px">
-						Vessel Call Sign : @Model.CallSign
+						Call Sign : @Model.CallSign
 					</li>
 					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
-						Vessel Cargo on Board : @(Model.IsLaden == false ? "No cargo on board" : Model.CargoTypeOnBoard)
+						Cargo on Board : @(Model.IsLaden == false ? "No cargo on board" : Model.CargoTypeOnBoard)
 					</li>
 
 					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500;position:absolute;top:55px;left:300px;width:420px">
-						Vessel Length Overall : @Model.LOA m
+						Length Overall : @Model.LOA m
 					</li>
 					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500;position:absolute;top:100px;left:300px;width:420px">
-						Vessel Breadth Max : @Model.Breadth m
+						Breadth Max : @Model.Breadth m
 					</li>
 
 					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
@@ -41,15 +41,15 @@
 					</li>
 
 					<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
-						Vessel Last Port of call: @Model?.PortsOfCall?.LastOrDefault()?.PortName / @Model?.PortsOfCall?.LastOrDefault()?.Country
+						Last Port of call: @Model?.PortsOfCall?.LastOrDefault()?.PortName / @Model?.PortsOfCall?.LastOrDefault()?.Country
 					</li>
 					@if (Model?.PortsOfCall?.Any() ?? false)
 					{
 						<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
-							Vessel Latitude: @Model?.PortsOfCall?.LastOrDefault()?.Latitude.Replace(".","˚")
+							Latitude: @Model?.PortsOfCall?.LastOrDefault()?.Latitude.Replace(".","˚")
 						</li>
 						<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
-							Vessel Longitude: @Model?.PortsOfCall?.LastOrDefault()?.Longitude.Replace("-","").Replace(".","˚")
+							Longitude: @Model?.PortsOfCall?.LastOrDefault()?.Longitude.Replace("-","").Replace(".","˚")
 						</li>
 					}					
 					<select class="w-25  form-control-sm dropdown-divider" style="background-color:lightgreen;touch-action:cross-slide-x;font-weight:400">
@@ -80,39 +80,50 @@
 	@if (User.IsInRole(RoleConstants.USER_OWNER) && Model.CrewMembersOnBoard < 25)
 	{
 		<h6 style="text-align:center" class="text-black shadow-lg rounded-3 w-50">Manage Crew Members</h6>
-		<form method="get" class="m-3" >
-			
+		<form method="get" class="m-3" >			
 			<div class="shadow-lg bg-info bg-opacity-10 rounded-pill w-50" style="text-align:center">
+
 				<input style="text-align:left" type="submit" value="✔️ Add" title="Choose crew members for this vessel"
 				   class="btn btn-success btn-outline-dark rounded-pill" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="AssignCrewToVessel">
-
 				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>
-
-				<input style="text-align:left" type="submit" value="Remove" title="Remove crew members from this vessel"
+				@if (Model.CrewMembersOnBoard == 0)
+				{
+					<input disabled style="text-align:left" type="submit" value="Remove" title="Remove crew members from this vessel"
 				   class="btn btn-danger btn-outline-dark rounded-pill" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="RemoveCrewFromVessel">
-
-				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>
-
+				}
+				else
+				{
+					<input style="text-align:left" type="submit" value="Remove" title="Remove crew members from this vessel"
+				   class="btn btn-danger btn-outline-dark rounded-pill" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="RemoveCrewFromVessel">
+				}
+				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>					
+								
 				<input style="text-align:center" type="submit" value="☒ Back" title="Back to Vessels"
 				   asp-controller="Vessel" asp-action="GetAllVessels" class="btn btn-warning btn-outline-dark rounded-pill">
 			</div>
 		</form>
 	}	
-	else
+	else if(User.IsInRole(RoleConstants.USER_OWNER) && Model.CrewMembersOnBoard >= 25)
 	{
 		<h6 style="text-align:center" class="text-black shadow-lg rounded-3 w-50">Manage Crew Members</h6>
 		<form method="get" class="m-3">
 
 			<div class="shadow-lg bg-info bg-opacity-10 rounded-pill w-50" style="text-align:center">
+
 				<input disabled style="text-align:left" type="submit" value="✔️ Add" title="Choose crew members for this vessel"
 				   class="btn btn-success btn-outline-dark rounded-pill" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="AssignCrewToVessel">
-
 				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>
-
-				<input style="text-align:left" type="submit" value="Remove" title="Remove crew members from this vessel"
+				@if (Model.CrewMembersOnBoard == 0)
+				{
+					<input disabled style="text-align:left" type="submit" value="Remove" title="Remove crew members from this vessel"
 				   class="btn btn-danger btn-outline-dark rounded-pill" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="RemoveCrewFromVessel">
-
-				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>
+				}
+				else
+				{
+					<input style="text-align:left" type="submit" value="Remove" title="Remove crew members from this vessel"
+				   class="btn btn-danger btn-outline-dark rounded-pill" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="RemoveCrewFromVessel">
+				}
+				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>													
 
 				<input style="text-align:center" type="submit" value="☒ Back" title="Back to Vessels"
 				   asp-controller="Vessel" asp-action="GetAllVessels" class="btn btn-warning btn-outline-dark rounded-pill">
