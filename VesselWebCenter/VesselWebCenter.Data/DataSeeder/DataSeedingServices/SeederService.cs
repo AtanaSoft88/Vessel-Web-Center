@@ -1,4 +1,5 @@
-﻿using VesselWebCenter.Data.DataSeeder.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using VesselWebCenter.Data.DataSeeder.Contracts;
 using VesselWebCenter.Data.Models;
 using VesselWebCenter.Data.Repositories;
 
@@ -7,7 +8,7 @@ namespace VesselWebCenter.Data.DataSeeder.DataSeedingServices
     public class SeederService : ISeederService
     {
         private readonly IRepository repo;
-        
+
         public SeederService(IRepository _repo)
         {
             this.repo = _repo;
@@ -53,41 +54,18 @@ namespace VesselWebCenter.Data.DataSeeder.DataSeedingServices
 
         public async Task SeedPortsOfCall(PortOfCall[] ports)
         {
-            foreach (var port in ports)
+            var allVesselsCount = await repo.AllReadonly<Vessel>().CountAsync();
+            for (int i = 1; i <= allVesselsCount; i++)
             {
-                var portOfCall = new PortOfCall()
+                var vessel = await repo.GetByIdAsync<Vessel>(i);
+                if (vessel!=null)
                 {
-                    Latitude = port.Latitude,
-                    Longitude = port.Longitude,
-                    Country = port.Country,
-                    PortName = port.PortName,
-                    UNLocode = port.UNLocode,
-                };
-                var randomNumberVessels = new Random().Next(1, 15);
-
-                var vesselMinId = 1;
-                var vesselMaxId = repo.AllReadonly<Vessel>().Count() + 1;
-
-                for (int i = 0; i < randomNumberVessels; i++)
-                {
-                    var vesselRandomId = new Random().Next(vesselMinId, vesselMaxId);
-                    var vesselVisitedPort = await repo.GetByIdAsync<Vessel>(vesselRandomId);
-                    if (vesselVisitedPort != null)
-                    {
-                        portOfCall.Vessels.Add(vesselVisitedPort);
-                        await repo.AddAsync(portOfCall);
-
-                        if (!vesselVisitedPort.PortsOfCall.Contains(portOfCall))
-                        {
-                            vesselVisitedPort.PortsOfCall.Add(portOfCall);
-                            repo.Update<Vessel>(vesselVisitedPort);
-
-                        }
-
-                    }
+                    var first = 0;
+                    var last = ports.Length;
+                    var randomPortIndex = new Random().Next(first, last);
+                    vessel.PortsOfCall.Add(ports[randomPortIndex]);
                 }
-                await repo.AddAsync(portOfCall);
-            }
+            }            
             await repo.SaveChangesAsync();
         }
 
@@ -113,15 +91,15 @@ namespace VesselWebCenter.Data.DataSeeder.DataSeedingServices
         {
             foreach (var dp in destinationPorts)
             {
-                var port = new DestinationPort() 
-                { 
+                var port = new DestinationPort()
+                {
                     PortName = dp.PortName,
                     Country = dp.Country,
-                    Latitude =dp.Latitude,
-                    Longitude=dp.Longitude,
-                    UNLocode =dp.UNLocode,                   
+                    Latitude = dp.Latitude,
+                    Longitude = dp.Longitude,
+                    UNLocode = dp.UNLocode,
                 };
-               await repo.AddAsync(port);
+                await repo.AddAsync(port);
             }
             await repo.SaveChangesAsync();
         }
