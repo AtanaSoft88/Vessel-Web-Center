@@ -83,14 +83,7 @@
     "Latitude": "37.70 N",
     "Longitude": "24.06 E",
     "Country": "Greece"
-  },
-  {
-    "PortName": "Ponta Delgada",
-    "UNLocode": "PTPDL",
-    "Latitude": "37.73 N",
-    "Longitude": "-25.66 W",
-    "Country": "Portugal"
-  },
+  },  
   {
     "PortName": "Barcelona",
     "UNLocode": "ESBCN",

@@ -33,7 +33,7 @@
     "Latitude": "41.01 N",
     "Longitude": "28.59 E",
     "Country": "Turkey"
-  }, 
+  },
   {
     "PortName": "Bandirma",
     "UNLocode": "TRBDM-0005",
@@ -61,6 +61,182 @@
     "Latitude": "31.27 N",
     "Longitude": "31.44 E",
     "Country": "Egypt"
+  },
+  {
+    "PortName": "Varna",
+    "UNLocode": "BGVAR-003",
+    "Latitude": "43.11 N",
+    "Longitude": "27.55 E",
+    "Country": "Bulgaria"
+
+  },
+  {
+    "PortName": "Burgas",
+    "UNLocode": "BGBOJ",
+    "Latitude": "42.46 N",
+    "Longitude": "28.49 E",
+    "Country": "Bulgaria"
+  },
+  {
+    "PortName": "Nikolaev",
+    "UNLocode": "UA NLV",
+    "Latitude": "46.94 N",
+    "Longitude": "31.99 E",
+    "Country": "Ukraine"
+  },
+  {
+    "PortName": "Poti",
+    "UNLocode": "GEPTI",
+    "Latitude": "42.09 N",
+    "Longitude": "41.39 E",
+    "Country": "Georgia"
+  },
+  {
+    "PortName": "Samsun",
+    "UNLocode": "TRSSX",
+    "Latitude": "41.18 N",
+    "Longitude": "36.20 E",
+    "Country": "Turkey"
+  },
+  {
+    "PortName": "Berdyansk",
+    "UNLocode": "UAERD",
+    "Latitude": "46.76 N",
+    "Longitude": "36.76 E",
+    "Country": "Ukraine"
+  },
+  {
+    "PortName": "Chornomorsk",
+    "UNLocode": "UK-0123",
+    "Latitude": "46.33 N",
+    "Longitude": "30.65 E",
+    "Country": "Ukraine"
+  },
+  {
+    "PortName": "Odessa",
+    "UNLocode": "UA ODS",
+    "Latitude": "46.49 N",
+    "Longitude": "30.74 E",
+    "Country": "Ukraine"
+  },
+  {
+    "PortName": "Piraeus",
+    "UNLocode": "GRPIR",
+    "Latitude": "37.94 N",
+    "Longitude": "23.61 E",
+    "Country": "Greece"
+  },
+  {
+    "PortName": "Alexandria",
+    "UNLocode": "EG ALY",
+    "Latitude": "31.18 N",
+    "Longitude": "29.87 E",
+    "Country": "Egypt"
+  },
+  {
+    "PortName": "Izmir",
+    "UNLocode": "TR IZM",
+    "Latitude": "38.45 N",
+    "Longitude": "27.15 E",
+    "Country": "Turkey"
+  },
+  {
+    "PortName": "Lavrio",
+    "UNLocode": "GRLAV",
+    "Latitude": "37.70 N",
+    "Longitude": "24.06 E",
+    "Country": "Greece"
+  },
+  {
+    "PortName": "Ponta Delgada",
+    "UNLocode": "PTPDL",
+    "Latitude": "37.73 N",
+    "Longitude": "-25.66 W",
+    "Country": "Portugal"
+  },
+  {
+    "PortName": "Barcelona",
+    "UNLocode": "ESBCN",
+    "Latitude": "41.35 N",
+    "Longitude": "2.16 E",
+    "Country": "Spain"
+  },
+  {
+    "PortName": "Bizerte",
+    "UNLocode": "TNBIZ",
+    "Latitude": "37.26 N",
+    "Longitude": "9.85 E",
+    "Country": "Tunisia"
+  },
+  {
+    "PortName": "Palma de Mallorca",
+    "UNLocode": "ESPMI",
+    "Latitude": "39.55 N",
+    "Longitude": "2.63 E",
+    "Country": "Spain"
+  },
+  {
+    "PortName": "Palermo",
+    "UNLocode": "ITPMO",
+    "Latitude": "38.13 N",
+    "Longitude": "13.37 E",
+    "Country": "Italy"
+  },
+  {
+    "PortName": "Brindisi",
+    "UNLocode": "ITBDS",
+    "Latitude": "40.64 N",
+    "Longitude": "17.95 E",
+    "Country": "Italy"
+  },
+  {
+    "PortName": "Conacry",
+    "UNLocode": "GNCKY",
+    "Latitude": "9.52 N",
+    "Longitude": "-13.71 W",
+    "Country": "Guinea"
+  },
+  {
+    "PortName": "Safi",
+    "UNLocode": "MASFI",
+    "Latitude": "32.30 N",
+    "Longitude": "-9.25 W",
+    "Country": "Morocco"
+  },
+  {
+    "PortName": "Casablanca",
+    "UNLocode": "MACAS",
+    "Latitude": "33.61 N",
+    "Longitude": "-7.59 W",
+    "Country": "Morocco"
+  },
+  {
+    "PortName": "Genova",
+    "UNLocode": "ITGOA",
+    "Latitude": "44.40 N",
+    "Longitude": "8.90 E",
+    "Country": "Italy"
+  },
+  {
+    "PortName": "Constanca",
+    "UNLocode": "ROCND",
+    "Latitude": "44.13 N",
+    "Longitude": "28.68 E",
+    "Country": "Romania"
+  },
+  {
+    "PortName": "Midia",
+    "UNLocode": "ROMID",
+    "Latitude": "44.34 N",
+    "Longitude": "28.65 E",
+    "Country": "Romania"
+  },
+  {
+    "PortName": "Caronte",
+    "UNLocode": "FRCOZ",
+    "Latitude": "43.40 N",
+    "Longitude": "5.01 E",
+    "Country": "France"
   }
 
 ]

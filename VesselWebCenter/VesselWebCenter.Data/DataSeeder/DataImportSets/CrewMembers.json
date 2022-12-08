@@ -4,8 +4,8 @@
     "LastName": "Minchev",
     "Nationality": "Bulgaria",
     "Age": 19,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -13,8 +13,8 @@
     "LastName": "Manolov",
     "Nationality": "Bulgaria",
     "Age": 29,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -22,8 +22,8 @@
     "LastName": "Keran",
     "Nationality": "Armenia",
     "Age": 22,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -31,8 +31,8 @@
     "LastName": "Ichkovich",
     "Nationality": "Ukraine",
     "Age": 25,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -40,8 +40,8 @@
     "LastName": "Procenko",
     "Nationality": "Russia",
     "Age": 56,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -49,17 +49,17 @@
     "LastName": "Kirov",
     "Nationality": "Bulgaria",
     "Age": 40,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
     "FirstName": "Xin Zhao",
     "LastName": "Min-Zho",
-    "Nationality": "Chinese",
+    "Nationality": "China",
     "Age": 32,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -67,8 +67,8 @@
     "LastName": "Cvetkov",
     "Nationality": "Bulgaria",
     "Age": 33,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -76,8 +76,8 @@
     "LastName": "Mmihov",
     "Nationality": "Bulgaria",
     "Age": 59,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -85,8 +85,8 @@
     "LastName": "Kasimov",
     "Nationality": "Bulgaria",
     "Age": 35,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -94,8 +94,8 @@
     "LastName": "Conev",
     "Nationality": "Bulgaria",
     "Age": 26,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -103,8 +103,8 @@
     "LastName": "Pizendawer",
     "Nationality": "Nigeria",
     "Age": 48,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -112,8 +112,8 @@
     "LastName": "Dlaware",
     "Nationality": "USA",
     "Age": 37,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -121,8 +121,8 @@
     "LastName": "Konesberg",
     "Nationality": "Germany",
     "Age": 31,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -130,8 +130,8 @@
     "LastName": "Picheza",
     "Nationality": "Italy",
     "Age": 43,
-    "IsPartOfACrew": false,
-    "VesselId": null
+    "IsPartOfACrew": true,
+    "VesselId": 2
 
   },
   {
@@ -403,6 +403,312 @@
     "IsPartOfACrew": false,
     "VesselId": null
 
+  },
+  {
+    "FirstName": "Mancho",
+    "LastName": "Biserov",
+    "Nationality": "Bulgaria",
+    "Age": 21,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Enrique",
+    "LastName": "Basques",
+    "Nationality": "Spain",
+    "Age": 22,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Mauro",
+    "LastName": "Ferucci",
+    "Nationality": "Italy",
+    "Age": 29,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Xhen",
+    "LastName": "Zhio-Chii",
+    "Nationality": "China",
+    "Age": 25,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Phill",
+    "LastName": "Collindare",
+    "Nationality": "USA",
+    "Age": 27,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Charls",
+    "LastName": "Dillson",
+    "Nationality": "England",
+    "Age": 33,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Crls",
+    "LastName": "Peterson",
+    "Nationality": "Denmark",
+    "Age": 27,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Michael",
+    "LastName": "Criton",
+    "Nationality": "USA",
+    "Age": 47,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Oliver",
+    "LastName": "Becker",
+    "Nationality": "USA",
+    "Age": 22,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Paegin",
+    "LastName": "Landsoer",
+    "Nationality": "USA",
+    "Age": 57,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Michael",
+    "LastName": "Buckston",
+    "Nationality": "USA",
+    "Age": 28,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Joseph",
+    "LastName": "Collins",
+    "Nationality": "USA",
+    "Age": 31,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Phill",
+    "LastName": "Macgregory",
+    "Nationality": "USA",
+    "Age": 24,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Christopher",
+    "LastName": "Maxton",
+    "Nationality": "USA",
+    "Age": 59,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Wayne",
+    "LastName": "Dockhower",
+    "Nationality": "USA",
+    "Age": 44,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Derrek",
+    "LastName": "Floman",
+    "Nationality": "USA",
+    "Age": 37,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Chuck",
+    "LastName": "Edison",
+    "Nationality": "USA",
+    "Age": 36,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Patrick",
+    "LastName": "Mackdane",
+    "Nationality": "USA",
+    "Age": 38,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Snake",
+    "LastName": "John",
+    "Nationality": "USA",
+    "Age": 21,
+    "IsPartOfACrew": false,
+    "VesselId": null
+  },
+  {
+    "FirstName": "Johnathan",
+    "LastName": "Flecker",
+    "Nationality": "USA",
+    "Age": 19,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Patrick",
+    "LastName": "Stock",
+    "Nationality": "USA",
+    "Age": 49,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Biser",
+    "LastName": "Prodanov",
+    "Nationality": "Bulgaria",
+    "Age": 20,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Milen",
+    "LastName": "Nonev",
+    "Nationality": "Bulgaria",
+    "Age": 21,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Kristian",
+    "LastName": "Peikov",
+    "Nationality": "Bulgaria",
+    "Age": 27,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Pavel",
+    "LastName": "Dinkov",
+    "Nationality": "Bulgaria",
+    "Age": 32,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Dinko",
+    "LastName": "Cenkov",
+    "Nationality": "Bulgaria",
+    "Age": 24,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Kolio",
+    "LastName": "Krasimirov",
+    "Nationality": "Bulgaria",
+    "Age": 58,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Anesti",
+    "LastName": "Hristov",
+    "Nationality": "Bulgaria",
+    "Age": 23,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Petrozar",
+    "LastName": "Nenov",
+    "Nationality": "Bulgaria",
+    "Age": 28,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Velizar",
+    "LastName": "Keranov",
+    "Nationality": "Bulgaria",
+    "Age": 18,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Kimnoa",
+    "LastName": "Benza",
+    "Nationality": "Nigeria",
+    "Age": 39,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Peter",
+    "LastName": "Lakenson",
+    "Nationality": "Sweden",
+    "Age": 25,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Brau",
+    "LastName": "Drainhoff",
+    "Nationality": "Germany",
+    "Age": 42,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
+  },
+  {
+    "FirstName": "Gunter",
+    "LastName": "Zehedorf",
+    "Nationality": "Germany",
+    "Age": 34,
+    "IsPartOfACrew": false,
+    "VesselId": null
+
   }
+
 
 ]
