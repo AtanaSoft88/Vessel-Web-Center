@@ -33,6 +33,12 @@ namespace VesselWebCenter.Services
                 CargoTypeOnBoard = x.CargoTypeOnBoard ?? "Unavailable",
                 CrewMembersOnBoard = x.CrewMembers.Count(),
                 ManningCompanyName = x.ManningCompany.Name,
+                Distance = x.Distances
+                .Sum(x=>x.VesselDistance) == 0 ?
+                "n/a" : double.Parse(x.Distances
+                .Sum(x => x.VesselDistance.Value)
+                .ToString("f2"))
+                .ToString(),
                 PortsOfCall = x.PortsOfCall.ToList(),                
             }).FirstAsync();     
                   

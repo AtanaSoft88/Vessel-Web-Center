@@ -11,6 +11,7 @@ namespace VesselWebCenter.Data.Models
         {
             PortsOfCall = new HashSet<PortOfCall>();
             CrewMembers = new HashSet<CrewMember>();
+            Distances = new HashSet<Distance>();
         }
 
         [Key]
@@ -22,20 +23,20 @@ namespace VesselWebCenter.Data.Models
 
         [Required]
         [StringLength(10)]
-        public string CallSign { get; set; } = null!; // Позивна 9HAYH9 - 6 letters/digits mixed Uppercase
+        public string CallSign { get; set; } = null!; 
 
-        public bool IsLaden { get; set; }  // Loaded or under Ballast
-
-        [Required]        
-        public int LengthOverall { get; set; } // LOA
+        public bool IsLaden { get; set; }  
 
         [Required]        
-        public int BreadthMax { get; set; } // LBP  
+        public int LengthOverall { get; set; } 
 
-        [Column(TypeName = "nvarchar(35)")]  // This Attribute converts an Enum into nvarchar - STRING in DataBase,instead of Int32
+        [Required]        
+        public int BreadthMax { get; set; } 
+
+        [Column(TypeName = "nvarchar(35)")]  
         [Required]
         public VesselType VesselType { get; set; }
-        public string? CargoTypeOnBoard { get; set; } // Can be null if under Ballast or VesselType = Tug
+        public string? CargoTypeOnBoard { get; set; } 
 
         [Required]
         [StringLength(400)]
@@ -48,6 +49,8 @@ namespace VesselWebCenter.Data.Models
         [ForeignKey(nameof(DestinationPort))]
         public int? DestinationPortId { get; set; }
         public DestinationPort? DestinationPort { get; set; }
+
+        public virtual ICollection<Distance> Distances { get; set; }
 
         public virtual ICollection<CrewMember> CrewMembers { get; set; }
 

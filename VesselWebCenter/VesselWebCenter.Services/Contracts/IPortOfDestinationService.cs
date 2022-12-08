@@ -15,6 +15,6 @@ namespace VesselWebCenter.Services.Contracts
         Task<IEnumerable<string>> GetCoordinates(string parameters,int vslId);
         Task<DestinationViewModel> GetDestinationPorts(string vesselId);
         Task<VoyageDataViewModel> GetDataForCalculation(IEnumerable<string> extractedCoordinates, double spd, int VesselId);
-        Task AddDestinationToVessel( int vesselId, int destinationId);
+        Task AddDestinationToVessel( int vesselId, int destinationId, double distance);
     }
 }

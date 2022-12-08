@@ -30,9 +30,9 @@ namespace VesselWebCenter.Data.DataSeeder.DataSeedingServices
         {
             foreach (var vsl in vessels)
             {
-                var companyId1 = await repo.GetByIdAsync<ManningCompany>(vsl.ManningCompanyId);
+                var companyId = await repo.GetByIdAsync<ManningCompany>(vsl.ManningCompanyId);
 
-                if (companyId1 != null)
+                if (companyId != null)
                 {
                     var vessel = new Vessel()
                     {
@@ -44,7 +44,8 @@ namespace VesselWebCenter.Data.DataSeeder.DataSeedingServices
                         VesselType = vsl.VesselType,
                         CargoTypeOnBoard = vsl.CargoTypeOnBoard,
                         VesselImageUrl = vsl.VesselImageUrl,
-                        ManningCompanyId = companyId1.Id,
+                        ManningCompanyId = companyId.Id,
+                        Distances = vsl.Distances,
                     };
                     await repo.AddAsync(vessel);
                 }
@@ -81,6 +82,7 @@ namespace VesselWebCenter.Data.DataSeeder.DataSeedingServices
                     Age = member.Age,
                     IsPartOfACrew = member.IsPartOfACrew,
                     VesselId = member.VesselId,
+                    DateHired = member.IsPartOfACrew ? DateTime.UtcNow : null,
                 };
                 await repo.AddAsync(crewMember);
             }

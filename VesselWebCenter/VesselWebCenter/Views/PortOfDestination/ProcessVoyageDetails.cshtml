@@ -1,6 +1,6 @@
 ﻿@model VoyageDataViewModel
 @{
-	ViewData["Title"] = "Voyage Estimated Det⚝ils ";
+	ViewData["Title"] = "Voyage Estimated Det⚝ils ";	
 }
 <h2>@ViewData["Title"]</h2>
 <div class="form-control-sm card-header-pills card-body	">
@@ -51,9 +51,10 @@
 	</table>
 
 	<div>
-		<form method="post">
-			<input id="field1" type="hidden" value="@Model.DestinationId" />
-			<input id="field2" type="submit" name="destinationId" value="Start Voyage🌀" onclick="myDestination()" class="btn btn-dark btn-outline-success rounded-pill" asp-action="SetVesselNewDestination" asp-controller="PortOfDestination" asp-route-vslId="@Model.VesselId" />
+		<form method="post">		
+			<input type="submit" value="Start Voyage🌀" class="btn btn-dark btn-outline-success rounded-pill"
+			       asp-action="SetVesselNewDestination" asp-controller="PortOfDestination"
+				   asp-route-vslId="@Model.VesselId" asp-route-distance="@Model.CalculatedDistance" asp-route-destinationId="@Model.DestinationId" />
 		</form>
 	</div>
 </div>

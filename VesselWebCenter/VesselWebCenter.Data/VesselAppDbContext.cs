@@ -29,6 +29,7 @@ namespace VesselWebCenter.Data
         public DbSet<CrewMember> CrewMembers { get; set; }
         public DbSet<PortOfCall> PortsOfCall { get; set; }
         public DbSet<DestinationPort> DestinationPorts { get; set; }
+        public DbSet<Distance> Distances { get; set; }
         
       
     }

@@ -76,6 +76,7 @@ namespace VesselWebCenter.Services
                                    .Replace("Lat: ", "")
                                    .Replace(" N Long: ", " ")
                                    .Replace(" E ", " ")
+                                   .Replace(" W ", " ")
                                    .Replace(" N ", " ")
                                    .Replace(" Country: ", " ")
                                    .Replace(" Locode: ", " ");
@@ -148,9 +149,12 @@ namespace VesselWebCenter.Services
             return dist;
         }
 
-        public async Task AddDestinationToVessel(int vesselId, int destinationId)
+        public async Task AddDestinationToVessel(int vesselId, int destinationId, double distanceSailed)
         {
-            var vessel = await repo.All<Vessel>().Include(x => x.PortsOfCall).FirstOrDefaultAsync(x => x.Id == vesselId);
+            var vessel = await repo.All<Vessel>()
+                .Include(x => x.PortsOfCall)
+                .Include(y=>y.Distances)
+                .FirstOrDefaultAsync(x => x.Id == vesselId);
 
             var destinationPort = await repo.GetByIdAsync<DestinationPort>(destinationId);
             var portOfCall = new PortOfCall()
@@ -163,9 +167,15 @@ namespace VesselWebCenter.Services
             };            
             if (vessel.PortsOfCall.Last().UNLocode != portOfCall.UNLocode)
             {
+                var distance = new Distance() 
+                {
+                    VesselName=vessel.Name,
+                    VesselDistance = distanceSailed,
+                    VesselId=vessel.Id,
+                };
                 vessel.DestinationPortId = destinationId;
                 vessel.PortsOfCall.Add(portOfCall);
-
+                vessel.Distances.Add(distance);
                 await repo.SaveChangesAsync();
             }
         }

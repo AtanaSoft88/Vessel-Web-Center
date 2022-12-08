@@ -22,6 +22,7 @@ namespace VesselWebCenter.Services.ViewModels
         public string? CargoTypeOnBoard { get; set; } = null!;  // Can be null if under Ballast or VesselType = Tug
         public string ManningCompanyName { get; set; } = null!;
         public int? CrewMembersOnBoard { get; set; }
+        public string? Distance { get; set; }
         public List<PortOfCall>? PortsOfCall { get; set; }
     }        
 }

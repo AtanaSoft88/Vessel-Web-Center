@@ -84,9 +84,9 @@ namespace VesselWebCenter.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> SetVesselNewDestination(int vslId, int destinationId) 
+        public async Task<IActionResult> SetVesselNewDestination(int vslId, int destinationId, double distance) 
         {
-            await service.AddDestinationToVessel(vslId, destinationId);
+            await service.AddDestinationToVessel(vslId, destinationId, distance);
             return RedirectToAction(nameof(AssignVesselForVoyage), "PortOfDestination");
         }
     }
