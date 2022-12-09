@@ -35,10 +35,10 @@ namespace VesselWebCenter.Services
                 ManningCompanyName = x.ManningCompany.Name,
                 Distance = x.Distances
                 .Sum(x=>x.VesselDistance) == 0 ?
-                "n/a" : double.Parse(x.Distances
+                "𝕟𝐼𝕒" : double.Parse(x.Distances
                 .Sum(x => x.VesselDistance.Value)
-                .ToString("f2"))
-                .ToString(),
+                .ToString("f2"))+ " nm",
+                
                 PortsOfCall = x.PortsOfCall.ToList(),                
             }).FirstAsync();     
                   

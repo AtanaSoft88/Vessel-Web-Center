@@ -51,7 +51,7 @@
 						<li class="list-group-item bg-primary bg-opacity-25" style="font-weight:500">
 							Longitude: @Model?.PortsOfCall?.LastOrDefault()?.Longitude.Replace("-","").Replace(".","˚")
 						</li>
-					}					
+					}
 					<select class="w-25  form-control-sm dropdown-divider" style="background-color:lightgreen;touch-action:cross-slide-x;font-weight:400">
 						<option>All Visited Ports</option>
 						@for (int i = 0; i < Model?.PortsOfCall?.Count(); i++)
@@ -61,17 +61,17 @@
 								@($"{i + 1}-{Model.PortsOfCall[i].PortName}")
 
 							</option>
-							
+
 						}
-						
+
 					</select>
 					<div class="form-control-sm bg-primary bg-opacity-25 rounded-3">
-						<h6 style="font-weight:500;text-align:left">Total distance sailed: @Model.Distance nm</h6>
+						<h6 style="-webkit-text-fill-color:darkslateblue; font-weight:500;text-align:left">Total distance sailed: @Model.Distance</h6>
 					</div>
 				</ul>
 			</div>
 
-		</div>		
+		</div>
 
 	</form>
 </div>
@@ -80,7 +80,7 @@
 	@if (User.IsInRole(RoleConstants.USER_OWNER) && Model.CrewMembersOnBoard < 25)
 	{
 		<h6 style="text-align:center" class="text-black shadow-lg rounded-3 w-50">Manage Crew Members</h6>
-		<form method="get" class="m-3" >			
+		<form method="get" class="m-3">
 			<div class="shadow-lg bg-info bg-opacity-10 rounded-pill w-50" style="text-align:center">
 
 				<input style="text-align:left" type="submit" value="✔️ Add" title="Choose crew members for this vessel"
@@ -96,14 +96,14 @@
 					<input style="text-align:left" type="submit" value="Remove" title="Remove crew members from this vessel"
 				   class="btn btn-danger btn-outline-dark rounded-pill" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="RemoveCrewFromVessel">
 				}
-				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>					
-								
+				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>
+
 				<input style="text-align:center" type="submit" value="☒ Back" title="Back to Vessels"
 				   asp-controller="Vessel" asp-action="GetAllVessels" class="btn btn-warning btn-outline-dark rounded-pill">
 			</div>
 		</form>
-	}	
-	else if(User.IsInRole(RoleConstants.USER_OWNER) && Model.CrewMembersOnBoard >= 25)
+	}
+	else if (User.IsInRole(RoleConstants.USER_OWNER) && Model.CrewMembersOnBoard >= 25)
 	{
 		<h6 style="text-align:center" class="text-black shadow-lg rounded-3 w-50">Manage Crew Members</h6>
 		<form method="get" class="m-3">
@@ -123,7 +123,7 @@
 					<input style="text-align:left" type="submit" value="Remove" title="Remove crew members from this vessel"
 				   class="btn btn-danger btn-outline-dark rounded-pill" asp-route-id="@Model.Id" asp-controller="Crew" asp-action="RemoveCrewFromVessel">
 				}
-				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>													
+				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>
 
 				<input style="text-align:center" type="submit" value="☒ Back" title="Back to Vessels"
 				   asp-controller="Vessel" asp-action="GetAllVessels" class="btn btn-warning btn-outline-dark rounded-pill">
