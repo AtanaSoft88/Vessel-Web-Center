@@ -35,28 +35,28 @@ namespace VesselWebCenter.Services
             }).OrderByDescending(vc => vc.TotalVesselsVisited).ToListAsync();
             var portNames = allPorts.Select(x=>x.PortName).ToList();
             
-            var dict = new Dictionary<string, int>();
-            foreach (var item in allPorts)
+            var portInfo = new Dictionary<string, int>();
+            foreach (var port in allPorts)
             {
-                if (!dict.ContainsKey(item.PortName))
+                if (!portInfo.ContainsKey(port.PortName))
                 {
-                    dict.Add(item.PortName, item.TotalVesselsVisited);
+                    portInfo.Add(port.PortName, port.TotalVesselsVisited);
                 }
                 else
                 {
-                    dict[item.PortName]++;
+                    portInfo[port.PortName]++;
                 }
             }
             allPorts = allPorts.DistinctBy(x=>x.PortName).ToList();
             for (int i = 0; i < allPorts.Count(); i++)
             {
-                if ( dict.Keys.ElementAt(i) == allPorts[i].PortName)
+                if ( portInfo.Keys.ElementAt(i) == allPorts[i].PortName)
                 {
-                    allPorts[i].TotalVesselsVisited = dict[allPorts[i].PortName];                   
+                    allPorts[i].TotalVesselsVisited = portInfo[allPorts[i].PortName];                   
                 }                
             }
             
-            return allPorts.OrderByDescending(x => x.TotalVesselsVisited).Take(10).ToList(); ;
+            return allPorts.OrderByDescending(x => x.TotalVesselsVisited).Take(10).ToList();
         }
     }
 }
