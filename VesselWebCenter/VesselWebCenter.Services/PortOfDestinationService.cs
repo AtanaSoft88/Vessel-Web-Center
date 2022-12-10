@@ -27,6 +27,7 @@ namespace VesselWebCenter.Services
                 LongitudeLastPort = x.PortsOfCall.OrderByDescending(x => x.Id).Select(x => x.Longitude).First(),
                 LastPortName = x.PortsOfCall.OrderByDescending(x => x.Id).Select(x => x.PortName).First(),
                 LastPortCountry = x.PortsOfCall.OrderByDescending(x => x.Id).Select(x => x.Country).First(),
+                IsValueAvailable = true
             }).ToListAsync();
             return vessels;
         }

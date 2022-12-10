@@ -300,7 +300,7 @@
     "BreadthMax": 35,
     "VesselType": 4,
     "CargoTypeOnBoard": "",
-    "ManningCompanyId": 8,
+    "ManningCompanyId": 5,
     "VesselImageUrl": "https://www.rantapallo.fi/wp-content/uploads/2014/09/Silja-Symphony-Silja-Line.jpg"
 
   },
@@ -378,8 +378,8 @@
     "BreadthMax": 15,
     "VesselType": 6,
     "CargoTypeOnBoard": "",
-    "ManningCompanyId": 1,
-    "VesselImageUrl": "https://www.kongsberg.com/contentassets/8b7f499ec25e498db10e951971f2acdb/hero_sma_tug.jpg"
+    "ManningCompanyId": 5,
+    "VesselImageUrl": "https://dolphin1.bg/wp-content/uploads/2017/06/DJI_0291.00_00_07_03.Still020-1.jpg?x61404"
   },
   {
 
@@ -390,7 +390,7 @@
     "BreadthMax": 13,
     "VesselType": 6,
     "CargoTypeOnBoard": "",
-    "ManningCompanyId": 1,
+    "ManningCompanyId": 5,
     "VesselImageUrl": "https://www.bairdmaritime.com/wp-content/uploads/media/k2/items/src/72aaebf2db92c4cb1c4ea733fa6aab75.jpg"
   },
   {

@@ -53,6 +53,7 @@ builder.Services.AddScoped<IPortService, PortService>();
 builder.Services.AddScoped<IAccountSupportService, AccountSupportService>();
 builder.Services.AddScoped<ISeederService, SeederService>();
 builder.Services.AddScoped<IPortOfDestinationService, PortOfDestinationService>();
+builder.Services.AddScoped<IManningCompanyService, ManningCompanyService>();
 
 var app = builder.Build();
 

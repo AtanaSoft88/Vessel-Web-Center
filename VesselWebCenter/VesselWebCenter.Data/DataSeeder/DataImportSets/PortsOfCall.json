@@ -16,7 +16,7 @@
   },
   {
     "PortName": "Nikolaev",
-    "UNLocode": "UA NLV",
+    "UNLocode": "UANLV",
     "Latitude": "46.94 N",
     "Longitude": "31.99 E",
     "Country": "Ukraine"
@@ -51,7 +51,7 @@
   },
   {
     "PortName": "Odessa",
-    "UNLocode": "UA ODS",
+    "UNLocode": "UAODS",
     "Latitude": "46.49 N",
     "Longitude": "30.74 E",
     "Country": "Ukraine"
@@ -65,14 +65,14 @@
   },
   {
     "PortName": "Alexandria",
-    "UNLocode": "EG ALY",
+    "UNLocode": "EGALY",
     "Latitude": "31.18 N",
     "Longitude": "29.87 E",
     "Country": "Egypt"
   },
   {
     "PortName": "Izmir",
-    "UNLocode": "TR IZM",
+    "UNLocode": "TRIZM",
     "Latitude": "38.45 N",
     "Longitude": "27.15 E",
     "Country": "Turkey"

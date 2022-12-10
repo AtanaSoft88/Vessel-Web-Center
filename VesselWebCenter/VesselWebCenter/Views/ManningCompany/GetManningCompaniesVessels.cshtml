@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ManningCompaniesVesselsViewModel>
+@{
+	ViewData["Title"] = "Current Company Vessels";	
+}
+<link rel="stylesheet" href="~/css/images-horizontally.css">
+
+<h3>@Model.Select(x=>x.CompanyName).First()</h3>
+<hr />
+
+<div class="card-body bg-info bg-opacity-25 rounded-3">
+	<div class="card-header-pills form-control-sm" style="display:inline-block">
+		<h6 class="card-body rounded-pill bg-primary bg-opacity-25 w-25">Vessels</h6>
+		@foreach (var dto in Model)
+		{
+			<div style="display:inline-block" class="card-body">
+				<p>@dto.VesselName</p>
+				<img style="display:inline-block; width: 15rem; height:10rem"
+				 src="@dto.VesselImage">
+			</div>
+		}
+
+	</div>
+	<h5 class="card-body rounded-pill bg-primary bg-opacity-25 w-50" title="Total Distance Sailed by all Company Vessels">
+		Distance Sailed by Vessels:
+		@(Model.Select(x => x.Distance).Sum() != 0.0 ?
+			Model.Select(x => x.Distance).Sum().ToString("f2") : "N/A")
+	</h5>
+</div>
+
+<div>
+	<form method="get">
+		<button class="btn btn-warning btn-outline-dark rounded-3" asp-controller="ManningCompany" asp-action="GetAllManningCompanies" type="submit">Back to Companies</button>
+	</form>
+</div>
