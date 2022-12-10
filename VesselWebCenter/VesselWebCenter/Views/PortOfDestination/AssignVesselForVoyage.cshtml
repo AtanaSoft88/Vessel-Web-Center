@@ -2,61 +2,77 @@
 @{
 	ViewData["Title"] = "◦•● ℂ𝕙𝕠𝕠𝕤𝕖 𝕒 𝕍𝕖𝕤𝕤𝕖𝕝 𝕗𝕠𝕣 𝕀𝕟𝕥𝕖𝕣𝕟𝕒𝕥𝕚𝕠𝕟𝕒𝕝 𝕍𝕠𝕪𝕒𝕘𝕖 ●•◦";
 }
-<h2 class="text-black shadow-lg rounded-pill bg-primary bg-opacity-25 w-75">@ViewData["Title"]</h2>
-<hr class="w-75" />
-<div class="table-responsive card-body bg-primary bg-opacity-25 rounded-3 shadow-lg col-8">
-	<form method="post">
-		<table class="table border-secondary table-bordered border-5 table-striped table-hover form-control-sm w-100 bg-success bg-opacity-25">
-			<thead>
-				<tr class="shadow-lg text-dark border-secondary border-3" style="background-color:slateblue">
-					<th align="center">❖ Vessel Name</th>
-					<th align="center">❖ Vessel Type</th>
-					<th align="center">❖ Last Port Name</th>
-					<th align="center">❖ Last Port of Call Lat/Long</th>
-					<th align="center">❖ Select Vessel for Voyage ✔</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var vsl in Model)
-				{
-					<tr>
-						<td>@vsl.VesselName</td>
-						<td>@vsl.VesselType</td>
-						<td>
-							@vsl.LastPortName / @vsl.LastPortCountry
-						</td>
-						<td>
-							φ: @(
-							vsl.LatitudeLastPort
-							)<br>
-							λ: @(
-						vsl.LongitudeLastPort
-						)
-						</td>
+@if (Model.Count(x=>x.IsValueAvailable==true) > 0)
+{
+	<h2 class="text-black shadow-lg rounded-pill bg-primary bg-opacity-25 w-75">@ViewData["Title"]</h2>
+	<hr class="w-75" />
+	<div class="table-responsive card-body bg-primary bg-opacity-25 rounded-3 shadow-lg col-8">
+		<form method="post">
+			<table class="table border-secondary table-bordered border-5 table-striped table-hover form-control-sm w-100 bg-success bg-opacity-25">
+				<thead>
+					<tr class="shadow-lg text-dark border-secondary border-3" style="background-color:slateblue">
+						<th align="center">❖ Vessel Name</th>
+						<th align="center">❖ Vessel Type</th>
+						<th align="center">❖ Last Port Name</th>
+						<th align="center">❖ Last Port of Call Lat/Long</th>
+						<th align="center">❖ Select Vessel for Voyage ✔</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var vsl in Model)
+					{
+						<tr>
+							<td>@vsl.VesselName</td>
+							<td>@vsl.VesselType</td>
+							<td>
+								@vsl.LastPortName / @vsl.LastPortCountry
+							</td>
+							<td>
+								φ: @(
+									vsl.LatitudeLastPort
+									)<br>
+								λ: @(
+									vsl.LongitudeLastPort
+									)
+							</td>
 
 
-						<td>
-							<div class="text-center">
-								<button disabled id="btn+@(vsl.VesselId)" class="btn btn-primary btn-outline-dark bg-opacity-75 rounded-pill"
+							<td>
+								<div class="text-center">
+									<button disabled id="btn+@(vsl.VesselId)" class="btn btn-primary btn-outline-dark bg-opacity-75 rounded-pill"
 									asp-action="AssignVesselForVoyage" asp-controller="PortOfDestination"
 									asp-route-vesselParams="@(vsl.VesselId +" "+ vsl.LatitudeLastPort +" "+ vsl.LongitudeLastPort)">
-									Select➲
-								</button>
-								<input class="form-check-input bg-primary bg-opacity-50 bs-popover-auto" type="checkbox" onchange="document.getElementById('btn+@(vsl.VesselId)').disabled = !this.checked;"
+										Select➲
+									</button>
+									<input class="form-check-input bg-primary bg-opacity-50 bs-popover-auto" type="checkbox" onchange="document.getElementById('btn+@(vsl.VesselId)').disabled = !this.checked;"
 								   name="progress" id="progress+@vsl.VesselId" value="@vsl.VesselId" tabIndex="@vsl.VesselId" onClick="ckChange(this)">
-							</div>
+								</div>
 
 
-						</td>
+							</td>
 
-					</tr>
+						</tr>
 
-				}
-			</tbody>
-		</table>
+					}
+				</tbody>
+			</table>
 
-	</form>
-</div>
+		</form>
+	</div>
+}
+else
+{
+	<div class="form-control border-danger bg-info rounded-pill bg-opacity-50 text-center w-100">
+		<h2>There are still no Vessels available for Voyage!</h2>
+
+		<div>
+			<form method="get" class="bg-info text-center w-100 bg-opacity-25 rounded-pill">
+				<button class="btn btn-warning btn-outline-danger rounded-pill" asp-action="GetAllVessels" asp-controller="Vessel">Return to Vessels</button>
+			</form>
+		</div>
+	</div>
+	
+}
 
 @section Scripts{
 	<script src="~/js/MyCheckBox.js" asp-append-version="true"></script>

@@ -21,7 +21,10 @@ namespace VesselWebCenter.Controllers
         public async Task<IActionResult> AssignVesselForVoyage()
         {
             var model = await service.GetAllAvailableForVoyage();
-
+            if (model.Count()!=0)
+            {
+                model.Select(x => x.IsValueAvailable=true);
+            }   
             return View(model);
         }
 
