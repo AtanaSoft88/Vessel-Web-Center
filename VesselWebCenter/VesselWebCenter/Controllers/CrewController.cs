@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,12 @@ namespace VesselWebCenter.Controllers
     public class CrewController : BaseController
     {
         private readonly ICrewService service;
+        private readonly INotyfService notyf;
 
-        public CrewController(ICrewService service)
+        public CrewController(ICrewService service, INotyfService _notyf)
         {
             this.service = service;
+            notyf = _notyf;
         }
                 
         [HttpGet]
@@ -37,6 +40,7 @@ namespace VesselWebCenter.Controllers
 
             }
             await service.AddCrewMemberToDataBase(model);
+            notyf.Success($"{model.FirstName} {model.LastName} has been registered as a crew member with success!");
             return RedirectToAction(nameof(AddCrewMemberAsUnassigned));
 
         }
@@ -63,6 +67,7 @@ namespace VesselWebCenter.Controllers
                 return this.View(model);
             }
             await service.GetCrewMemberAdd(model);
+            notyf.Success($"A crew member has been add to this vessel!");
             return RedirectToAction("ChooseAVessel","Vessel", new { Id});
 
         }
@@ -89,6 +94,7 @@ namespace VesselWebCenter.Controllers
                 return this.View(model);
             }
             await service.GetCrewMemberRemoved(model);
+            notyf.Warning($"A crew member has been removed from this vessel!");
             return RedirectToAction("ChooseAVessel", "Vessel", new { model.VesselId });
 
         }

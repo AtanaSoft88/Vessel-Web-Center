@@ -9,7 +9,8 @@ using VesselWebCenter.Data.Models.Accounts;
 using VesselWebCenter.Data.Repositories;
 using VesselWebCenter.Services;
 using VesselWebCenter.Services.Contracts;
-
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,8 +54,14 @@ builder.Services.AddScoped<IAccountSupportService, AccountSupportService>();
 builder.Services.AddScoped<ISeederService, SeederService>();
 builder.Services.AddScoped<IPortOfDestinationService, PortOfDestinationService>();
 builder.Services.AddScoped<IManningCompanyService, ManningCompanyService>();
-
-var app = builder.Build();
+builder.Services.AddNotyf(config =>  // notify toast msgs
+{ 
+    config.DurationInSeconds = 10; config
+    .IsDismissable = true; config
+    .Position = NotyfPosition
+    .TopCenter; 
+});
+var app = builder.Build(); 
 
 using (var serviceScope = app.Services.CreateScope())
 {
@@ -86,6 +93,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseNotyf(); // notify toast msgs
 app.MapRazorPages();
 app.Run();
 

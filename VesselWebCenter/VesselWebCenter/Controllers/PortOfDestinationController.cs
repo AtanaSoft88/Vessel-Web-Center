@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using VesselWebCenter.Data.Constants;
@@ -11,10 +12,11 @@ namespace VesselWebCenter.Controllers
     public class PortOfDestinationController : BaseController
     {
         private readonly IPortOfDestinationService service;
-
-        public PortOfDestinationController(IPortOfDestinationService _service)
+        private readonly INotyfService notyf;
+        public PortOfDestinationController(IPortOfDestinationService _service, INotyfService _notyf)
         {
             this.service = _service;
+            this.notyf = _notyf;
         }
         
         [HttpGet]
@@ -63,7 +65,8 @@ namespace VesselWebCenter.Controllers
             {
                 var extractedCoordinates = await service.GetCoordinates(value,vslId);
                 if (extractedCoordinates == null) 
-                {
+                {                    
+                    notyf.Warning("Voyage could not be processed! Please select Destination port to be different from Last point!");
                     return RedirectToAction(nameof(AssignVesselForVoyage), "PortOfDestination");
                 }
                 
@@ -80,8 +83,7 @@ namespace VesselWebCenter.Controllers
         [HttpGet]
         public async Task<IActionResult> ProcessVoyageDetails(IEnumerable<string> extractedCoordinates,double spd,int vslId)
         {
-            var model = await service.GetDataForCalculation(extractedCoordinates,spd, vslId);
-            
+            var model = await service.GetDataForCalculation(extractedCoordinates,spd, vslId);            
             return View(model);
 
         }
@@ -90,6 +92,9 @@ namespace VesselWebCenter.Controllers
         public async Task<IActionResult> SetVesselNewDestination(int vslId, int destinationId, double distance) 
         {
             await service.AddDestinationToVessel(vslId, destinationId, distance);
+            
+            notyf.Success($"Voyage succeeded! Distance of {distance.ToString("f2")} has been travelled.");
+            notyf.Information("Vessel new port location has been set!",11);
             return RedirectToAction(nameof(AssignVesselForVoyage), "PortOfDestination");
         }
     }

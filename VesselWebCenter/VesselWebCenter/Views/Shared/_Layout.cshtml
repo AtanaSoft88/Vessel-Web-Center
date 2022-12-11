@@ -5,13 +5,13 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
+
 	<title>@ViewData["Title"] - VesselWebCenter</title>
 	<link rel="icon" type="image/x-icon" href="~/Img/favicon.ico">
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/css/myIndex.css" asp-append-version="true" /> @*my css*@			
-	<link rel="stylesheet" href="~/VesselWebCenter.styles.css" asp-append-version="true" />	
+	<link rel="stylesheet" href="~/css/myIndex.css" asp-append-version="true" /> @*my css*@
+	<link rel="stylesheet" href="~/VesselWebCenter.styles.css" asp-append-version="true" />
 
 </head>
 <body style="background-color:aliceblue;">
@@ -30,7 +30,7 @@
 						</li>
 						<li class="nav-item m-1">
 							<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="" asp-controller="Vessel" asp-action="GetAllVessels">✯Vessel's Catalogue</a>
-						</li>						
+						</li>
 						@*IF user not logged , dont show Vessels Collection in header*@
 						@if (User?.Identity?.IsAuthenticated ?? false)  //<- put this inside -> User?.Identity?.IsAuthenticated ?? false
 						{
@@ -46,31 +46,31 @@
 						@if ((await AuthorizationService.AuthorizeAsync(User, "myFullPermissionPolicy")).Succeeded)
 						{
 							<li>
-								<partial name="_NavDropdown"/>
-							</li>														
+								<partial name="_NavDropdown" />
+							</li>
 						}
 
 					</ul>
-					<partial name="_LoginPartial" />					
+					<partial name="_LoginPartial" />
 				</div>
 			</div>
-		</nav>		
+		</nav>
 	</header>
 	<div class="container">
 		<main role="main" class="pb-3" style="color:blueviolet">
-			@RenderBody()			
+			@RenderBody()
 		</main>
 	</div>
 	<footer class="border-top footer text-muted card-footer bg-success bg-opacity-10 ">
 		<div class="container">
 			&copy; 2022 - VesselWebCenter -
-			<a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>			
+			<a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 		</div>
-	</footer>	
+	</footer>
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>		
-
+	<script src="~/js/site.js" asp-append-version="true"></script>
 	@await RenderSectionAsync("Scripts", required: false)
+	@await Component.InvokeAsync("Notyf")
 </body>
 </html>

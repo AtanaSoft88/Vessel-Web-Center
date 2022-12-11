@@ -176,7 +176,7 @@ namespace VesselWebCenter.Services
                 };
                 vessel.DestinationPortId = destinationId;
                 vessel.PortsOfCall.Add(portOfCall);
-                vessel.Distances.Add(distance);
+                vessel.Distances.Add(distance);                
                 await repo.SaveChangesAsync();
             }
         }
