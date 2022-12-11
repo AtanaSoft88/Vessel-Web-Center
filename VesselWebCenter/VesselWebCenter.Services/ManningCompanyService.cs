@@ -15,7 +15,7 @@ namespace VesselWebCenter.Services
             this.repo = _repo;            
         }
         public async Task<IEnumerable<ManningCompanyViewModel>> GetAllCompanies()
-		{                  
+		{            
             return await repo.AllReadonly<ManningCompany>().Include(x => x.Vessels).Select( mc => new ManningCompanyViewModel()
             {
                 ManningCompanyId = mc.Id,
@@ -35,7 +35,7 @@ namespace VesselWebCenter.Services
                 VesselName = v.Name,
                 VesselImage = v.VesselImageUrl,
                 IdVessel = v.Id,
-                Distance = v.Distances.Sum(x=>x.VesselDistance) ?? 0
+                Distance = v.Distances.Sum(x=>x.VesselDistance)??5
             }).ToListAsync();
         }
     }
