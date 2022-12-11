@@ -40,8 +40,7 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("myFullPermissionPolicy", policy =>
     policy.RequireAssertion(context =>
-                            context.User.IsInRole(RoleConstants.ADMINISTRATOR) &&
-                            context.User.IsInRole(RoleConstants.MANAGER) &&
+                            context.User.IsInRole(RoleConstants.ADMINISTRATOR) &&                            
                             context.User.IsInRole(RoleConstants.USER_OWNER)));
 });
 

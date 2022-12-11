@@ -15,9 +15,9 @@
 				<td class="bg-body" align="center">CallSign</td>
 				<td class="bg-body" align="center">Length Overall</td>
 				<td class="bg-body" align="center">Breadth</td>
-				<td class="bg-body col-1" align="center">Visited Ports Number</td>
+				<td class="bg-body" align="center">Visited Ports Number</td>
 				<td class="bg-body" align="center">Last Port Of Call</td>
-				<td class="bg-body" align="center">Details for:</td>
+				<td class="bg-body col-sm-2"  align="center">Details for:</td>
 				<td class="bg-body col-1" align="center">Crew Members Count</td>
 				@if (User.IsInRole(RoleConstants.USER_OWNER))
 				{
@@ -57,7 +57,7 @@
 
 							@if (User?.Identity?.IsAuthenticated ?? false)
 							{
-								<label style="font-style:oblique;-moz-animation-fill-mode:forwards" asp-for="@vsl.Id">More details⊳</label>
+								<label class="badge text-black-50" asp-for="@vsl.Id">More details⊳</label>
 								<input type="submit" style="backdrop-filter:blur()" class="btn-sm rounded-circle border-2 btn-dark btn-outline-warning shadow-lg rounded-3" title="@vsl.Name" name="vesselId" value="@vsl.Id" asp-controller="Vessel" asp-action="ChooseAVessel" />								
 							}
 							else

@@ -82,8 +82,7 @@ namespace VesselWebCenter.Controllers
                 
                 if (!await roleManager.Roles.AnyAsync())
                 {
-                    await roleManager.CreateAsync(new IdentityRole<Guid>(RoleConstants.ADMINISTRATOR));
-                    await roleManager.CreateAsync(new IdentityRole<Guid>(RoleConstants.MANAGER));
+                    await roleManager.CreateAsync(new IdentityRole<Guid>(RoleConstants.ADMINISTRATOR));                   
                     await roleManager.CreateAsync(new IdentityRole<Guid>(RoleConstants.USER_OWNER));
                     await roleManager.CreateAsync(new IdentityRole<Guid>(RoleConstants.REGULAR_USER));
                 }
@@ -91,8 +90,7 @@ namespace VesselWebCenter.Controllers
                 if (userManager.Users.Count() == 1)
                 {
                     await userManager.AddToRolesAsync(user, new string[]
-                    {   RoleConstants.ADMINISTRATOR,
-                        RoleConstants.MANAGER,
+                    {   RoleConstants.ADMINISTRATOR,                        
                         RoleConstants.USER_OWNER
                     });
                 }
@@ -211,8 +209,9 @@ namespace VesselWebCenter.Controllers
                 return this.View(account);
             }
 
-            if (User.IsInRole(RoleConstants.ADMINISTRATOR) && User.IsInRole(RoleConstants.MANAGER)
-                                                           && User?.Identity?.Name == account.EmailAddress)
+            if (User.IsInRole(RoleConstants.ADMINISTRATOR) 
+                && User.IsInRole(RoleConstants.USER_OWNER)                                                           
+                && User?.Identity?.Name == account.EmailAddress)
             {                
                 return RedirectToAction(nameof(UserMessages), "Account");
             }
