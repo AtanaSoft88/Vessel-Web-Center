@@ -35,7 +35,7 @@ namespace VesselWebCenter.Services
                 VesselName = v.Name,
                 VesselImage = v.VesselImageUrl,
                 IdVessel = v.Id,
-                Distance = v.Distances.Sum(x=>x.VesselDistance)??5
+                Distance = v.Distances.Sum(x=>x.VesselDistance??0)
             }).ToListAsync();
         }
     }
