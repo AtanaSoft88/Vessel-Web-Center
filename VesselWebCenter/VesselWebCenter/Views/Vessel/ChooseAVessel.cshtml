@@ -6,7 +6,6 @@
 
 }
 <h1 class="fst-italic bg-primary bg-opacity-10 rounded-pill w-50" style="-webkit-text-fill-color:blueviolet">@ViewData["Title"]</h1>
-<hr />
 <ol style="font-family:'Book Antiqua';font-weight:700">
 	Vessel Owner Company: @Model.ManningCompanyName
 </ol>
@@ -99,7 +98,9 @@
 				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>
 
 				<input style="text-align:center" type="submit" value="☒ Back" title="Back to Vessels"
-				   asp-controller="Vessel" asp-action="GetAllVessels" class="btn btn-warning btn-outline-dark rounded-pill">
+				   asp-controller="Vessel" asp-action="GetAllVessels" class="btn btn-warning btn-outline-dark rounded-pill m-1">
+				<input formmethod="post" style="text-align:center" type="submit" value="See all Company Vessels" title="All Company Vessels"
+				   asp-controller="ManningCompany" asp-action="GetManningCompaniesVessels" asp-route-idComp="@Model.CompanyId" class="btn btn-sm btn-info btn-outline-dark rounded-pill">
 			</div>
 		</form>
 	}
@@ -126,7 +127,9 @@
 				<vr class="text-black-50">⊱━━━━━━━━━━━━━━⊰</vr>
 
 				<input style="text-align:center" type="submit" value="☒ Back" title="Back to Vessels"
-				   asp-controller="Vessel" asp-action="GetAllVessels" class="btn btn-warning btn-outline-dark rounded-pill">
+				   asp-controller="Vessel" asp-action="GetAllVessels" class="btn btn-warning btn-outline-dark rounded-pill m-1">
+				<input formmethod="post" style="text-align:center" type="submit" value="See all Company Vessels" title="All Company Vessels"
+				   asp-controller="ManningCompany" asp-action="GetManningCompaniesVessels" asp-route-idComp="@Model.CompanyId" class="btn btn-sm btn-warning btn-outline-dark rounded-pill">
 			</div>
 		</form>
 	}

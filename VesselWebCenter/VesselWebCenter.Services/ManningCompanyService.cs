@@ -34,6 +34,7 @@ namespace VesselWebCenter.Services
                 CompanyName = v.ManningCompany.Name,
                 VesselName = v.Name,
                 VesselImage = v.VesselImageUrl,
+                IdVessel = v.Id,
                 Distance = v.Distances.Sum(x=>x.VesselDistance) ?? 0
             }).ToListAsync();
         }

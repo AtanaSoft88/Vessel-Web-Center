@@ -24,8 +24,12 @@ namespace VesselWebCenter.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetManningCompaniesVessels(int compId)
+        public async Task<IActionResult> GetManningCompaniesVessels(int compId, int idComp)
         {
+            if (compId == 0)
+            {
+                compId = idComp;
+            }
             var vessels = await service.GetVessels(compId);
             return View(vessels);
         }

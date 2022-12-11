@@ -30,6 +30,9 @@
     <Content Update="wwwroot\css\interactiveButton.css">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\css\flipImage.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\css\nav-Acc-Dropdown.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -49,7 +52,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\js\HighChartsDiagrams\MostVisitedPorts_HC.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

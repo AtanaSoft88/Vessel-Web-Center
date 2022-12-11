@@ -12,6 +12,7 @@ namespace VesselWebCenter.Services.ViewModels
 	public class SingleVesselViewModel
     {
         public int Id { get; set; }        
+        public int CompanyId { get; set; }        
         public string Name { get; set; } = null!;
         public string CallSign { get; set; } = null!;
         public bool IsLaden { get; set; }

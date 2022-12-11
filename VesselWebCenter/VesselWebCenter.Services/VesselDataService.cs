@@ -22,7 +22,8 @@ namespace VesselWebCenter.Services
         {
             return await repo.AllReadonly<Vessel>().Include(x=>x.CrewMembers).Where(x=>x.Id==idVessel).Select(x => new SingleVesselViewModel
             {
-                Id = x.Id,                
+                Id = x.Id, 
+                CompanyId = x.ManningCompanyId,
                 Name = x.Name,
                 CallSign = x.CallSign,
                 IsLaden = x.IsLaden,
