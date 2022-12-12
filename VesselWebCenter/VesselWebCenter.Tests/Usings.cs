@@ -4,3 +4,8 @@ global using System.Collections.Generic;
 global using System.Linq;
 global using System.Text;
 global using System.Threading.Tasks;
+global using Moq;
+global using VesselWebCenter.Data.Models;
+global using VesselWebCenter.Data.Repositories;
+global using VesselWebCenter.Services;
+global using VesselWebCenter.Services.Contracts;

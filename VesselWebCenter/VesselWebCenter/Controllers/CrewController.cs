@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using VesselWebCenter.Data.Constants;
 using VesselWebCenter.Data.Models;
 using VesselWebCenter.Services.Contracts;
@@ -14,11 +15,15 @@ namespace VesselWebCenter.Controllers
     {
         private readonly ICrewService service;
         private readonly INotyfService notyf;
+        private readonly ILogger<CrewController> logger;
 
-        public CrewController(ICrewService service, INotyfService _notyf)
+        public CrewController(ICrewService service,
+                              INotyfService _notyf,
+                              ILogger<CrewController> _logger)
         {
             this.service = service;
             notyf = _notyf;
+            logger = _logger;
         }
                 
         [HttpGet]
@@ -39,8 +44,25 @@ namespace VesselWebCenter.Controllers
                 return this.View(model);
 
             }
-            await service.AddCrewMemberToDataBase(model);
-            notyf.Success($"{model.FirstName} {model.LastName} has been registered as a crew member with success!");
+
+            try
+            {
+               var isCrewAdd = await service.AddCrewMemberToDataBase(model);
+                if (isCrewAdd)
+                {
+                    notyf.Success($"{model.FirstName} {model.LastName} has been registered as a crew member with success!");
+                }
+                else
+                {
+                    notyf.Warning($"{model.FirstName} {model.LastName} already exists in database!");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(nameof(AddCrewMemberAsUnassigned), ex);
+                throw new ApplicationException("Crew member could not be add to db",ex);
+            }            
+            
             return RedirectToAction(nameof(AddCrewMemberAsUnassigned));
 
         }

@@ -16,7 +16,7 @@ namespace VesselWebCenter.Services
         {
             this.repo = _repo;
         }
-        public async Task AddCrewMemberToDataBase(CrewMemberViewModel model)
+        public async Task<bool> AddCrewMemberToDataBase(CrewMemberViewModel model)
         {
             var crewMember = new CrewMember()
             {
@@ -25,11 +25,21 @@ namespace VesselWebCenter.Services
                 Nationality = model.Nationality,
                 Age = model.Age,
             };
-            if (!repo.AllReadonly<CrewMember>().Contains(crewMember))
+            var crewMembersDb = await repo.AllReadonly<CrewMember>().ToListAsync();
+            if (crewMembersDb.Any(x=>x.FirstName==crewMember.FirstName 
+                                  && x.LastName == crewMember.LastName 
+                                  && x.Age == crewMember.Age 
+                                  && x.Nationality==crewMember.Nationality))                
+            {
+                return false;
+            }
+            else
             {
                 await repo.AddAsync<CrewMember>(crewMember);
                 await repo.SaveChangesAsync();
-            }            
+                return true;
+                
+            }
 
         }       
 
