@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VesselWebCenter.Data", "Ves
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VesselWebCenter.Services", "VesselWebCenter.Services\VesselWebCenter.Services.csproj", "{7B9198CB-DBDE-46F0-890C-B41FC9414C64}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VesselWebCenter.Tests", "VesselWebCenter.Tests\VesselWebCenter.Tests.csproj", "{AD06F4E6-C5D2-44D2-B8D8-EEF1A377B9A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7B9198CB-DBDE-46F0-890C-B41FC9414C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B9198CB-DBDE-46F0-890C-B41FC9414C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B9198CB-DBDE-46F0-890C-B41FC9414C64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD06F4E6-C5D2-44D2-B8D8-EEF1A377B9A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD06F4E6-C5D2-44D2-B8D8-EEF1A377B9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD06F4E6-C5D2-44D2-B8D8-EEF1A377B9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD06F4E6-C5D2-44D2-B8D8-EEF1A377B9A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
