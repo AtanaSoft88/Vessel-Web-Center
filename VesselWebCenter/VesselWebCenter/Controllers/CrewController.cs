@@ -54,7 +54,7 @@ namespace VesselWebCenter.Controllers
                 }
                 else
                 {
-                    notyf.Warning($"{model.FirstName} {model.LastName} already exists in database!");
+                    notyf.Warning($"{model.FirstName} {model.LastName} already exists and could not be registered!");
                 }
             }
             catch (Exception ex)
