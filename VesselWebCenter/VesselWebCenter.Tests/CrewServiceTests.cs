@@ -146,8 +146,7 @@ namespace VesselWebCenter.Tests
             await fakeDatabase.SaveChangesAsync();
 
             var repo = new Repository(fakeDatabase);
-            service = new CrewService(repo);
-            bool canAdd = false;
+            service = new CrewService(repo);           
 
             var modelDublicate = new CrewMemberViewModel()
             {
@@ -156,6 +155,7 @@ namespace VesselWebCenter.Tests
                 Nationality = "Bgn",
                 Age = 20
             };
+            bool canAdd = true;
             canAdd = await service.AddCrewMemberToDataBase(modelDublicate);
             Assert.IsFalse(canAdd);
 
