@@ -105,7 +105,7 @@ namespace VesselWebCenter.Services
 
         public async Task RemovedCrewMemberFromVessel(CrewMembersDropDownViewModel model)
         {
-            var vessel = await repo.AllReadonly<Vessel>().Include(x=>x.CrewMembers).Where(x=>x.Id==model.VesselId).FirstOrDefaultAsync();
+            var vessel = await repo.AllReadonly<Vessel>().Where(x=>x.Id==model.VesselId).FirstOrDefaultAsync();
 
             var crewMember = await repo.GetByIdAsync<CrewMember>(model.memberId);
             if (vessel != null && crewMember != null)

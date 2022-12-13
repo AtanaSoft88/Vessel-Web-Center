@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VesselWebCenter.Data;
 
 namespace VesselWebCenter.Tests.Mocks
@@ -15,7 +10,7 @@ namespace VesselWebCenter.Tests.Mocks
             get 
             {
                 var contextOptions = new DbContextOptionsBuilder<VesselAppDbContext>()
-                    .UseInMemoryDatabase("A" + new Random().Next(1,100).ToString())
+                    .UseInMemoryDatabase("Base" + new Random().Next(1,1000).ToString())
                     .Options;
                 return new VesselAppDbContext(contextOptions);
             }
