@@ -25,7 +25,20 @@ namespace VesselWebCenter.Controllers
             notyf = _notyf;
             logger = _logger;
         }
-                
+
+        [HttpGet]
+        [Authorize(Roles = RoleConstants.USER_OWNER)]
+        public async Task<IActionResult> GetAllCrewMembers(int pageNumber = 1)
+        {
+            IQueryable<CrewAllViewModel>? crewMembers = await service.GetAll();
+            if (await crewMembers.CountAsync() > 0 && crewMembers != null)
+            {
+                var model = await PagingList<CrewAllViewModel>.CreatePagesAsync(crewMembers, pageNumber, 15);
+                return View(model);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpGet]
         [Authorize(Roles = RoleConstants.USER_OWNER)]
         public IActionResult AddCrewMemberAsUnassigned()
@@ -88,7 +101,7 @@ namespace VesselWebCenter.Controllers
             {
                 return this.View(model);
             }
-            await service.GetCrewMemberAdd(model);
+            await service.AddCrewMemberToVessel(model);
             notyf.Success($"A crew member has been add to this vessel!");
             return RedirectToAction("ChooseAVessel","Vessel", new { Id});
 
@@ -115,23 +128,10 @@ namespace VesselWebCenter.Controllers
             {
                 return this.View(model);
             }
-            await service.GetCrewMemberRemoved(model);
+            await service.RemovedCrewMemberFromVessel(model);
             notyf.Warning($"A crew member has been removed from this vessel!");
             return RedirectToAction("ChooseAVessel", "Vessel", new { model.VesselId });
 
-        }
-
-        [HttpGet]
-        [Authorize(Roles = RoleConstants.USER_OWNER)]
-        public async Task<IActionResult> GetAllCrewMembers(int pageNumber = 1)
-        {
-            IQueryable<CrewAllViewModel>? crewMembers = await service.GetAll();
-            if (await crewMembers.CountAsync() > 0 && crewMembers != null)
-            {
-                var model = await PagingList<CrewAllViewModel>.CreatePagesAsync(crewMembers, pageNumber, 15);
-                return View(model);
-            }
-            return RedirectToAction("Index", "Home");
-        }
+        }        
     }
 }

@@ -16,6 +16,23 @@ namespace VesselWebCenter.Services
         {
             this.repo = _repo;
         }
+        public async Task<IQueryable<CrewAllViewModel>> GetAll()
+        {
+            var crewAll = repo.AllReadonly<CrewMember>().Select(x => new CrewAllViewModel()
+            {
+                CrewMemberId = x.Id,
+                VesselName = x.Vessel.Name,
+                ManningCompanyName = x.Vessel.ManningCompany.Name,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Age = x.Age,
+                Nationality = x.Nationality,
+                HiredToVessel = x.IsPartOfACrew,
+                DateHired = x.IsPartOfACrew == true ? x.DateHired.Value.Date.ToString("dd-MM-yyyy") : "N/A",
+            }).AsQueryable();
+            return crewAll;
+        }
+
         public async Task<bool> AddCrewMemberToDataBase(CrewMemberViewModel model)
         {
             var crewMember = new CrewMember()
@@ -69,7 +86,7 @@ namespace VesselWebCenter.Services
             return dropDownMembers;
         }
 
-        public async Task GetCrewMemberAdd(CrewMembersDropDownViewModel model)
+        public async Task AddCrewMemberToVessel(CrewMembersDropDownViewModel model)
         {
             var vessel = await repo.GetByIdAsync<Vessel>(model.VesselId);
             
@@ -86,7 +103,7 @@ namespace VesselWebCenter.Services
 
         }
 
-        public async Task GetCrewMemberRemoved(CrewMembersDropDownViewModel model)
+        public async Task RemovedCrewMemberFromVessel(CrewMembersDropDownViewModel model)
         {
             var vessel = await repo.AllReadonly<Vessel>().Include(x=>x.CrewMembers).Where(x=>x.Id==model.VesselId).FirstOrDefaultAsync();
 
@@ -100,22 +117,6 @@ namespace VesselWebCenter.Services
                 await repo.SaveChangesAsync();
             }
 
-        }
-
-        public async Task<IQueryable<CrewAllViewModel>> GetAll()
-        {
-            return repo.AllReadonly<CrewMember>().Include(x=>x.Vessel).ThenInclude(x=>x.ManningCompany).Select( x => new CrewAllViewModel() 
-            { 
-                CrewMemberId = x.Id,
-                VesselName = x.Vessel.Name,
-                ManningCompanyName = x.Vessel.ManningCompany.Name,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                Age = x.Age,
-                Nationality = x.Nationality,
-                HiredToVessel = x.IsPartOfACrew,                
-                DateHired = x.IsPartOfACrew==true?x.DateHired.Value.Date.ToString("dd-MM-yyyy") : "N/A",                
-            }).AsNoTracking();            
-        }        
+        }       
     }
 }
