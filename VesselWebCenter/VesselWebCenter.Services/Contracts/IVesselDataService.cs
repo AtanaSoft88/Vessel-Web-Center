@@ -8,7 +8,7 @@ namespace VesselWebCenter.Services.Contracts
     {
         IQueryable<VesselsViewModel> GetAll();        
         Task<SingleVesselViewModel> GetChoosenVessel(int id);
-        Task<IEnumerable<VesselsHomeViewModel>> AllAsHomePage();
+        Task<IEnumerable<VesselsHomeViewModel>> AllEmptyVesselsAsHomePage();
 
 
     }

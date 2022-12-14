@@ -22,7 +22,7 @@ namespace VesselWebCenter.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var models = await service.AllAsHomePage();
+            var models = await service.AllEmptyVesselsAsHomePage();
 
             return View(models);
         }        

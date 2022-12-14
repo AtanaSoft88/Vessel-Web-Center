@@ -52,7 +52,7 @@ namespace VesselWebCenter.Tests
                     LastName = "Marinov",
                     Age = 54,
                     Nationality = "Bg",
-                    IsPartOfACrew = true,
+                    IsPartOfACrew = true,                    
                     VesselId = 5
                  },
                   new T

@@ -17,12 +17,29 @@ namespace VesselWebCenter.Services
         public VesselDataService(IRepository repo)
         {
             this.repo = repo;            
-        }        
+        }
+        public IQueryable<VesselsViewModel> GetAll()
+        {
+            var allVessels = repo.AllReadonly<Vessel>().Select(x => new VesselsViewModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CallSign = x.CallSign,
+                Breadth = x.BreadthMax,
+                LOA = x.LengthOverall,
+                VesselType = x.VesselType,
+                VesselAvailableForVoyage = x.CrewMembers.Count() >= 15 ? true : false,
+                CrewMembersCount = x.CrewMembers.Count() == 0 ? "n/a" : x.CrewMembers.Count().ToString(),
+                PortsOfCall = x.PortsOfCall.ToList(),
+            });
+            return allVessels.AsQueryable();
+
+        }
         public async Task<SingleVesselViewModel> GetChoosenVessel(int idVessel)
         {
-            return await repo.AllReadonly<Vessel>().Include(x=>x.CrewMembers).Where(x=>x.Id==idVessel).Select(x => new SingleVesselViewModel
+            var vessel = await repo.AllReadonly<Vessel>().Include(x => x.Distances).Where(x => x.Id == idVessel).Select(x => new SingleVesselViewModel
             {
-                Id = x.Id, 
+                Id = x.Id,
                 CompanyId = x.ManningCompanyId,
                 Name = x.Name,
                 CallSign = x.CallSign,
@@ -35,35 +52,19 @@ namespace VesselWebCenter.Services
                 CrewMembersOnBoard = x.CrewMembers.Count(),
                 ManningCompanyName = x.ManningCompany.Name,
                 Distance = x.Distances
-                .Sum(x=>x.VesselDistance) == 0 ?
+                .Sum(x => x.VesselDistance) == 0 ?
                 "𝕟𝐼𝕒" : double.Parse(x.Distances
                 .Sum(x => x.VesselDistance.Value)
-                .ToString("f2"))+ " nm",
-                
-                PortsOfCall = x.PortsOfCall.ToList(),                
-            }).FirstAsync();     
-                  
-        }
+                .ToString("f2")) + " nm",
 
-        public IQueryable<VesselsViewModel> GetAll()
-        {
-            var allVessels = repo.AllReadonly<Vessel>().Select(x => new VesselsViewModel
-            {
-                Id = x.Id,
-                Name = x.Name,
-                CallSign = x.CallSign,
-                Breadth = x.BreadthMax,
-                LOA = x.LengthOverall,
-                VesselType = x.VesselType,
-                VesselAvailableForVoyage = x.CrewMembers.Count()>=15? true : false,
-                CrewMembersCount = x.CrewMembers.Count()==0?"n/a": x.CrewMembers.Count().ToString(),
                 PortsOfCall = x.PortsOfCall.ToList(),
-            });
-            return allVessels.AsNoTracking();
-             
-        }
+            }).FirstAsync();
+            return vessel;
 
-        public async Task<IEnumerable<VesselsHomeViewModel>> AllAsHomePage()
+
+        }        
+
+        public async Task<IEnumerable<VesselsHomeViewModel>> AllEmptyVesselsAsHomePage()
         {
             return await repo.AllReadonly<Vessel>().Where(x=>x.IsLaden==false).Select(v => new VesselsHomeViewModel
             {
