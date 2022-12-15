@@ -1,127 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using VesselWebCenter.Tests.DataPopulation;
 using VesselWebCenter.Tests.Mocks;
 
 namespace VesselWebCenter.Tests
 {
-    public class ManningCompanyServiceTests
+    public class ManningCompanyServiceTests : DataPopulator
     {
         private IRepository repo;
-        private IManningCompanyService service;
-        private List<T> CompanyPopulator<T>(List<T> model)
-            where T : ManningCompany, new()
-        {
-            model.AddRange(new List<T>
-            {
-                new T
-                {
-                    Id = 1,
-                    Name = "Company1",
-                    Country = "Bgn",
-                    Vessels = new List<Vessel>()
-                    {
-                        new Vessel()
-                        {
-                            Id = 12,
-                            Name="Seven Ocenas",
-                            LengthOverall=260,
-                            BreadthMax = 20,
-                            CallSign ="xxxx",
-                            IsLaden = true,
-                            ManningCompanyId=4,
-                            VesselImageUrl="",
-                            VesselType=0,
-                            CargoTypeOnBoard="",
-                        }
-                    }
-                },
-                new T
-                {
-                    Id = 2,
-                    Name = "Company2",
-                    Country = "Ng",
-                    Vessels = new List<Vessel>()
-                    {
-                        new Vessel()
-                        {
-                            Id = 9,
-                            Name="Seven Ocenas",
-                            LengthOverall=260,
-                            BreadthMax = 20,
-                            CallSign ="xxxx",
-                            IsLaden = true,
-                            ManningCompanyId=4,
-                            VesselImageUrl="",
-                            VesselType=0,
-                            CargoTypeOnBoard="",
-                        }
-                    }
-                },
-                new T
-                {
-                    Id = 3,
-                    Name = "BestCompanyEver",
-                    Country = "Bg",
-                    Vessels = new List<Vessel>()
-                    {
-                        new Vessel()
-                        {
-                            Id = 1,
-                            Name="Seven Ocenas",
-                            LengthOverall=260,
-                            BreadthMax = 20,
-                            CallSign ="xxxx",
-                            IsLaden = true,
-                            ManningCompanyId=3,
-                            VesselImageUrl="",
-                            VesselType=0,
-                            CargoTypeOnBoard="",
-                        },
-                        new Vessel()
-                        {
-                            Id = 2,
-                            Name="Seven Ocenas",
-                            LengthOverall=260,
-                            BreadthMax = 20,
-                            CallSign ="xxxx",
-                            IsLaden = true,
-                            ManningCompanyId=3,
-                            VesselImageUrl="",
-                            VesselType=0,
-                            CargoTypeOnBoard="",
-                        }
-                    }
-                },
-                 new T
-                 {
-                    Id = 4,
-                    Name = "Company4",
-                    Country = "Dn",
-                    Vessels = new List<Vessel>() 
-                    {
-                        new Vessel() 
-                        { Id = 5,
-                            Name = "Seven Ocenas",
-                            LengthOverall = 260,
-                            BreadthMax = 20,
-                            CallSign = "xxxx",
-                            IsLaden = true,
-                            ManningCompanyId = 4,
-                            VesselImageUrl = "", 
-                            VesselType = 0, 
-                            CargoTypeOnBoard = "" 
-                    }   }
-                 }
-            });
-            return model;
-
-
-        }
+        private IManningCompanyService service;        
 
         [SetUp]
         public void Setup()
@@ -133,7 +20,7 @@ namespace VesselWebCenter.Tests
         public async Task Get_All_Manning_Companies()
         {
             var repoMock = new Mock<IRepository>();
-            var companies = CompanyPopulator<ManningCompany>(new List<ManningCompany>());
+            var companies = CompanyPopulator(new List<ManningCompany>());
             repoMock.Setup(x => x.AllReadonly<ManningCompany>())
                 .Returns(companies.AsQueryable().BuildMock());
             repo = repoMock.Object;

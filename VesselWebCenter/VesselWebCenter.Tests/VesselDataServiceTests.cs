@@ -1,107 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using MockQueryable.Moq;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using VesselWebCenter.Data.Enums;
-using VesselWebCenter.Data.Models;
-using VesselWebCenter.Services.ViewModels;
+﻿using MockQueryable.Moq;
+using VesselWebCenter.Tests.DataPopulation;
 using VesselWebCenter.Tests.Mocks;
 
 namespace VesselWebCenter.Tests
 {
-    public class VesselDataServiceTests
+    public class VesselDataServiceTests : DataPopulator
     {
         private IRepository repo;
-        private IVesselDataService service;
-
-        private List<T> VesselPopulator<T>(List<T> model)
-           where T : Vessel, new()
-        {
-            model.AddRange(new List<T>
-            {
-                new T
-                {
-                    Id = 1,
-                    Name="Verila",
-                    LengthOverall=160,
-                    BreadthMax = 30,
-                    CallSign ="xxxx",
-                    IsLaden = true,
-                    ManningCompanyId=1,
-                    VesselImageUrl="",
-                    VesselType=0,
-                    CargoTypeOnBoard="",
-                    ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
-                },
-                new T
-                {
-                    Id = 2,
-                    Name="Lena",
-                    LengthOverall=190,
-                    BreadthMax = 30,
-                    CallSign ="xxxx",
-                    IsLaden = false,
-                    ManningCompanyId=1,
-                    VesselImageUrl="",
-                    VesselType=0,
-                    CargoTypeOnBoard=null,
-                    ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
-                },
-                new T
-                {
-                    Id = 3,
-                    Name="Persian Miracle",
-                    LengthOverall=220,
-                    BreadthMax = 30,
-                    CallSign ="xxxx",
-                    IsLaden = true,
-                    ManningCompanyId=1,
-                    VesselImageUrl="",
-                    VesselType=0,
-                    CargoTypeOnBoard="",
-                    ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
-                },
-                 new T
-                 {
-                    Id = 4,
-                    Name="Seven Ocenas",
-                    LengthOverall=260,
-                    BreadthMax = 20,
-                    CallSign ="xxxx",
-                    IsLaden = true,
-                    ManningCompanyId=1,
-                    VesselImageUrl="",
-                    VesselType=0,
-                    CargoTypeOnBoard="",
-                    ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
-                 },
-                  new T
-                  {
-                    Id = 5,
-                    Name="Maveric",
-                    LengthOverall=190,
-                    BreadthMax = 20,
-                    CallSign ="xxxx",
-                    IsLaden = true,
-                    ManningCompanyId=1,
-                    VesselImageUrl="",
-                    VesselType=0,
-                    CargoTypeOnBoard="",                    
-                    ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
-                  }                 
-
-            });
-            return model;
-
-
-        }
+        private IVesselDataService service;        
 
         [SetUp]
         public void Setup()

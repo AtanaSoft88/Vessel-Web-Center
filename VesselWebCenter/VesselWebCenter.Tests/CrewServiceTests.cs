@@ -1,76 +1,15 @@
 ﻿using MockQueryable.Moq;
 using VesselWebCenter.Services.ViewModels;
+using VesselWebCenter.Tests.DataPopulation;
 using VesselWebCenter.Tests.Mocks;
 
 namespace VesselWebCenter.Tests
 {
     [TestFixture]
-    public class CrewServiceTests
+    public class CrewServiceTests : DataPopulator
     {
         private IRepository repo;
-        private ICrewService service;
-        private List<T> CrewPopulator<T>(List<T> model)
-            where T : CrewMember, new()
-        {
-            model.AddRange(new List<T>
-            {
-                new T
-                {
-                    Id = 1,
-                    FirstName = "Pesho",
-                    LastName = "Goshev",
-                    Nationality = "Bgn",
-                    Age = 18,
-                    IsPartOfACrew = true,
-                    VesselId = 5
-                },
-                new T
-                {
-                    Id = 2,
-                    FirstName = "Stoycho" ,
-                    LastName = "Marinov",
-                    Age = 34,
-                    Nationality = "Bg",
-                    IsPartOfACrew = false,
-                    VesselId = null
-
-                },
-                new T
-                {
-                    Id = 3,
-                    FirstName = "Nikola",
-                    LastName = "Cenov",
-                    Nationality = "Bgn",
-                    Age = 20,
-                    IsPartOfACrew = false,
-                    VesselId = null
-                },
-                 new T
-                 {
-                    Id = 4,
-                    FirstName = "Gencho" ,
-                    LastName = "Marinov",
-                    Age = 54,
-                    Nationality = "Bg",
-                    IsPartOfACrew = true,                    
-                    VesselId = 5
-                 },
-                  new T
-                  {
-                    Id = 5,
-                    FirstName = "Nikola",
-                    LastName = "Cenov",
-                    Nationality = "Bgn",
-                    Age = 20,
-                    IsPartOfACrew = true,
-                    VesselId = 5
-
-                  }
-            });
-            return model;
-
-
-        }
+        private ICrewService service;        
 
         [SetUp]
         public void Setup()
@@ -81,9 +20,8 @@ namespace VesselWebCenter.Tests
         [Test]
         public async Task Crew_Members_Get_All()
         {
-            using var fakeDatabase = DataBaseMock.Instance;
+            using var fakeDatabase = DataBaseMock.Instance;            
             await fakeDatabase.AddRangeAsync(CrewPopulator(new List<CrewMember>()));
-
             await fakeDatabase.SaveChangesAsync();
             repo = new Repository(fakeDatabase);
             service = new CrewService(repo);
@@ -96,7 +34,7 @@ namespace VesselWebCenter.Tests
         public async Task Crew_Members_Count_In_Db_Increased_After_Add()
         {
             using var fakeDatabase = DataBaseMock.Instance;
-            List<CrewMember> dbModelList = CrewPopulator<CrewMember>(new List<CrewMember>());
+            List<CrewMember> dbModelList = CrewPopulator(new List<CrewMember>());
             await fakeDatabase.AddRangeAsync(dbModelList);
             await fakeDatabase.SaveChangesAsync();
             var initialCountCrewMembers = fakeDatabase.CrewMembers.Count();
@@ -119,7 +57,7 @@ namespace VesselWebCenter.Tests
         public async Task Can_Add_CrewMember_To_DataBase()
         {
             using var fakeDatabase = DataBaseMock.Instance;
-            List<CrewMember> dbModelList = CrewPopulator<CrewMember>(new List<CrewMember>());
+            List<CrewMember> dbModelList = CrewPopulator(new List<CrewMember>());
             await fakeDatabase.AddRangeAsync(dbModelList);
             await fakeDatabase.SaveChangesAsync();
             var repo = new Repository(fakeDatabase);
@@ -141,7 +79,7 @@ namespace VesselWebCenter.Tests
         public async Task Can_Not_Add_CrewMember_To_DataBase()
         {
             using var fakeDatabase = DataBaseMock.Instance;
-            List<CrewMember> dbModelList = CrewPopulator<CrewMember>(new List<CrewMember>());
+            List<CrewMember> dbModelList = CrewPopulator(new List<CrewMember>());
             await fakeDatabase.AddRangeAsync(dbModelList);
             await fakeDatabase.SaveChangesAsync();
 
@@ -199,7 +137,7 @@ namespace VesselWebCenter.Tests
             var chosenMemberId = 3;
             var chosenMemberName = "Nikola";
             using var fakeDatabase = DataBaseMock.Instance;
-            List<CrewMember> dbCrewModelList = CrewPopulator<CrewMember>(new List<CrewMember>());
+            List<CrewMember> dbCrewModelList = CrewPopulator(new List<CrewMember>());
             var vessels = new List<Vessel>()
             {  
                 new Vessel() 
@@ -242,7 +180,7 @@ namespace VesselWebCenter.Tests
             var chosenMemberId = 1;
             var chosenMemberName = "Pesho";
             using var fakeDatabase = DataBaseMock.Instance;
-            List<CrewMember> dbCrewModelList = CrewPopulator<CrewMember>(new List<CrewMember>());
+            List<CrewMember> dbCrewModelList = CrewPopulator(new List<CrewMember>());
             var vessels = new List<Vessel>()
             {
                 new Vessel()

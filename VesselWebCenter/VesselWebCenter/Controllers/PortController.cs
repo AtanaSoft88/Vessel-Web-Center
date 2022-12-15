@@ -26,7 +26,7 @@ namespace VesselWebCenter.Controllers
         [HttpGet]
         public async Task<IActionResult> TopTenVisitedPortsHighCharts()
         {             
-            return Json(await service.GetMost10VisitedPorts());
+            return Json(await service.Get10MostVisitedPorts());
 
         }        
         

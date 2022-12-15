@@ -25,14 +25,9 @@ namespace VesselWebCenter.Services
             }).OrderByDescending(vc=>vc.TotalVesselsVisited).ToListAsync();
         }
 
-        public async Task<IEnumerable<MostVisitedPortsViewModel>> GetMost10VisitedPorts()
+        public async Task<IEnumerable<MostVisitedPortsViewModel>> Get10MostVisitedPorts()
         {
-            var allPorts = await repo.All<PortOfCall>().Include(v => v.Vessels).Select(p => new MostVisitedPortsViewModel
-            {
-                PortName = p.PortName,
-                CountryName = p.Country,
-                TotalVesselsVisited = p.Vessels.Count(),
-            }).OrderByDescending(vc => vc.TotalVesselsVisited).ToListAsync();
+            var allPorts = await GetMostVisitedPorts();
             var portNames = allPorts.Select(x=>x.PortName).ToList();
             
             var portInfo = new Dictionary<string, int>();
@@ -50,9 +45,9 @@ namespace VesselWebCenter.Services
             allPorts = allPorts.DistinctBy(x=>x.PortName).ToList();
             for (int i = 0; i < allPorts.Count(); i++)
             {
-                if ( portInfo.Keys.ElementAt(i) == allPorts[i].PortName)
+                if ( portInfo.Keys.ElementAt(i) == allPorts.ToList()[i].PortName)
                 {
-                    allPorts[i].TotalVesselsVisited = portInfo[allPorts[i].PortName];                   
+                    allPorts.ToList()[i].TotalVesselsVisited = portInfo[allPorts.ToList()[i].PortName];                   
                 }                
             }
             

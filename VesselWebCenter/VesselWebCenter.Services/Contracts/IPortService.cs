@@ -6,7 +6,7 @@ namespace VesselWebCenter.Services.Contracts
     public interface IPortService
     {        
         Task<IEnumerable<MostVisitedPortsViewModel>> GetMostVisitedPorts();        
-        Task<IEnumerable<MostVisitedPortsViewModel>> GetMost10VisitedPorts();        
+        Task<IEnumerable<MostVisitedPortsViewModel>> Get10MostVisitedPorts();        
         
     }
 }
