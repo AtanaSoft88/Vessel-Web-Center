@@ -27,6 +27,19 @@ namespace VesselWebCenter.Tests.DataPopulation
             }
             
         }
+        private static CrewMember CrewTemplate(int crewMemberId,int vesselId, bool isLowerLetter) 
+        {
+            return new CrewMember 
+            {
+                Id = crewMemberId,
+                Age = new Random().Next(18, 65),
+                FirstName = "A" + LetterRandomizator(5, isLowerLetter),
+                LastName = "B" + LetterRandomizator(5, isLowerLetter),
+                IsPartOfACrew = true,
+                Nationality = "N" + LetterRandomizator(5, isLowerLetter),
+                VesselId = vesselId,
+            };
+        }
         internal static List<T> PortOfCallPopulator<T>(List<T> model)
             where T : PortOfCall, new()
         {
@@ -247,6 +260,50 @@ namespace VesselWebCenter.Tests.DataPopulation
 
         }
 
+        internal static List<T> PortOfDestinationPopulator<T>(List<T> model) 
+            where T : DestinationPort, new()
+        {
+            bool isUpper = false;
+            bool isLower = true;
+            model = new List<T>();
+            for (int i = 1; i <= 15; i++)
+            {
+                var ss = new T
+                {
+                    Id = i,
+                    Country = "A" + (char)new Random().Next(97, 123),
+                    PortName = LetterRandomizator(10, isLower),
+                    Latitude = $"15.{i} N",
+                    Longitude = $"{i}.30 E",
+                    UNLocode = Guid.NewGuid().ToString().Split("-").First().ToString(),
+                    Vessels = new List<Vessel>()
+                    {
+                      new Vessel
+                      {
+                          Id = i,
+                          Name="Maveric",
+                          LengthOverall=190,
+                          BreadthMax = 20,
+                          CallSign = LetterRandomizator(10,isUpper),
+                          IsLaden = true,
+                          ManningCompanyId=1,
+                          VesselImageUrl="",
+                          VesselType=0,
+                          CargoTypeOnBoard="",
+                          ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
+                      },
+
+
+                    }
+
+                };
+                model.Add(ss);
+
+
+            };
+            return model;
+        }
+
         internal static List<T> CrewPopulator<T>(List<T> model)
             where T : CrewMember, new()
         {
@@ -311,6 +368,38 @@ namespace VesselWebCenter.Tests.DataPopulation
         internal static List<T> VesselPopulator<T>(List<T> model)
            where T : Vessel, new()
         {
+            var crewVessel1 = new List<CrewMember>();
+            var crewVessel2 = new List<CrewMember>();
+            var crewVessel3 = new List<CrewMember>();
+            var crewVessel4 = new List<CrewMember>();
+            var crewVessel5 = new List<CrewMember>();
+            
+            bool isLower = true;
+            for (int i = 1; i <= 74; i++)
+            {
+                if (i<16)
+                {
+                    crewVessel1.Add(CrewTemplate(i,1,isLower));
+                    
+                }
+                else if (i >= 16 && i<31)
+                {
+                    crewVessel2.Add(CrewTemplate(i,2, isLower));
+                }
+                else if (i >= 31 && i < 46)
+                {
+                    crewVessel3.Add(CrewTemplate(i,3, isLower));
+                }
+                else if (i >= 46 && i < 61)
+                {
+                    crewVessel4.Add(CrewTemplate(i,4, isLower));
+                }
+                else 
+                {
+                    crewVessel5.Add(CrewTemplate(i,5, isLower));
+                }
+            }
+
             model.AddRange(new List<T>
             {
                 new T
@@ -325,6 +414,8 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselImageUrl="",
                     VesselType=0,
                     CargoTypeOnBoard="",
+                    CrewMembers = crewVessel1,
+                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=1,Latitude="",Longitude="", Country = "", PortName = "", UNLocode = "" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
                 },
                 new T
@@ -339,6 +430,8 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselImageUrl="",
                     VesselType=0,
                     CargoTypeOnBoard=null,
+                    CrewMembers = crewVessel2,
+                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=2,Latitude="",Longitude="", Country = "", PortName = "", UNLocode = "" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
                 },
                 new T
@@ -353,6 +446,8 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselImageUrl="",
                     VesselType=0,
                     CargoTypeOnBoard="",
+                    CrewMembers = crewVessel3,
+                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=3,Latitude="",Longitude="", Country = "", PortName = "", UNLocode = "" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
                 },
                  new T
@@ -367,6 +462,8 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselImageUrl="",
                     VesselType=0,
                     CargoTypeOnBoard="",
+                    CrewMembers = crewVessel4,
+                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=4,Latitude="",Longitude="", Country = "", PortName = "", UNLocode = "" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
                  },
                   new T
@@ -381,6 +478,8 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselImageUrl="",
                     VesselType=0,
                     CargoTypeOnBoard="",
+                    CrewMembers = crewVessel5,
+                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=5,Latitude="",Longitude="",Country="",PortName="",UNLocode="" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
                   }
 

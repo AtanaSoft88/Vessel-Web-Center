@@ -36,11 +36,11 @@ namespace VesselWebCenter.Services
         {
             var vslId = int.Parse(vesselParams.Split(" ")[0]);
 
-            var destinationListItems = repo.AllReadonly<DestinationPort>().Select(x => new SelectListItem
+            var destinationListItems =await repo.AllReadonly<DestinationPort>().Select(x => new SelectListItem
             {
                 Text = $"Port: {x.PortName} Lat: {x.Latitude} Long: {x.Longitude} Country: {x.Country} Locode: {x.UNLocode}",
                 Value = x.Id.ToString(),
-            });
+            }).ToListAsync();
             var vessel = await repo.AllReadonly<Vessel>().Include(x => x.PortsOfCall).Where(x => x.Id == vslId).FirstOrDefaultAsync();
             var latLP = vessel.PortsOfCall.Select(x => x.Latitude).Last();
             var lonLP = vessel.PortsOfCall.Select(x => x.Longitude).Last();
