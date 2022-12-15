@@ -4,7 +4,7 @@ namespace VesselWebCenter.Tests.DataPopulation
 {
     public class DataPopulator
     {
-        public static string LetterRandomizator(int count, bool isLower)
+        private static string LetterRandomizator(int count, bool isLower)
         {
             string randomName = "";
             if (isLower)
