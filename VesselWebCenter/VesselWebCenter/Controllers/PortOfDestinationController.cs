@@ -34,7 +34,7 @@ namespace VesselWebCenter.Controllers
         [HttpPost]
         public async Task<IActionResult> AssignVesselForVoyage(string vesselParams)
         {
-            var model = await service.GetDestinationPorts(vesselParams);
+            var model = await service.GetDestinationPort(vesselParams);
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -48,7 +48,7 @@ namespace VesselWebCenter.Controllers
         {
             try
             {
-                var model = await service.GetDestinationPorts(vesselParams);
+               var model = await service.GetDestinationPort(vesselParams);
                 return View(model);
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace VesselWebCenter.Controllers
                 var extractedCoordinates = await service.GetCoordinates(value,vslId);
                 if (extractedCoordinates == null) 
                 {                    
-                    notyf.Warning("Voyage could not be processed! Please select Destination port to be different from Last point!");
+                    notyf.Warning("Voyage could not be processed! Please select Destination port to be different from Last port!");
                     return RedirectToAction(nameof(AssignVesselForVoyage), "PortOfDestination");
                 }
                 

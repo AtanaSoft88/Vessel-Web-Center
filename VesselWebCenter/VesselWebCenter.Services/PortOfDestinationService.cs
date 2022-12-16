@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
+using System;
 using VesselWebCenter.Data.Models;
 using VesselWebCenter.Data.Repositories;
 using VesselWebCenter.Services.Contracts;
@@ -16,6 +17,12 @@ namespace VesselWebCenter.Services
         {
             this.repo = _repo;
         }
+
+        private async Task<Vessel> GetSpecificVessel(int vslId)
+        {
+            return await repo.AllReadonly<Vessel>().Include(x => x.PortsOfCall).Where(x => x.Id == vslId).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<VesselAssignViewModel>> GetAllAvailableForVoyage()
         {
             var vessels = await repo.AllReadonly<Vessel>().Where(x => x.CrewMembers.Count() >= 15).Select(x => new VesselAssignViewModel
@@ -32,16 +39,20 @@ namespace VesselWebCenter.Services
             return vessels;
         }
 
-        public async Task<DestinationViewModel> GetDestinationPorts(string vesselParams)
+        public async Task<DestinationViewModel> GetDestinationPort(string vesselParams)
         {
             var vslId = int.Parse(vesselParams.Split(" ")[0]);
 
-            var destinationListItems =await repo.AllReadonly<DestinationPort>().Select(x => new SelectListItem
+            var destinationListItems = await repo.AllReadonly<DestinationPort>().Select(x => new SelectListItem
             {
                 Text = $"Port: {x.PortName} Lat: {x.Latitude} Long: {x.Longitude} Country: {x.Country} Locode: {x.UNLocode}",
                 Value = x.Id.ToString(),
             }).ToListAsync();
-            var vessel = await repo.AllReadonly<Vessel>().Include(x => x.PortsOfCall).Where(x => x.Id == vslId).FirstOrDefaultAsync();
+            Vessel? vessel = await GetSpecificVessel(vslId);
+            if (vessel == null)
+            {
+                return null;
+            }
             var latLP = vessel.PortsOfCall.Select(x => x.Latitude).Last();
             var lonLP = vessel.PortsOfCall.Select(x => x.Longitude).Last();
             var lastPortName = vessel.PortsOfCall.Select(x => x.PortName).Last();
@@ -67,7 +78,7 @@ namespace VesselWebCenter.Services
             }).FirstOrDefaultAsync();
 
             return modelResult;
-        }
+        }       
 
         public async Task<IEnumerable<string>> GetCoordinates(string parameters, int vslId)
         {
@@ -89,7 +100,11 @@ namespace VesselWebCenter.Services
             var destCountry = resultValue.Split(" ")[2];
             var destUNLocode = resultValue.Split(" ")[3];
 
-            var vessel = await repo.AllReadonly<Vessel>().Include(x => x.PortsOfCall).Where(x => x.Id == vslId).FirstOrDefaultAsync();
+            Vessel? vessel = await GetSpecificVessel(vslId);
+            if (vessel == null)
+            {
+                return null;
+            }
             var lastPortName = vessel.PortsOfCall.Select(x => x.PortName).Last();
             var lastPortUnlocode = vessel.PortsOfCall.Select(x => x.UNLocode).Last();
             if (lastPortName == portName && lastPortUnlocode == destUNLocode && lastPortLat == destPortLat)
@@ -110,7 +125,11 @@ namespace VesselWebCenter.Services
             var destUNLocode = extractedCoordinates.ToList()[6];
 
             var destinationId = await repo.AllReadonly<DestinationPort>().Where(x => x.PortName == portName).Select(x => x.Id).FirstOrDefaultAsync();
-            var currentVessel = await repo.AllReadonly<Vessel>().Include(x => x.PortsOfCall).Where(x => x.Id == vslId).FirstOrDefaultAsync();
+            var currentVessel = await GetSpecificVessel(vslId);
+            if (currentVessel == null)
+            {
+                return null;
+            }
             var lastPortName = currentVessel.PortsOfCall.Select(x => x.PortName).Last();
             var lastPortCountry = currentVessel.PortsOfCall.Select(x => x.Country).Last();
             var model = new VoyageDataViewModel()
@@ -154,7 +173,7 @@ namespace VesselWebCenter.Services
         {
             var vessel = await repo.All<Vessel>()
                 .Include(x => x.PortsOfCall)
-                .Include(y=>y.Distances)
+                .Include(y => y.Distances)
                 .FirstOrDefaultAsync(x => x.Id == vesselId);
 
             var destinationPort = await repo.GetByIdAsync<DestinationPort>(destinationId);

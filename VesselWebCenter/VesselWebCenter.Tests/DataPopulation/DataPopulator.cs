@@ -268,7 +268,7 @@ namespace VesselWebCenter.Tests.DataPopulation
             model = new List<T>();
             for (int i = 1; i <= 15; i++)
             {
-                var ss = new T
+                var destination = new T
                 {
                     Id = i,
                     Country = "A" + (char)new Random().Next(97, 123),
@@ -297,7 +297,7 @@ namespace VesselWebCenter.Tests.DataPopulation
                     }
 
                 };
-                model.Add(ss);
+                model.Add(destination);
 
 
             };
@@ -399,7 +399,7 @@ namespace VesselWebCenter.Tests.DataPopulation
                     crewVessel5.Add(CrewTemplate(i,5, isLower));
                 }
             }
-
+            
             model.AddRange(new List<T>
             {
                 new T
@@ -415,7 +415,7 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselType=0,
                     CargoTypeOnBoard="",
                     CrewMembers = crewVessel1,
-                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=1,Latitude="",Longitude="", Country = "", PortName = "", UNLocode = "" } },
+                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=1,Latitude="25.30",Longitude="17.30", Country = "Egypt", PortName = "Sudan", UNLocode = "SDN-872" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
                 },
                 new T
@@ -431,8 +431,11 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselType=0,
                     CargoTypeOnBoard=null,
                     CrewMembers = crewVessel2,
-                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=2,Latitude="",Longitude="", Country = "", PortName = "", UNLocode = "" } },
+                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=2,Latitude= "43.11", Longitude= "27.55", Country = "", PortName = "Varna", UNLocode = "BGVAR-003" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
+                    //[TestCase("Port: Varna Lat: 43.11 N Long: 27.55 E Country: Bulgaria Locode: BGVAR-003 Lat: 31.18 N Long: 29.87 E ", 3)]
+                    //[TestCase("Port: Ochakov Lat: 46.59 N Long: 31.58 E Country: Ukraine Locode: UAOCHW Lat: 46.59 N Long: 31.58 E ", 2)]
+                    //lastPortName == portName && lastPortUnlocode == destUNLocode && lastPortLat == destPortLat
                 },
                 new T
                 {
@@ -447,7 +450,7 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselType=0,
                     CargoTypeOnBoard="",
                     CrewMembers = crewVessel3,
-                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=3,Latitude="",Longitude="", Country = "", PortName = "", UNLocode = "" } },
+                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=3,Latitude="15.15",Longitude="34.21", Country = "Germany", PortName = "Hamburg", UNLocode = "HBG-265" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
                 },
                  new T
@@ -463,7 +466,7 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselType=0,
                     CargoTypeOnBoard="",
                     CrewMembers = crewVessel4,
-                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=4,Latitude="",Longitude="", Country = "", PortName = "", UNLocode = "" } },
+                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=4,Latitude="31.30",Longitude="22.35", Country = "Italy", PortName = "Palermo", UNLocode = "PM891" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
                  },
                   new T
@@ -479,7 +482,7 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselType=0,
                     CargoTypeOnBoard="",
                     CrewMembers = crewVessel5,
-                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=5,Latitude="",Longitude="",Country="",PortName="",UNLocode="" } },
+                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=5,Latitude="41.30",Longitude="28.34",Country="Bulgaria",PortName="Burgas",UNLocode="BS8192" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
                   }
 
