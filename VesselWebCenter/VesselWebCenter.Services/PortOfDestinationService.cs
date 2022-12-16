@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
-using System;
 using VesselWebCenter.Data.Models;
 using VesselWebCenter.Data.Repositories;
 using VesselWebCenter.Services.Contracts;
@@ -171,7 +169,7 @@ namespace VesselWebCenter.Services
 
         public async Task AddDestinationToVessel(int vesselId, int destinationId, double distanceSailed)
         {
-            var vessel = await repo.All<Vessel>()
+            var vessels = await repo.All<Vessel>()
                 .Include(x => x.PortsOfCall)
                 .Include(y => y.Distances)
                 .FirstOrDefaultAsync(x => x.Id == vesselId);
@@ -185,17 +183,17 @@ namespace VesselWebCenter.Services
                 Longitude = destinationPort.Longitude,
                 PortName = destinationPort.PortName,
             };            
-            if (vessel.PortsOfCall.Last().UNLocode != portOfCall.UNLocode)
+            if (vessels.PortsOfCall.Last().UNLocode != portOfCall.UNLocode)
             {
                 var distance = new Distance() 
                 {
-                    VesselName=vessel.Name,
+                    VesselName=vessels.Name,
                     VesselDistance = distanceSailed,
-                    VesselId=vessel.Id,
+                    VesselId=vessels.Id,
                 };
-                vessel.DestinationPortId = destinationId;
-                vessel.PortsOfCall.Add(portOfCall);
-                vessel.Distances.Add(distance);                
+                vessels.DestinationPortId = destinationId;
+                vessels.PortsOfCall.Add(portOfCall);
+                vessels.Distances.Add(distance);                
                 await repo.SaveChangesAsync();
             }
         }

@@ -298,9 +298,38 @@ namespace VesselWebCenter.Tests.DataPopulation
 
                 };
                 model.Add(destination);
-
+                
+                
 
             };
+            model.Add(new T 
+            {
+                Id = 16,
+                Country = "Ukraine",
+                PortName = "Sevastopol",
+                Latitude = "44.35",
+                Longitude = "33.30",
+                UNLocode = "UASVP",
+                Vessels = new List<Vessel>()
+                    {
+                      new Vessel
+                      {
+                          Id = 16,
+                          Name="MSC Franchesca",
+                          LengthOverall=190,
+                          BreadthMax = 20,
+                          CallSign = "9HAYH9",
+                          IsLaden = true,
+                          ManningCompanyId=1,
+                          VesselImageUrl="",
+                          VesselType=0,
+                          CargoTypeOnBoard="Cement",
+                          ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
+                      },
+
+
+                    }
+            });
             return model;
         }
 
@@ -414,6 +443,7 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselImageUrl="",
                     VesselType=0,
                     CargoTypeOnBoard="",
+                    Distances = new List<Distance>(){ new Distance {Id=1,VesselId=1,VesselDistance=2700,VesselName= "Verila" } },
                     CrewMembers = crewVessel1,
                     PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=1,Latitude="25.30",Longitude="17.30", Country = "Egypt", PortName = "Sudan", UNLocode = "SDN-872" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
@@ -430,12 +460,11 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselImageUrl="",
                     VesselType=0,
                     CargoTypeOnBoard=null,
+                    Distances = new List<Distance>(){ new Distance {Id=2,VesselId=2,VesselDistance=1700,VesselName= "Lena" } },
                     CrewMembers = crewVessel2,
                     PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=2,Latitude= "43.11", Longitude= "27.55", Country = "", PortName = "Varna", UNLocode = "BGVAR-003" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
-                    //[TestCase("Port: Varna Lat: 43.11 N Long: 27.55 E Country: Bulgaria Locode: BGVAR-003 Lat: 31.18 N Long: 29.87 E ", 3)]
-                    //[TestCase("Port: Ochakov Lat: 46.59 N Long: 31.58 E Country: Ukraine Locode: UAOCHW Lat: 46.59 N Long: 31.58 E ", 2)]
-                    //lastPortName == portName && lastPortUnlocode == destUNLocode && lastPortLat == destPortLat
+                    
                 },
                 new T
                 {
@@ -449,6 +478,7 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselImageUrl="",
                     VesselType=0,
                     CargoTypeOnBoard="",
+                    Distances = new List<Distance>(){ new Distance {Id=3,VesselId=3,VesselDistance=700,VesselName= "Persian Miracle" } },
                     CrewMembers = crewVessel3,
                     PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=3,Latitude="15.15",Longitude="34.21", Country = "Germany", PortName = "Hamburg", UNLocode = "HBG-265" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
@@ -465,8 +495,9 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselImageUrl="",
                     VesselType=0,
                     CargoTypeOnBoard="",
+                    Distances = new List<Distance>(){ new Distance {Id=4,VesselId=4,VesselDistance=4700,VesselName= "Seven Ocenas" } },
                     CrewMembers = crewVessel4,
-                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=4,Latitude="31.30",Longitude="22.35", Country = "Italy", PortName = "Palermo", UNLocode = "PM891" } },
+                    PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=4,Latitude= "41.01", Longitude= "28.59", Country = "Turkey", PortName = "Istanbul", UNLocode = "TRIST" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
                  },
                   new T
@@ -481,6 +512,7 @@ namespace VesselWebCenter.Tests.DataPopulation
                     VesselImageUrl="",
                     VesselType=0,
                     CargoTypeOnBoard="",
+                    Distances = new List<Distance>(){ new Distance {Id=5,VesselId=5,VesselDistance=6700,VesselName= "Maveric" } },
                     CrewMembers = crewVessel5,
                     PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=5,Latitude="41.30",Longitude="28.34",Country="Bulgaria",PortName="Burgas",UNLocode="BS8192" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
