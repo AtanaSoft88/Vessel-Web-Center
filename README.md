@@ -19,6 +19,7 @@ calculations.Thus you have idea of what distance and how much time will the voya
 
 # Built using the following:
 - ASP.NET Core 6 MVC
+- Repository
 - MSSQL Server
 - Entity Framework Core
 - AJAX
@@ -29,6 +30,7 @@ calculations.Thus you have idea of what distance and how much time will the voya
 - DataTables
 - High Charts - Diagram Implementation
 - Toast messages
+- Dependency Injection
 
 # Getting started...
 * You have to register a User. By default after log/in/out you are given full control
@@ -40,6 +42,13 @@ and permission of this Application users,roles and actions.
 * Only first 2 roles can have the big interaction and test the full application potential.The third one only can observe partial
 information and can not be part of the big deal:)
 * Not logged in users have almost no point of using this application ( don't be one of them) :)
+
+# Project Architecture
+My main project consists of 4 projects strictly connected and depending each other.
+VesselWebCenter - ASP .NET Core Web App MVC.
+VesselWebCenter.Data - Class Library, holding DBContext, Migrations and DB-Models.
+VesselWebCenter.Services - Class Library, holding Services and Service Models and main business logic of the application.
+VesselWebCenter.Tests - NUnit Test Project, holding Service Tests, proving that the application works as expected.
 
 # Data Base Diagram
 ![title](Image/diagram.png)
