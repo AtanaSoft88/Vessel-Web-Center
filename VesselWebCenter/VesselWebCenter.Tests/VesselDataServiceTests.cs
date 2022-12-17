@@ -7,7 +7,7 @@ namespace VesselWebCenter.Tests
     public class VesselDataServiceTests : DataPopulator
     {
         private IRepository repo;
-        private IVesselDataService service;        
+        private IVesselDataService service;
 
         [SetUp]
         public void Setup()
@@ -25,13 +25,20 @@ namespace VesselWebCenter.Tests
             service = new VesselDataService(repo);
             var serviceResult = service.GetAll();
             Assert.That(serviceResult.Count(), Is.EqualTo(5));
+            fakeDb.Vessels.RemoveRange(fakeDb.Vessels);
+            await fakeDb.SaveChangesAsync();
+            if (!fakeDb.Vessels.Any())
+            {
+                serviceResult = service.GetAll();
+                Assert.That(serviceResult, Is.Empty);
+            }
         }
 
         [Test]
         public async Task Get_The_Chosen_Vessel()
         {
             int chosenVesselId = 5;
-            string expectedVesselName = "Maveric";            
+            string expectedVesselName = "Maveric";
             var mockRepo = new Mock<IRepository>();
             var vessels = VesselPopulator(new List<Vessel>());
             mockRepo.Setup(r => r.AllReadonly<Vessel>())
@@ -52,7 +59,7 @@ namespace VesselWebCenter.Tests
                 .Returns(allVessels.AsQueryable().BuildMock());
             repo = mockRepo.Object;
             service = new VesselDataService(repo);
-            var serviceResult =await service.AllEmptyVesselsAsHomePage();
+            var serviceResult = await service.AllEmptyVesselsAsHomePage();
             Assert.That(serviceResult.Count(), Is.EqualTo(1));
             Assert.That(allVessels.Count(), Is.EqualTo(5));
             Assert.That(serviceResult.Select(x => x.Name).Any(), Is.EqualTo(true));
