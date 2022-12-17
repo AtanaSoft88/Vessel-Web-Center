@@ -44,11 +44,11 @@ information and can not be part of the big deal:)
 * Not logged in users have almost no point of using this application ( don't be one of them) :)
 
 # Project Architecture
-My main project consists of 4 projects strictly connected and depending each other.
-VesselWebCenter - ASP .NET Core Web App MVC.
-VesselWebCenter.Data - Class Library, holding DBContext, Migrations and DB-Models.
-VesselWebCenter.Services - Class Library, holding Services and Service Models and main business logic of the application.
-VesselWebCenter.Tests - NUnit Test Project, holding Service Tests, proving that the application works as expected.
+- My main project consists of 4 projects strictly connected and depending each other.
+1. VesselWebCenter - ASP .NET Core Web App MVC.
+2. VesselWebCenter.Data - Class Library, holding DBContext, Migrations and DB-Models.
+3. VesselWebCenter.Services - Class Library, holding Services and Service Models and main business logic of the application.
+4. VesselWebCenter.Tests - NUnit Test Project, holding Service Tests, proving that the application works as expected.
 
 # Data Base Diagram
 ![title](Image/diagram.png)
