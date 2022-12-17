@@ -124,7 +124,7 @@ namespace VesselWebCenter.Services
 
             var destinationId = await repo.AllReadonly<DestinationPort>().Where(x => x.PortName == portName).Select(x => x.Id).FirstOrDefaultAsync();
             var currentVessel = await GetSpecificVessel(vslId);
-            if (currentVessel == null)
+            if (currentVessel == null || (spd <= 0 || spd > 18) )
             {
                 return null;
             }

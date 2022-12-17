@@ -83,7 +83,11 @@ namespace VesselWebCenter.Controllers
         [HttpGet]
         public async Task<IActionResult> ProcessVoyageDetails(IEnumerable<string> extractedCoordinates,double spd,int vslId)
         {
-            var model = await service.GetDataForCalculation(extractedCoordinates,spd, vslId);            
+            var model = await service.GetDataForCalculation(extractedCoordinates,spd, vslId);
+            if (model is null)
+            {
+                return RedirectToAction(nameof(AssignVesselForVoyage), "PortOfDestination");
+            }
             return View(model);
 
         }

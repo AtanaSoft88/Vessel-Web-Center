@@ -103,12 +103,15 @@ namespace VesselWebCenter.Tests
 
         }
         [Test]
+        [TestCase(2, 0)]
         [TestCase(15, 18)]
         [TestCase(1, 5.8)]
         [TestCase(2, 7)]
         [TestCase(3, 6.6)]
         [TestCase(4, 1)]
         [TestCase(5, 18)]
+        [TestCase(5, 100)]
+        [TestCase(5, -5)]
 
         public async Task Prepare_Coordinates_For_The_Voyage(int vesselId, double spd)
         {
@@ -121,7 +124,7 @@ namespace VesselWebCenter.Tests
             repo = mockRepo.Object;
             service = new PortOfDestinationService(repo);
             var result = await service.GetDataForCalculation(parameters, spd, vesselId);
-            if (vesselId > vessels.Count())
+            if (vesselId > vessels.Count() || (spd <=0 || spd > 18))
             {
                 Assert.That(result, Is.Null);
             }
@@ -150,7 +153,7 @@ namespace VesselWebCenter.Tests
             {
                initialTotalDistance = currentVessel.Distances.Sum(x=>x.VesselDistance);
                initialPortsCount = currentVessel.PortsOfCall.Count();
-            }
+            }           
             var mockRepo = new Mock<IRepository>();
             mockRepo.Setup(x => x.All<Vessel>()).Returns(vessels.AsQueryable().BuildMock());
             mockRepo.Setup(x => x.GetByIdAsync<DestinationPort>(destinationId)).Returns(destinations.BuildMock().FirstOrDefaultAsync());
