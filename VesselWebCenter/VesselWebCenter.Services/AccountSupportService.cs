@@ -10,20 +10,17 @@ using VesselWebCenter.Services.ViewModels;
 namespace VesselWebCenter.Services
 {
     public class AccountSupportService : IAccountSupportService
-    {
-        private readonly VesselAppDbContext context;
+    {        
         private readonly IRepository repo;
         private readonly UserManager<AppUser> userManager;
-        private readonly RoleManager<IdentityRole<Guid>> roleManager;
+        
 
-        public AccountSupportService(VesselAppDbContext context, IRepository repo, UserManager<AppUser> userManager, RoleManager<IdentityRole<Guid>> _roleManager)
-        {
-            this.context = context;
+        public AccountSupportService(IRepository repo, UserManager<AppUser> userManager)
+        {            
             this.repo = repo;
-            this.userManager = userManager;
-            roleManager = _roleManager;
+            this.userManager = userManager;            
         }
-        public async Task DeleteUserAccount(AccountDeleteViewModel account)
+        public async Task DeleteAccountAsync(AccountDeleteViewModel account)
         {            
             var userToDelete = await repo.All<AppUser>(x => x.Email == account.EmailAddress).FirstOrDefaultAsync();
            

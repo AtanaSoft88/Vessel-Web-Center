@@ -5,7 +5,7 @@ namespace VesselWebCenter.Services.Contracts
 {
     public interface IAccountSupportService
     {
-        Task DeleteUserAccount(AccountDeleteViewModel account);         
+        Task DeleteAccountAsync(AccountDeleteViewModel account);         
         Task<IEnumerable<SelectListItem>> GetAllUsers();
         Task<IEnumerable<SelectListItem>> GetAllDeletedUsers();
         Task GetUserAccountRecovered(AccountRecoverViewModel account);

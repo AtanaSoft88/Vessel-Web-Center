@@ -31,8 +31,8 @@
 						<li class="nav-item m-1">
 							<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="" asp-controller="Vessel" asp-action="GetAllVessels">✯Vessel's Catalogue</a>
 						</li>
-						@*IF user not logged , dont show Vessels Collection in header*@
-						@if (User?.Identity?.IsAuthenticated ?? false)  //<- put this inside -> User?.Identity?.IsAuthenticated ?? false
+						
+						@if (User?.Identity?.IsAuthenticated ?? false)  
 						{
 
 							<li class="my-re nav-item m-1">

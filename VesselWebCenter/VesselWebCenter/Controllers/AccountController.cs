@@ -222,7 +222,7 @@ namespace VesselWebCenter.Controllers
                 TempData["delEmail"] = "unavailable";
                 return RedirectToAction("UserMessages", "Account");
             }
-            await accountSupportService.DeleteUserAccount(account);
+            await accountSupportService.DeleteAccountAsync(account);
             TempData["delUser"] = userManager.Users.Where(x => x.Email == account.EmailAddress).FirstOrDefault()?.FirstName;
             TempData["delEmail"] = userManager.Users.Where(x => x.Email == account.EmailAddress).FirstOrDefault()?.Email;
             return RedirectToAction(nameof(UserMessages), "Account");

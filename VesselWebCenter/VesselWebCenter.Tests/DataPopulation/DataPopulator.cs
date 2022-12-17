@@ -1,4 +1,5 @@
 ﻿using NuGet.Packaging;
+using VesselWebCenter.Data.Models.Accounts;
 
 namespace VesselWebCenter.Tests.DataPopulation
 {
@@ -8,7 +9,7 @@ namespace VesselWebCenter.Tests.DataPopulation
         {
             string randomName = "";
             if (isLower)
-            {                
+            {
                 for (int i = 0; i < count; i++)
                 {
                     var randomChar = ((char)new Random().Next(97, 123));
@@ -17,7 +18,7 @@ namespace VesselWebCenter.Tests.DataPopulation
                 return randomName;
             }
             else
-            {                
+            {
                 for (int i = 0; i < count; i++)
                 {
                     var randomChar = ((char)new Random().Next(65, 91));
@@ -25,11 +26,11 @@ namespace VesselWebCenter.Tests.DataPopulation
                 }
                 return randomName;
             }
-            
+
         }
-        private static CrewMember CrewTemplate(int crewMemberId,int vesselId, bool isLowerLetter) 
+        private static CrewMember CrewTemplate(int crewMemberId, int vesselId, bool isLowerLetter)
         {
-            return new CrewMember 
+            return new CrewMember
             {
                 Id = crewMemberId,
                 Age = new Random().Next(18, 65),
@@ -48,7 +49,7 @@ namespace VesselWebCenter.Tests.DataPopulation
             var portList = new List<T>();
             for (int i = 1; i <= 11; i++)
             {
-                var ss = new T 
+                var port = new T
                 {
                     Id = i,
                     Country = "A" + (char)new Random().Next(97, 123),
@@ -77,7 +78,7 @@ namespace VesselWebCenter.Tests.DataPopulation
                     }
 
                 };
-                portList.Add(ss);
+                portList.Add(port);
 
 
             };
@@ -254,13 +255,13 @@ namespace VesselWebCenter.Tests.DataPopulation
                     }
 
                 }
-                
+
             });
             return model;
 
         }
 
-        internal static List<T> PortOfDestinationPopulator<T>(List<T> model) 
+        internal static List<T> PortOfDestinationPopulator<T>(List<T> model)
             where T : DestinationPort, new()
         {
             bool isUpper = false;
@@ -298,11 +299,11 @@ namespace VesselWebCenter.Tests.DataPopulation
 
                 };
                 model.Add(destination);
-                
-                
+
+
 
             };
-            model.Add(new T 
+            model.Add(new T
             {
                 Id = 16,
                 Country = "Ukraine",
@@ -402,33 +403,33 @@ namespace VesselWebCenter.Tests.DataPopulation
             var crewVessel3 = new List<CrewMember>();
             var crewVessel4 = new List<CrewMember>();
             var crewVessel5 = new List<CrewMember>();
-            
+
             bool isLower = true;
             for (int i = 1; i <= 74; i++)
             {
-                if (i<16)
+                if (i < 16)
                 {
-                    crewVessel1.Add(CrewTemplate(i,1,isLower));
-                    
+                    crewVessel1.Add(CrewTemplate(i, 1, isLower));
+
                 }
-                else if (i >= 16 && i<31)
+                else if (i >= 16 && i < 31)
                 {
-                    crewVessel2.Add(CrewTemplate(i,2, isLower));
+                    crewVessel2.Add(CrewTemplate(i, 2, isLower));
                 }
                 else if (i >= 31 && i < 46)
                 {
-                    crewVessel3.Add(CrewTemplate(i,3, isLower));
+                    crewVessel3.Add(CrewTemplate(i, 3, isLower));
                 }
                 else if (i >= 46 && i < 61)
                 {
-                    crewVessel4.Add(CrewTemplate(i,4, isLower));
+                    crewVessel4.Add(CrewTemplate(i, 4, isLower));
                 }
-                else 
+                else
                 {
-                    crewVessel5.Add(CrewTemplate(i,5, isLower));
+                    crewVessel5.Add(CrewTemplate(i, 5, isLower));
                 }
             }
-            
+
             model.AddRange(new List<T>
             {
                 new T
@@ -464,7 +465,7 @@ namespace VesselWebCenter.Tests.DataPopulation
                     CrewMembers = crewVessel2,
                     PortsOfCall=new List<PortOfCall>(){ new PortOfCall() {Id=2,Latitude= "43.11", Longitude= "27.55", Country = "", PortName = "Varna", UNLocode = "BGVAR-003" } },
                     ManningCompany=new ManningCompany(){Name="NBM",Country="Bg" }
-                    
+
                 },
                 new T
                 {
@@ -627,6 +628,28 @@ namespace VesselWebCenter.Tests.DataPopulation
                     }   }
                  }
             });
+            return model;
+        }
+
+        internal static List<T> ApplicationUserPopulator<T>(List<T> model, int countUsers)
+            where T : AppUser, new()
+        {            
+            for (int i = 0; i < countUsers; i++)
+            {
+                var randomizer = LetterRandomizator(8, true);
+                var user = new T
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = $"FirstName{i}",
+                    Email = $"{randomizer}@abv.bg",
+                    EmailConfirmed = true,
+                    IsDeleted = (i%2==0) ? false : true,
+                    LastName = $"LastName{i}",
+                    NormalizedEmail = $"{randomizer}@abv.bg".ToUpper(),
+                    UserName = $"{randomizer}@abv.bg",
+                };
+                model.Add(user);
+            }            
             return model;
         }
 

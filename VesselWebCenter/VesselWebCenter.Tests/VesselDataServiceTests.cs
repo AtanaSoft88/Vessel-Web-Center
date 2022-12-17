@@ -18,7 +18,7 @@ namespace VesselWebCenter.Tests
         [Test]
         public async Task Get_All_Vessels()
         {
-            var fakeDb = DataBaseMock.Instance;
+            using var fakeDb = DataBaseMock.Instance;
             await fakeDb.AddRangeAsync(VesselPopulator(new List<Vessel>()));
             await fakeDb.SaveChangesAsync();
             repo = new Repository(fakeDb);
