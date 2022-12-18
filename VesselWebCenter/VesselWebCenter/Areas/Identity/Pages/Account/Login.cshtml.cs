@@ -14,18 +14,23 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using VesselWebCenter.Data.Models.Accounts;
 
 namespace VesselWebCenter.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<AppUser> signInManager,
+                          ILogger<LoginModel> logger,
+                          UserManager<AppUser> _userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            userManager = _userManager;
         }
 
         /// <summary>
@@ -114,6 +119,12 @@ namespace VesselWebCenter.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = await userManager.FindByEmailAsync(Input.Email);
+
+                    if (user != null && await userManager.IsInRoleAsync(user, "Administrator"))
+                    {
+                        return RedirectToAction("Index", "Admin", new { Area = "Admin" });
+                    }
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

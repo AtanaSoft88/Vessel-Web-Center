@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>@ViewData["Title"] - VesselWebCenter - Administration</title>
+	<link rel="icon" type="image/x-icon" href="~/Img/favicon.ico">
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/myIndex.css" asp-append-version="true" /> 
+	<link rel="stylesheet" href="~/VesselWebCenter.styles.css" asp-append-version="true" />
+
+</head>
+<body style="background-color:aliceblue;">
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 bgrnd">
+			<div class="container-fluid">
+				<a style="-webkit-text-fill-color:chartreuse" class="navbar-brand text-uppercase text-dark" asp-area="" asp-controller="Home" asp-action="Index">Vessel Web Center</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div style="background-color:steelblue;width:5%;height:50px" class="navbar-collapse collapsed d-sm-inline-flex justify-content-between list-group-item list-group-item-success">
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item m-1">
+							<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="" asp-controller="Home" asp-action="Index">✯Home</a>
+						</li>
+						<li class="nav-item m-1">
+							<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="" asp-controller="Vessel" asp-action="GetAllVessels">✯Vessel's Catalogue</a>
+						</li>
+
+						@if (User?.Identity?.IsAuthenticated ?? false)
+						{
+
+							<li class="my-re nav-item m-1">
+								<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="" asp-controller="Crew" asp-action="AddCrewMemberAsUnassigned">✯Register a crew member</a>
+							</li>
+
+							<li class="my-re nav-item m-1">
+								<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="" asp-controller="PortOfDestination" asp-action="AssignVesselForVoyage">✯Voyage Planner</a>
+							</li>
+						}
+						@if ((await AuthorizationService.AuthorizeAsync(User, "myFullPermissionPolicy")).Succeeded)
+						{
+							<li>
+								<partial name="_NavDropdown" />
+							</li>
+						}
+
+					</ul>
+					<partial name="_LoginPartial" />
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+		<h2 class="form-control bg-danger bg-opacity-25 rounded-pill w-50">Administration area</h2>
+		<main role="main" class="pb-3" style="color:yellowgreen">
+			@RenderBody()
+		</main>
+	</div>
+	<footer class="border-top footer text-muted card-footer bg-success bg-opacity-10 ">
+		<div class="container">
+			&copy; VesselWebCenter  - ⋐
+			@DateTime.UtcNow.Year ⋑
+		</div>
+	</footer>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+	@await Component.InvokeAsync("Notyf")
+</body>
+</html>
