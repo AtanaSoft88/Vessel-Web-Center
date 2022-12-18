@@ -61,6 +61,7 @@ builder.Services.AddNotyf(config =>  // notify toast msgs
     .Position = NotyfPosition
     .TopCenter; 
 });
+builder.Services.AddResponseCaching();
 var app = builder.Build(); 
 
 using (var serviceScope = app.Services.CreateScope())
@@ -91,9 +92,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+  name: "areas",
+  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.UseNotyf(); // notify toast msgs
 app.MapRazorPages();
+app.UseResponseCaching();
 app.Run();
 

@@ -17,6 +17,7 @@ namespace VesselWebCenter.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetAllManningCompanies()
         {
             var companies = await service.GetAllCompanies();

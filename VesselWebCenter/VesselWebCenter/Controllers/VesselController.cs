@@ -28,6 +28,7 @@ namespace VesselWebCenter.Controllers
         /// <param name="pageNumber"></param>
         /// <returns>All Vessels Paginated</returns>
         [AllowAnonymous]
+        [ResponseCache(Duration = 30)]
         [HttpGet]
         public async Task<IActionResult> GetAllVessels(int pageNumber = 1)
         {

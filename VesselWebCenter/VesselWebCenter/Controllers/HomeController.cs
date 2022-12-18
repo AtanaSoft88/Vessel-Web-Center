@@ -19,20 +19,15 @@ namespace VesselWebCenter.Controllers
         }
 
         [AllowAnonymous]
+        [ResponseCache(Duration = 30)]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var models = await service.AllEmptyVesselsAsHomePage();
 
             return View(models);
-        }        
-
-        [AllowAnonymous]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
+        }      
+         
         [AllowAnonymous]
         public IActionResult StatusCodeError(int errorCode)
         {
