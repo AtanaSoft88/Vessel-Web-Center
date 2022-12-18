@@ -13,10 +13,14 @@ namespace VesselWebCenter.Controllers
     {
         private readonly IPortOfDestinationService service;
         private readonly INotyfService notyf;
-        public PortOfDestinationController(IPortOfDestinationService _service, INotyfService _notyf)
+        private readonly ILogger<PortOfDestinationController> logger;
+        public PortOfDestinationController(IPortOfDestinationService _service,
+                                            INotyfService _notyf,
+                                            ILogger<PortOfDestinationController> _logger)
         {
             this.service = _service;
             this.notyf = _notyf;
+            this.logger = _logger;
         }
         
         [HttpGet]
@@ -53,7 +57,7 @@ namespace VesselWebCenter.Controllers
             }
             catch (Exception ex)
             {
-
+                logger.LogError(nameof(ChooseDestinationForCurrentVessel), ex);
                 throw new ArgumentException("Error occurred on attempt to pass 'vesselParameters' and return correctly filled model", ex);
             }
         }
@@ -74,6 +78,7 @@ namespace VesselWebCenter.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(nameof(ChooseDestinationForCurrentVessel), ex);
                 throw new ArgumentException("Error occurred on attempt to set last port and destination port parameters",ex);
                
             }        
