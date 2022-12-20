@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model AccountDeleteViewModel
+
+<form method="post"> 
+    <div>
+        <div>
+            @if ((await AuthorizationService.AuthorizeAsync(User, "myFullPermissionPolicy")).Succeeded)
+            {
+                <div class="card-body">
+                    <ul style="font-size:smaller;" class="usr-Count rounded-3">
+                        <partial name="_UsersRegisteredCount" class="" />
+                        <partial>Currently Loggedin: @User.Identity.Name</partial>
+                    </ul>
+                </div>
+
+
+            }
+        </div>
+        
+        <div class="card-body rounded-3  w-auto alert-primary  align-content-md-center">
+            <h3>Choose the account you wish to delete</h3>
+            <hr />
+            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            <select asp-for="EmailAddress" asp-items="Model.Users" class="form-control w-25 bg-success bg-opacity-25 m-1">
+                <option class="bg-secondary bg-opacity-25 text-danger">⛔Account to be Deleted ⌵ ☠ </option>
+            </select>
+
+            <button type="submit" class="w-40 btn-primary btn-sm btn-danger">Delete</button>
+        </div>
+    </div>
+    
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

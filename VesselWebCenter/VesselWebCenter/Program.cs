@@ -33,7 +33,7 @@ builder.Services.AddDefaultIdentity<AppUser>(options =>
 builder.Services.ConfigureApplicationCookie(options => 
 {
     options.LoginPath = "/Account/Login";
-    options.LogoutPath = "/Account/Logout";
+    options.LogoutPath = "";
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
@@ -91,15 +91,21 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-  name: "areas",
-  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}"
+        );
+    endpoints.MapRazorPages();
+});
 app.UseNotyf(); // notify toast msgs
-app.MapRazorPages();
+//app.MapRazorPages();
 app.UseResponseCaching();
 app.Run();
 

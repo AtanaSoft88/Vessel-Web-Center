@@ -1,0 +1,11 @@
+﻿<link rel="stylesheet" href="~/css/nav-Acc-Dropdown.css" asp-append-version="true" /> @*my css*@
+
+<div class="dropdown">
+	<a onclick="myFunction()" class="dropbtn nav-link text-dark btn-outline-primary rounded-2 rounded-pill">✯Account Management ⌵</a>
+	<div id="myDropdown" class="dropdown-content">
+		<a asp-area="Admin" asp-controller="Admin" asp-action="DeleteUserAccount">Delete Account</a>
+		<a asp-area="Admin" asp-controller="Admin" asp-action="RecoverUserAccount">Recover Account</a>
+		<a asp-area="Admin" asp-controller="Admin" asp-action="ManageUserRoles">Manage User Roles</a>
+	</div>
+</div>
+<script src="~/js/dropdown-nav.js" asp-append-version="true"></script>

@@ -1,0 +1,20 @@
+﻿@model AccountRecoverViewModel
+
+<form method="post">
+	<div>
+		<div class="card-body rounded-3  w-auto alert-primary  align-content-md-center">
+			<h3>Choose the account you wish to recover</h3>
+			<hr />
+			<span asp-validation-for="EmailAddress" class="text-danger"></span>
+			<select asp-for="EmailAddress" asp-items="Model.Users" class="form-control w-25 bg-success bg-opacity-25 m-1">
+				<option class="bg-secondary bg-opacity-25 text-danger"> ㊂ Account to Recover ▼  </option>
+			</select>			
+			<button type="submit" class="w-40 btn-primary btn-sm btn-success">Recover</button>
+		</div>
+	</div>
+
+</form>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

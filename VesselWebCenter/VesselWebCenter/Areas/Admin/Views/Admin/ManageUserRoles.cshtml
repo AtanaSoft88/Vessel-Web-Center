@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@using VesselWebCenter.Data.Models.Accounts
+@inject IAuthorizationService AuthorizationService
+@model AccountAddRolesViewModel
+@inject RoleManager<IdentityRole<Guid>> roleManager
+@inject UserManager<AppUser> userManager
+
+@{
+	ViewData["Title"] = "Roles to be Assigned";
+}
+<h1 class="rounded-3 shadow fst-italic" style="-webkit-text-fill-color:lightseagreen">@ViewData["Title"]</h1>
+<partial name="_roleMessages" />
+
+<form method="post">
+	<hr />
+	<div class="card-body rounded-3  w-auto alert-primary  align-content-md-center">
+		<div class="form-floating card-header-pills">
+		<h3>Choose account to assign role</h3>
+		<select asp-for="UserId" asp-items="Model.UserIds" class="form-control-sm w-25 bg-success bg-opacity-25 m-1">
+			<option class="bg-secondary bg-opacity-25 text-danger">Select user account ⌵ </option>
+		</select>
+	</div>
+
+	<div class="form-floating card-header-pills">
+		<h3>Available roles to choose</h3>
+		<select asp-for="RoleName" class="form-control-sm w-25 bg-success bg-opacity-25 m-1">
+			<option class="bg-secondary bg-opacity-25 text-danger">Select Role ⌵</option>
+			@foreach (var role in Model.RolesAvailable)
+			{
+				<option value="@role">@role </option>
+			}
+		</select>
+	</div>
+	</div>
+	<button asp-route-userId="@Model.UserIds.Select(x=>x.Value==Model.UserId.ToString())." type="submit" class="w-40 btn-primary btn-sm btn-danger">Manage</button>
+</form>
+<hr />
+<h1 class="rounded-3  shadow fst-italic" style="-webkit-text-fill-color:lightseagreen">Current Roles Assignment</h1>
+
+<table class="table table-striped table-hover table-bordered border-success">
+	<thead>		
+		<tr class="bg-success shadow-lg text-warning">			
+			<td class="bg-body w-auto" align="center">First Name</td>
+			<td class="bg-body w-auto" align="center">Last Name</td>
+			<td class="bg-body w-auto" align="center">Email</td>
+			<td class="bg-body w-auto" align="center">Roles</td>
+		</tr>
+	</thead>
+	<tbody class="table-hover link-success">
+		@foreach (var user in userManager.Users)
+		{
+			var userFirstName = user.FirstName;
+			var userLastName = user.LastName;
+			var userEmail = user.Email;
+			var roleName = "";
+			<tr>
+				<td>
+					@userFirstName
+				</td>
+
+				<td>
+					@userLastName
+				</td>
+
+				<td>
+					@userEmail
+				</td>
+				@foreach (var role in await userManager.GetRolesAsync(user))
+				{
+					roleName += $"{role}, ";
+
+				}
+				
+				<td>
+					@(roleName = roleName.TrimEnd(new char[] { ',', ' ' }))
+				</td>
+
+			</tr>
+		}
+
+	</tbody>
+</table>
+
+

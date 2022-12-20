@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using VesselWebCenter.Data.Models.Accounts;
 using VesselWebCenter.Models;
 using VesselWebCenter.Services.Contracts;
 using VesselWebCenter.Services.ViewModels;
@@ -11,11 +13,13 @@ namespace VesselWebCenter.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IVesselDataService service;
+        private readonly UserManager<AppUser> userManager;
 
-        public HomeController(ILogger<HomeController> logger, IVesselDataService _service)
+        public HomeController(ILogger<HomeController> logger, IVesselDataService _service, UserManager<AppUser> userManager)
         {
             _logger = logger;
             this.service = _service;
+            this.userManager = userManager;
         }
 
         [AllowAnonymous]
@@ -23,8 +27,11 @@ namespace VesselWebCenter.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var models = await service.AllEmptyVesselsAsHomePage();
-
+            var models = await service.AllEmptyVesselsAsHomePage();            
+            if (User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Admin", new { area = "Admin" });
+            }
             return View(models);
         }      
          

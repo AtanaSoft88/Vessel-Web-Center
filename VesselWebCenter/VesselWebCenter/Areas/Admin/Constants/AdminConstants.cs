@@ -6,6 +6,6 @@
 
         public const string AdminRolleName = "Administrator";
 
-        public const string AdminEmail = "admin@mail.com";
+        public const string AdminEmail = "djx700@abv.bg";
 	}
 }

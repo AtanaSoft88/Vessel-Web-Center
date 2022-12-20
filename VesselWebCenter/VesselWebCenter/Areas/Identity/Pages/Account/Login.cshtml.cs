@@ -20,13 +20,13 @@ namespace VesselWebCenter.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<AppUser> _signInManager;
-        private readonly UserManager<AppUser> userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<AppUser> signInManager,
+        public LoginModel(SignInManager<IdentityUser> signInManager,
                           ILogger<LoginModel> logger,
-                          UserManager<AppUser> _userManager)
+                          UserManager<IdentityUser> _userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -123,7 +123,7 @@ namespace VesselWebCenter.Areas.Identity.Pages.Account
 
                     if (user != null && await userManager.IsInRoleAsync(user, "Administrator"))
                     {
-                        return RedirectToAction("Index", "Admin", new { Area = "Admin" });
+                        return RedirectToAction("Index", "Admin", new { area = "Admin" });
                     }
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
