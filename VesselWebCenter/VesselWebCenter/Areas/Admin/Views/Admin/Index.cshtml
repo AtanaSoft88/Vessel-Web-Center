@@ -1,8 +1,40 @@
-﻿@{
-	ViewData["Title"] = "Admin Home Page";
+﻿@model InformationViewModel
+@{
+	ViewData["Title"] = "Administration Home Page";
 	
 }
 <div class="text-center">
-	<h1 class="title-Beautify">Welcome to vessel web center - Administration Home Page!</h1>
-	<br />
+	<h1 class="title-Beautify">@ViewData["Title"]</h1>	
 </div>
+<hr />
+<table class=" table table-responsive border-success table-hover">
+	<thead class="text-center">
+		<tr>
+			<th>
+				┊Total vessels registered:┊
+			</th>
+			<th>
+				┊Number of vessels ready for Voyage┊
+			</th>
+			<th>
+				┊Total Crew members assigned on Board┊
+			</th>
+			<th>
+				┊Total Crew members registered┊
+			</th>			
+		</tr>
+	</thead>
+	<tbody class="text-center">
+		<tr>
+			<td> @Model.TotalVessels</td>
+
+			<td> @Model.VesselsReadyForVoyageCount</td>
+
+			<td> @Model.TotalCrewMembersHired</td>
+
+			<td> @Model.TotalFreeCrewMembers</td>
+			
+		</tr>
+	</tbody>
+
+</table>

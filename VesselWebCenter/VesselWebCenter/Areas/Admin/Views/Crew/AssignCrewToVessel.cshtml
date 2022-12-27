@@ -1,0 +1,32 @@
+﻿@model CrewMembersDropDownViewModel
+@{
+	ViewData["Title"] = "Add Crew To Vessel";
+}
+<h1>@ViewData["Title"]</h1>
+<hr class="shadow-lg" />
+<div class="mb-3 card-body bg-secondary bg-opacity-25 rounded-3 w-50">
+
+	<form method="post" asp-action="AssignCrewToVessel" asp-controller="Crew">
+
+		<div class="mb-3 card-body bg-secondary bg-opacity-25 rounded-pill w-100">
+			<div>
+				<label asp-for="@Model.memberId" class="form-label">Choose a crew member ⌕</label>
+			</div>
+			<select asp-for="@Model.memberId" class="form-control-sm dropdown-divider bg-success bg-opacity-25 w-50">
+				@foreach (var memb in Model.CrewMembers)
+				{
+				<option value="@memb.Text">@memb.Value</option>
+				}
+			</select>
+			<span asp-validation-for="memberId" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<input class="btn btn-outline-success btn-warning w-auto" type="submit" value="Add to Vessel" style="position:relative;left:15px" />
+		</div>
+	</form>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
+

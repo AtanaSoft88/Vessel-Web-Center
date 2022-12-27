@@ -8,7 +8,8 @@ using VesselWebCenter.Services.Contracts;
 using VesselWebCenter.Services.ViewModels;
 
 namespace VesselWebCenter.Controllers
-{    
+{
+    [AllowAnonymous]
     public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
@@ -21,9 +22,8 @@ namespace VesselWebCenter.Controllers
             this.service = _service;
             this.userManager = userManager;
         }
-
-        [AllowAnonymous]
-        [ResponseCache(Duration = 30)]
+        
+        //[ResponseCache(Duration = 20*60*60)]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -33,15 +33,13 @@ namespace VesselWebCenter.Controllers
                 return RedirectToAction("Index", "Admin", new { area = "Admin" });
             }
             return View(models);
-        }      
-         
-        [AllowAnonymous]
+        }              
+        
         public IActionResult StatusCodeError(int errorCode)
         {
-            return this.View();
+            return this.View(errorCode);
         }
-
-        [AllowAnonymous]
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -12,8 +12,8 @@
 			<a style="-webkit-text-fill-color:greenyellow" class="nav-link text-success" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @ViewBag.UserFirstName !</a>
 		</li>
 		<li class="nav-item m-1">
-			<form  asp-controller="Admin" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-				<button type="submit" class="btn-outline-warning nav-link text-dark btn-outline-primary rounded-pill">🔓Logout</button>
+			<form  asp-controller="Admin" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "Admin" })">
+				<button type="submit" class="btn-outline-primary nav-link text-dark rounded-pill">🔓Logout</button>
 
 			</form>
 		</li>
@@ -22,10 +22,10 @@
 	else
 	{
 		<li class="nav-item m-1">
-			<a class="btn-outline-warning nav-link text-dark btn-outline-primary rounded-pill" asp-controller="Account" asp-action="Register">🔒Register</a>
+			<a class="btn-outline-primary nav-link text-dark rounded-pill" asp-controller="Account" asp-action="Register">🔒Register</a>
 		</li>
 		<li class="nav-item m-1">
-			<a class="btn-outline-warning nav-link text-dark btn-outline-primary rounded-pill" asp-controller="Account" asp-action="Login">🔑Login</a>
+			<a class="btn-outline-primary nav-link text-dark rounded-pill" asp-controller="Account" asp-action="Login">🔑Login</a>
 		</li>
 	}
 </ul>

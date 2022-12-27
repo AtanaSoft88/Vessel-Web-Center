@@ -28,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\css\footer.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\css\interactiveButton.css">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>

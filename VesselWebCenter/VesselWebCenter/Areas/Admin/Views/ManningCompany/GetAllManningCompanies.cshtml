@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ManningCompanyViewModel>
+@{
+	ViewData["Title"] = "Manning Companies Overview";	
+}
+<h2>@ViewData["Title"]</h2>
+
+<table class="table border-secondary table-bordered border-5 table-striped table-hover form-control-sm w-75 bg-success bg-opacity-25">
+	<thead>
+		<tr class="shadow-lg text-dark border-secondary border-3" style="background-color:springgreen">
+			<th width="5%" align="center">❐ №</th>
+			<th width="15%" align="center">❐ Company Country 🏴</th>
+			<th width="25%" align="center">❐ CompanyName 󠁧󠁢󠁥󠁮󠁧󠁿</th>
+			<th width="10%" align="center">❐ Vessels Owned Count</th>
+			<th width="15%" align="center">❐ Details Vessels</th>
+
+		</tr>
+	</thead>
+	<tbody class="table-hover link-success">
+		@foreach (var company in Model)
+		{
+			<tr>
+				<td>
+					@company.ManningCompanyId
+				</td>
+				<td>
+					@company.CompanyCountry
+				</td>
+				<td>
+					@company.CompanyName
+				</td>
+				<td>
+					@company.VesselsCount
+				</td>				
+				<td>
+					<form method="post">
+						<button class="btn btn-outline-light btn-info btn-group-sm rounded-pill" type="submit" asp-action="GetManningCompaniesVessels"
+						asp-route-compId="@company.ManningCompanyId">See Details</button>						
+					</form>
+					
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+

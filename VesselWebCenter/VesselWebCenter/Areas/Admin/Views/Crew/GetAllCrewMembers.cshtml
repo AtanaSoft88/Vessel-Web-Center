@@ -1,0 +1,86 @@
+﻿@model PagingList<CrewAllViewModel>
+@{
+	ViewData["Title"] = "◦•●◉ ℂ𝕣𝕖𝕨 𝕞𝕖𝕞𝕓𝕖𝕣 𝔻𝕖𝕥𝕒𝕚𝕝𝕤 ◉●•◦";
+	var previousDisabled = !Model.PreviousPage ? "disabled" : "";
+	var nextDisabled = !Model.NextPage ? "disabled" : "";
+}
+<link rel="stylesheet" href="~/css/interactiveButton.css" asp-append-version="true" />
+
+<h2 class="text-black shadow-lg rounded-pill bg-primary bg-opacity-25 w-50">@ViewData["Title"]</h2>
+<div class="table-responsive card-body bg-primary bg-opacity-25 rounded-3 shadow-lg col-12">
+	<form method="post">
+		<table class="table border-secondary table-bordered border-5 table-striped table-hover form-control-sm w-100 bg-success bg-opacity-25">
+			<thead>
+				<tr class="shadow-lg text-dark border-secondary border-3" style="background-color:sandybrown">
+					<th align="center">❐ №</th>
+					<th align="center">❐ First/Last Name 🤵</th>
+					<th align="center">❐ Nationality 🏴󠁧󠁢󠁥󠁮󠁧󠁿</th>
+					<th align="center">❐ Age🔞</th>
+					<th align="center">❐ Status Hired ✓</th>
+					<th align="center">❐ Contract Dated📆</th>
+					<th align="center">❐ Hired On Vessel ⛵</th>
+					<th align="center">❐ Manning Company 🗺</th>
+
+				</tr>
+			</thead>
+			<tbody class="table-hover link-success">
+				@foreach (var member in Model)
+				{
+					<tr>
+						<td>
+							@(member.CrewMemberId)
+						</td>
+						<td>
+							@member.FirstName @member.LastName
+						</td>
+						<td>
+							@member.Nationality
+						</td>
+						<td>
+							@member.Age
+						</td>
+						<td class="text-center">
+							<strong>@(member.HiredToVessel == true ? "✔" : "❌")</strong>
+						</td>
+						<td>
+							@(member.DateHired)
+						</td>
+						<td>
+							@(member.VesselName == null ? "N/A" : member.VesselName)
+						</td>
+						<td>
+							@(member.ManningCompanyName == null ? "N/A" : member.ManningCompanyName)
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</form>
+	<div class="btn-group-sm">
+		<a asp-action="GetAllCrewMembers"
+		   asp-route-pageNumber="@(Model.PageIndex-1)"
+		   class="btn btn-outline-dark rounded-pill @previousDisabled" style="background-color:orange">
+			⫷Previous
+		</a>
+		@for (int i = 1; i <= Model.TotalPages; i++)
+		{
+			<a asp-action="GetAllCrewMembers"
+		   asp-route-pageNumber="@(i)"
+		   class="buttonZ btn-group rounded-pill @nextDisabled">
+				@i
+			</a>
+		}
+		<a asp-action="GetAllCrewMembers"
+		   asp-route-pageNumber="@(Model.PageIndex+1)"
+		   class="btn btn-outline-dark rounded-pill @nextDisabled" style="background-color:orange">
+			Next⫸
+		</a>
+
+	</div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,14 @@
+﻿#footer {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 40px;
+    width: 100%;
+    background: #4cff00;
+    opacity: 0.8;    
+    color: mediumblue;
+    border-radius: 5px;
+    border: 3px solid #808080;
+    padding: 10px;
+    
+}

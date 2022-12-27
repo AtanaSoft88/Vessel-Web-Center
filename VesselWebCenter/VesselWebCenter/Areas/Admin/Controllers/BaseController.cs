@@ -6,9 +6,8 @@ using static VesselWebCenter.Areas.Admin.Constants.AdminConstants;
 namespace VesselWebCenter.Areas.Admin.Controllers
 {
     [Area(AreaName)]
-    [Route("Admin/[controller]/[Action]/{id?}")]
-    [Authorize(Roles = AdminRolleName)]
-
+    [Route("Admin/[controller]/[Action]/{id?}")]    
+    [Authorize(Policy = "myFullPermissionPolicy")]
     public class BaseController : Controller
     {
         public string UserFirstName

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using VesselWebCenter.Services.Contracts;
 using VesselWebCenter.Services.ViewModels;
 
-namespace VesselWebCenter.Controllers
+namespace VesselWebCenter.Areas.Admin.Controllers
 {
     /// <summary>
     /// Vessel Controller responsible for Vessels arrangement
@@ -27,8 +27,8 @@ namespace VesselWebCenter.Controllers
         /// </summary>
         /// <param name="pageNumber"></param>
         /// <returns>All Vessels Paginated</returns>
-        [AllowAnonymous]
-        //[ResponseCache(Duration = 30*60*60)]
+       
+        [ResponseCache(Duration = 30 , Location = ResponseCacheLocation.None, NoStore = true)]
         [HttpGet]
         public async Task<IActionResult> GetAllVessels(int pageNumber = 1)
         {
@@ -47,7 +47,7 @@ namespace VesselWebCenter.Controllers
         /// <param name="id"></param>
         /// <param name="vesselId"></param>
         /// <returns>Vessel chosen by User</returns>
-        [AllowAnonymous]        
+        
         public async Task<IActionResult> ChooseAVessel(int id, int vesselId)
         {
             if (id==0)

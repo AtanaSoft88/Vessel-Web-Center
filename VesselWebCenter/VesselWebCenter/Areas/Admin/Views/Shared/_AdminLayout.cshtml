@@ -10,6 +10,7 @@
 	<link rel="icon" type="image/x-icon" href="~/Img/favicon.ico">
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/footer.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/css/myIndex.css" asp-append-version="true" /> 
 	<link rel="stylesheet" href="~/VesselWebCenter.styles.css" asp-append-version="true" />
 
@@ -18,7 +19,7 @@
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 bgrnd">
 			<div class="container-fluid">
-				<a style="-webkit-text-fill-color:chartreuse" class="navbar-brand text-uppercase text-dark" asp-area="" asp-controller="Home" asp-action="Index">Vessel Web Center</a>
+				<a style="-webkit-text-fill-color:chartreuse" class="navbar-brand text-uppercase text-dark" asp-area="Admin" asp-controller="Admin" asp-action="Index">Vessel Web Center</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -26,22 +27,18 @@
 				<div style="background-color:steelblue;width:5%;height:50px" class="navbar-collapse collapsed d-sm-inline-flex justify-content-between list-group-item list-group-item-success">
 					<ul class="navbar-nav flex-grow-1">
 						<li class="nav-item m-1">
-							<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="" asp-controller="Home" asp-action="Index">✯Home</a>
+							<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="Admin" asp-controller="Admin" asp-action="Index">✯Home</a>
 						</li>
 						<li class="nav-item m-1">
-							<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="" asp-controller="Vessel" asp-action="GetAllVessels">✯Vessel's Catalogue</a>
+							<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="Admin" asp-controller="Vessel" asp-action="GetAllVessels">✯Vessel's Catalogue</a>
 						</li>
 						
 						@if (User?.Identity?.IsAuthenticated ?? false)  
 						{
 
 							<li class="my-re nav-item m-1">
-								<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="" asp-controller="Crew" asp-action="AddCrewMemberAsUnassigned">✯Register a crew member</a>
-							</li>
-
-							<li class="my-re nav-item m-1">
-								<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="" asp-controller="PortOfDestination" asp-action="AssignVesselForVoyage">✯Voyage Planner</a>
-							</li>
+								<a class="nav-link text-dark btn-outline-primary rounded-2 rounded-pill" asp-area="Admin" asp-controller="Crew" asp-action="AddCrewMemberAsUnassigned">✯Register a crew member</a>
+							</li>							
 						}
 						@if ((await AuthorizationService.AuthorizeAsync(User, "myFullPermissionPolicy")).Succeeded)
 						{
@@ -57,12 +54,15 @@
 		</nav>
 	</header>
 	<div class="container">
-		<h2 class="form-control bg-danger bg-opacity-25 rounded-pill w-50">Administration area</h2>
-		<main role="main" class="pb-3" style="color:yellowgreen">
+		
+		<main role="main" class="pb-3" style="color:slateblue">
 			@RenderBody()
 		</main>
+		<div class="form-control bg-danger bg-opacity-25 rounded-pill text-center w-25">
+			<h5>Administration area</h5>
+		</div>
 	</div>
-	<footer class="border-top footer text-muted card-footer bg-success bg-opacity-10 ">
+	<footer id="footer">
 		<div class="container">
 			&copy; VesselWebCenter  - ⋐
 			@DateTime.UtcNow.Year ⋑

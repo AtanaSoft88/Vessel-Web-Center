@@ -143,7 +143,12 @@ namespace VesselWebCenter.Controllers
                 if (result.Succeeded)
                 {
                     if (loginModel.ReturnUrl != null)
-                    {
+                    {                        
+                        if (loginModel.Email.Contains("admin@abv.bg"))
+                        {
+                            loginModel.ReturnUrl = "/Admin/Admin/Index";
+                            return Redirect(loginModel.ReturnUrl);
+                        }
                         return Redirect(loginModel.ReturnUrl);
                     }
 

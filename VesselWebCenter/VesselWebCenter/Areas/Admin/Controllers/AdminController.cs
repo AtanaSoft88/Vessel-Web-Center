@@ -11,13 +11,14 @@ using VesselWebCenter.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace VesselWebCenter.Areas.Admin.Controllers
-{	
-	public class AdminController : BaseController
+{    
+    public class AdminController : BaseController
 	{
         private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
         private readonly RoleManager<IdentityRole<Guid>> roleManager;
         private readonly IAccountSupportService accountSupportService;
+        private readonly IAdminService adminService;
 
         /// <summary>
         /// Configuring UserManager,SignInManager and RoleManager for each specific User.
@@ -30,17 +31,22 @@ namespace VesselWebCenter.Areas.Admin.Controllers
             UserManager<AppUser> _userManager,
             SignInManager<AppUser> _signInManager,
             RoleManager<IdentityRole<Guid>> _roleManager,
-            IAccountSupportService _accountSupportService)
+            IAccountSupportService _accountSupportService,
+            IAdminService _adminService)
         {
             this.userManager = _userManager;
             this.signInManager = _signInManager;
             this.roleManager = _roleManager;
             this.accountSupportService = _accountSupportService;
+            this.adminService = _adminService;
         }
-
-        public IActionResult Index()
+        
+        [HttpGet]
+        public async Task<IActionResult> Index()
 		{
-			return View();
+            var model = new InformationViewModel();
+            model = await adminService.ShowGeneralInfo();
+            return View(model);
 		}
 
         /// <summary>
@@ -48,7 +54,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
         /// </summary>
         /// <param name="returnUrl"></param>
         /// <returns>Login form to be filled up</returns>
-        [AllowAnonymous]
+        
         [HttpGet]
         public IActionResult Login(string? returnUrl = null)
         {
@@ -64,7 +70,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
         /// </summary>
         /// <param name="loginModel"></param>
         /// <returns>Signing in a User</returns>
-        [AllowAnonymous]
+        
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginModel)
         {
@@ -124,8 +130,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
         /// Deletion of an User Account
         /// </summary>
         /// <returns>All User Accounts which can be deleted</returns>
-        [HttpGet]
-        [Authorize(Policy = "myFullPermissionPolicy")]
+        [HttpGet]        
         public async Task<IActionResult> DeleteUserAccount()
         {
             var model = new AccountDeleteViewModel();
@@ -138,8 +143,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
         /// </summary>
         /// <param name="account"></param>
         /// <returns>All available User's Accounts(Those not marked as Deleted)</returns>
-        [HttpPost]
-        [Authorize(Policy = "myFullPermissionPolicy")]
+        [HttpPost]        
         public async Task<IActionResult> DeleteUserAccount(AccountDeleteViewModel account)
         {
             if (!this.ModelState.IsValid)
@@ -170,8 +174,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
         /// Recovering of an User Account
         /// </summary>
         /// <returns>All User Accounts which can be Recovered</returns>
-        [HttpGet]
-        [Authorize(Policy = "myFullPermissionPolicy")]
+        [HttpGet]        
         public async Task<IActionResult> RecoverUserAccount()
         {
             var model = new AccountRecoverViewModel();
@@ -183,8 +186,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
         /// Recovering of an User Account
         /// </summary>
         /// <returns>Message describing the operation result</returns>
-        [HttpPost]
-        [Authorize(Policy = "myFullPermissionPolicy")]
+        [HttpPost]        
         public async Task<IActionResult> RecoverUserAccount(AccountRecoverViewModel account)
         {
             if (!this.ModelState.IsValid)
@@ -200,8 +202,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
         /// Configuring User Roles or Resetting existing ones
         /// </summary>
         /// <returns>List of Users and their Roles</returns>
-        [HttpGet]
-        [Authorize(Policy = "myFullPermissionPolicy")]
+        [HttpGet]        
         public async Task<IActionResult> ManageUserRoles()
         {
             var model = new AccountAddRolesViewModel();
@@ -222,8 +223,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
         /// <param name="userId"></param>
         /// <param name="roleName"></param>
         /// <returns>Obtaining roles for given Users</returns>
-        [HttpPost]
-        [Authorize(Policy = "myFullPermissionPolicy")]
+        [HttpPost]        
         public async Task<IActionResult> ManageUserRoles(AccountAddRolesViewModel model, string userId, string roleName)
         {
             if (model.UserId == Guid.Empty || userId.Contains("Select") || roleName.Contains("Select"))

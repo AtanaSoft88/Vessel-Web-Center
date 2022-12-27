@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ManningCompaniesVesselsViewModel>
+@{
+	ViewData["Title"] = "Current Company Vessels";
+}
+<link rel="stylesheet" href="~/css/flipImage.css">
+
+<h3>@Model.Select(x=>x.CompanyName).First()</h3>
+<hr />
+
+<div class="card-body bg-info bg-opacity-10 rounded-3">
+	<div class="card-header-pills">
+		<h6 class="card-body rounded-3 bg-primary bg-opacity-25 w-100">⛵ Vessels</h6>
+		@foreach (var dto in Model)
+		{
+			<div style="display:inline-block" class="flip-box card-body">
+				<p>@dto.VesselName</p>
+				<div class="flip-box card-body">
+					<div class="flip-box-inner">
+						<div class="flip-box-front">
+							<img style="width: 15rem; height:10rem"
+							 src="@dto.VesselImage">
+						</div>
+						<div class="flip-box-back">
+							@if (Model.Select(x=>x.Distance).OrderByDescending(x=>x).First() == dto.Distance && dto.Distance>0)
+							{
+								<a style="height:150px;width:250px;background-color:cornflowerblue" class="btn btn-outline-success rounded-pill" asp-controller="Vessel" asp-action="ChooseAVessel" asp-route-id="@dto.IdVessel">
+									@dto.VesselName <hr>
+									🏆Distance Sailed: @(dto.Distance.ToString("f2")) nm
+								</a>
+							}
+							else if(Model.Select(x=>x.Distance).OrderByDescending(x=>x).First() != dto.Distance && dto.Distance>0)
+							{
+								<a style="height:150px;width:250px;background-color:cornflowerblue" class="btn btn-outline-success rounded-pill" asp-controller="Vessel" asp-action="ChooseAVessel" asp-route-id="@dto.IdVessel">
+									@dto.VesselName <hr>
+									🥈Distance Sailed: @(dto.Distance.ToString("f2")) nm
+								</a>
+							}
+							else
+							{
+								<a style="height:150px;width:250px;background-color:cornflowerblue" class="btn btn-outline-success rounded-pill" asp-controller="Vessel" asp-action="ChooseAVessel" asp-route-id="@dto.IdVessel">
+									@dto.VesselName <hr>
+									Distance Sailed: @(dto.Distance.ToString("f2")) nm
+								</a>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+
+	</div>
+	<h5 class="card-body rounded-3 bg-primary bg-opacity-25 w-100">
+		Company Vessels Total distance covered:
+		@(Model.Select(x => x.Distance).Sum() != 0.0 ?
+			Model.Select(x => x.Distance).Sum().ToString("f2") + " nm" : "N/A")
+	</h5>
+</div>
+
+<div>
+	<form method="get">
+		<button class="btn btn-warning btn-outline-dark rounded-pill" asp-controller="ManningCompany" asp-action="GetAllManningCompanies" type="submit">⋘ Back to Companies</button>
+		<button class="btn btn-success btn-outline-dark rounded-pill" asp-controller="Vessel" asp-action="GetAllVessels" type="submit">Go to all Vessels ⋙</button>
+	</form>
+</div>
