@@ -61,7 +61,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
                var isCrewAdd = await service.AddCrewMemberToDataBase(model);
                 if (isCrewAdd)
                 {
-                    notyf.Success($"{model.FirstName} {model.LastName} has been registered as a crew member with success!");
+                    notyf.Success($"{model.FirstName} {model.LastName} has been registered as a crew member with success by Admin!");
                 }
                 else
                 {
@@ -98,7 +98,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
                 return this.View(model);
             }
             await service.AddCrewMemberToVessel(model);
-            notyf.Success($"A crew member has been add to this vessel!");
+            notyf.Success($"Admin has just add a crew member to this vessel!");
             return RedirectToAction("ChooseAVessel","Vessel", new { Id});
 
         }
@@ -123,7 +123,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
                 return this.View(model);
             }
             await service.RemovedCrewMemberFromVessel(model);
-            notyf.Warning($"A crew member has been removed from this vessel!");
+            notyf.Warning($"Admin has removed a crew member from this vessel!");
             return RedirectToAction("ChooseAVessel", "Vessel", new { model.VesselId });
 
         }        

@@ -15,10 +15,11 @@ calculations.Thus you have idea of what distance and how much time will the voya
 - There are statistics of the most visited Ports by Vessels, as that can be easily changed dynamically by doing voyages with your favourite vessels.
 - A Crew member can be Add to or removed from any vessel, as well as saving it in database for late assignment.
 - Destinations are also  limited and pure distance can be obtained between two different ports.
-- Application keeps track of the distances of the any vessel and also the total distance sailed by all vessels part of a given company.
+- Application keeps track of the distances of any vessel and also the total distance sailed by all vessels part of a given company.
 
 # Built using the following:
 - ASP.NET Core 6 MVC
+- Areas
 - Repository
 - MSSQL Server
 - Entity Framework Core
@@ -27,21 +28,31 @@ calculations.Thus you have idea of what distance and how much time will the voya
 - Moq
 - NUnit tests
 - Bootstrap
+- Java Script
 - DataTables
 - High Charts - Diagram Implementation
 - Toast messages
 - Dependency Injection
 
 # Getting started...
-* You have to register a User. By default after log/in/out you are given full control
-and permission of this Application users,roles and actions.
-* Most of the Entities are seeded and some of the Vessels already have a Crew capable of doing their first international Voyage!
+* You can register a User. By default Admin User is seeded at application start.You are given full control
+and permission of this Application users,roles and actions.You got redirected to Administration area at first.After logout you have
+opportunity to register as much users as you want.Once you do this you are free to manage all users roles in when you access your
+administration profile.
+* Default credentials for admin:
+<> Email: admin@abv.bg
+<> Password: admin@admin
+* Most of the Entities are seeded and one of the Vessels already have a Crew capable of doing their first international Voyage!
 * If you want more vessels enabled for sailing you have to hire more crew members on board of these vessels.
 * All subsequent users registered need to be given a role or they will be without such.
-* The following roles can be used : Administrator, User-Owner and Ordinary-User.There is a menu where this can be done.
-* Only first 2 roles can have the big interaction and test the full application potential.The third one only can observe partial
+* The following roles can be used : Administrator, User-Owner and Ordinary-User.There is a menu where this can be done.(In Admin area, logged as Admin)
+* Only first 2 roles can have the big interaction and test the full application potential.The third one can only observe partial
 information and can not be part of the big deal:)
-* Not logged in users have almost no point of using this application ( don't be one of them) :)
+* You can set your favourite vessel to sail to her intended destination and observe the sailed distances, as well as the total distance
+covered by the relevant company vessels. You can compare all vessels by their distances and many more statistics.
+* There is a menu where you can get information(statistics) about crew available/unavailable , most visited ports in a table or structured 
+in a graphic by means of using High Charts implementation.Further more you can see all companies and their vessels with their achieved distances.
+* Not logged-in users have almost no point of using this application ( don't be one of them) :)
 
 # Project Architecture
 - My main project consists of 4 projects strictly connected and depending each other.
@@ -50,6 +61,20 @@ information and can not be part of the big deal:)
 3. VesselWebCenter.Services - Class Library, holding Services and Service Models and main business logic of the application.
 4. VesselWebCenter.Tests - NUnit Test Project, holding Service Tests, proving that the application works as expected.
 
+# Gallery 
+![title](Image/IndexCarousel.png)
+![title](Image/AdministrationHome.png)
+![title](Image/RolesAssignment.png)
+![title](Image/IndexPic.png)
+![title](Image/Crew.png)
+![title](Image/HireCrewMember.png)
+![title](Image/VesselCatalogue.png)
+![title](Image/VoyagePlanning.png)
+![title](Image/SeeVoyageDetails.png)
+![title](Image/VoyageCompleted.png)
+
 # Data Base Diagram
 ![title](Image/diagram.png)
+
+
 

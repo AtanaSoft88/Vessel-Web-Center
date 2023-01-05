@@ -155,7 +155,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
                 && User.IsInRole(RoleConstants.USER_OWNER)
                 && User?.Identity?.Name == account.EmailAddress)
             {
-                return RedirectToAction(nameof(UserMessages), "Admin");
+                return RedirectToAction(nameof(UserMessages), AdminConstants.AreaName);
             }
             var currentUserToDelete = userManager.Users.FirstOrDefault(x => x.Email == account.EmailAddress);
             if ((!userManager.Users.Any(x => x.Email == account.EmailAddress)) || currentUserToDelete.IsDeleted == true)
@@ -167,7 +167,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
             await accountSupportService.DeleteAccountAsync(account);
             TempData["delUser"] = userManager.Users.Where(x => x.Email == account.EmailAddress).FirstOrDefault()?.FirstName;
             TempData["delEmail"] = userManager.Users.Where(x => x.Email == account.EmailAddress).FirstOrDefault()?.Email;
-            return RedirectToAction(nameof(UserMessages), "Admin");
+            return RedirectToAction(nameof(UserMessages), AdminConstants.AreaName);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace VesselWebCenter.Areas.Admin.Controllers
             }
             await accountSupportService.GetUserAccountRecovered(account);
             TempData["recoverMsg"] = "recover";
-            return RedirectToAction(nameof(UserMessages), "Admin");
+            return RedirectToAction(nameof(UserMessages), AdminConstants.AreaName);
         }
 
         /// <summary>
@@ -240,19 +240,19 @@ namespace VesselWebCenter.Areas.Admin.Controllers
             if (model.IsRoleAddWithSuccess)
             {
                 TempData["role_add_successfully"] = RoleConstants.SUCCESSFUL_ROLE_ADD;
-                return this.RedirectToAction(nameof(ManageUserRoles), "Admin");
+                return this.RedirectToAction(nameof(ManageUserRoles), AdminConstants.AreaName);
             }
             if (model.IsAlreadyInRole)
             {
                 TempData["already_in_role"] = RoleConstants.ROLE_ALREADY_EXISTS;
-                return RedirectToAction(nameof(ManageUserRoles), "Admin");
+                return RedirectToAction(nameof(ManageUserRoles), AdminConstants.AreaName);
             }
             if (model.AreRolesReset)
             {
                 TempData["roles_reset"] = RoleConstants.RESET_ROLES;
-                return RedirectToAction(nameof(ManageUserRoles),"Admin");
+                return RedirectToAction(nameof(ManageUserRoles), AdminConstants.AreaName);
             }
-            return RedirectToAction(nameof(ManageUserRoles), "Admin");
+            return RedirectToAction(nameof(ManageUserRoles), AdminConstants.AreaName);
         }
 
     }
