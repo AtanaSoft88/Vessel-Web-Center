@@ -63,6 +63,7 @@ in a graphic by means of using High Charts implementation.Further more you can s
 
 # Gallery 
 ![title](Image/IndexCarousel.png)
+![title](Image/visited.png)
 ![title](Image/AdministrationHome.png)
 ![title](Image/RolesAssignment.png)
 ![title](Image/IndexPic.png)
